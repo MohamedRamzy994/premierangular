@@ -1,0 +1,197 @@
+<section class="page-title">
+  <div class="container">
+    <ol class="breadcrumb">
+
+      <li>
+        <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+      </li>
+
+      <li>
+
+        <a [routerLink]="[ '/sales' ]" routerLinkActive="active">مبيعات</a>
+
+
+      </li>
+      <li>
+
+        <a [routerLink]="[ '/oldsaleback' ]" routerLinkActive="active">مرتجعات بيع سابقه</a>
+
+      </li>
+      <li>
+        <a [routerLink]="[ '/oldsalebackwithbill' ]" routerLinkActive="active">مرتجعات بيع سايقة مرتبطة بفاتوره</a>
+
+
+      </li>
+      <li class="active"> طباعة مرتجع بيع مرتبط بفاتوره </li>
+    </ol>
+  </div>
+</section>
+
+
+
+<section class="body-content" id="body-content">
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-2 text text-center">
+            <img src="/bag.png" class="userlogo"
+              style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;">
+          </div>
+
+
+          <div class="col-md-8">
+            <h3 class="text text-center">
+              مرتجع بيع غير مرتبط بفاتوره
+            </h3>
+          </div>
+          <div class="col-md-2 text text-right">
+
+            <div class="printbrand">
+              ماركــت شــوت
+
+            </div>
+
+
+          </div>
+
+        </div>
+      <br>
+
+      </div>
+      <div class="panel-body">
+        <div class="spacetoprint"></div>
+        <hr>
+
+       
+        <div class="row">
+          <div class="col-md-4 text text-right">
+            <div class="form-group ">
+              <label for="StoreName" class="label label-default">  رقم الفاتورة </label>
+              &nbsp; <span>{{DiscardID}}</span>
+            </div>
+    
+    
+          </div>
+          <div class="col-md-4 text text-right">
+    
+            <div class="form-group ">
+              <label for="StoreTo" class="label label-default">  العميل</label>
+              &nbsp; <span [textContent]="productSaleDiscardMainInvoice.CustomerName"></span>
+    
+    
+    
+            </div>
+          </div>
+          <div class="col-md-4 text text-right">
+            <div class="form-group">
+              <label for="DateSubmit" class="label label-default"> التاريخ </label>
+    
+              &nbsp; <span [textContent]="productSaleDiscardMainInvoice.DateSubmit|date"></span>
+    
+    
+            </div>
+    
+          </div>
+        
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-4 text text-right">
+    
+            <div class="form-group ">
+              <label for="StoreTo" class="label label-default">  المخزن</label>
+              &nbsp; <span [textContent]="productSaleDiscardMainInvoice.StoreName"></span>
+    
+    
+    
+            </div>
+          </div>
+              <div class="col-md-4 text text-right">
+                  <div class="form-group">
+                    <label for="DateSubmit" class="label label-default"> نقطة البيع </label>
+          
+                    &nbsp; <span [textContent]="productSaleDiscardMainInvoice.UserName"></span>
+          
+          
+                  </div>
+          
+                </div>
+          
+                  <div class="col-md-4 text text-right">
+                      <div class="form-group ">
+                        <label for="StoreName" class="label label-default">  حساب الفاتورة </label>
+                        &nbsp; <span>{{productSaleDiscardMainInvoice.DiscardValue}}</span>
+                      </div>
+              
+              
+                    </div>
+        </div>
+        <br>
+        <div class="row fixheight">
+          <div class="col-md-12">
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h5 class="text-colored text-right">المرتجعات علي الفاتورة</h5>
+
+              </div>
+              <div class="panel-body">
+                <div style="overflow-x: auto;">
+                  <table class="table text-right table-bordered  table-responsive">
+                    <thead>
+                      <tr>
+                        <th style="width:10%;">كود الصنف</th>
+                        <th style="width:30%;"> إسم الصنف </th>
+                        <th style="width:10%;"> كميه المرتجع </th>
+                        <th style="width:10%;"> الوحده </th>
+                        <th style="width:10%;"> السعر </th>
+                        <th style="width:10%;"> الإجمالي </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let item of productSaleDiscardSelectMainInvoicesItems| paginate: { itemsPerPage: 10, currentPage: p } ;">
+                        <td>{{item.ProductID}}</td>
+                        <td>{{item.ProductName}}</td>
+                        <td>{{item.Num| number:'1.2-2'}}</td>
+                        <td>{{item.UnitName}}</td>
+                        <td>{{item.Price| currency}}</td>
+                        <td>{{(item.Price * item.Num)| currency}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="6" class="text text-center alert alert-danger"
+                          *ngIf="(productSaleDiscardSelectMainInvoicesItems).length === 0">
+                          <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                        </td>
+                      </tr>
+                   
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <br>
+                <br>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="btntricks">
+
+          <button type="button" class="btn  btn-style" (click)="PrintReportInvoice()">
+
+            <i class="fa fa-print"></i> طباعه </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

@@ -1,0 +1,71 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+          </li>
+
+          <li class="active"> سجلات المتابعة </li>
+      </ol>
+  </div>
+</section>
+  <section class="body-content">
+      <div class="container">
+          <div class="row">
+
+               
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AccessActivitiesRecord==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-bell"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/listactivities' ]" routerLinkActive="active"> سجل النشاطات </a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AccessStoreNotifications==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-bell"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/listnotifications' ]" routerLinkActive="active"> سجل المخزون </a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+         <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AccessSalesPointNotifications==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-bell"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/listsalesnotifications' ]" routerLinkActive="active"> سجل نقاط البيع </a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+
+
+          </div>
+          </div>
+  </section>

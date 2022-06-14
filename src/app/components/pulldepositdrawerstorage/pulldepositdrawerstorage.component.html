@@ -1,0 +1,224 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active"> المصروفات</a>
+
+
+            </li>
+            <li class="active"> سحب وايداع </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+
+        <div class="panel panel-default">
+            <div class="panel-heading text text-right">
+                    <div class="row">
+                            <div class="col-md-4">
+                                    <h4>
+                                            سحب وايداع
+                                        </h4>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-2 text-left">
+                                <a>
+                        
+                                    <button (click)="Refresh()" class="btn btn-link">
+                                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                    </button>
+                                  </a>
+                            </div>
+                        </div>
+              
+            </div>
+
+            <div class="panel-body">
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-6 ">
+                        <form name="info-form" class="clearfix " #AddWithdrawDepositForm="ngForm">
+
+                            <fieldset>
+                                <div class="row">
+
+                                    <div class="form-group text-right">
+                                        <label for="form_facial-move"> الحركه الماليه </label>
+
+                                        <br>
+                                        <div class="radio disp-inl-bl " style="margin-right:25px;">
+                                            <label for="withdraw">
+                                                <input id="withdraw" name="withdraw" type="radio" [value]="1" [(ngModel)]="withdraw"> سحب من نقطة بيع
+                                            </label>
+                                        </div>
+                                        &nbsp;&nbsp;
+
+                                        <div class="radio disp-inl-bl">
+                                            <label for="deposit">
+                                                <input  id="deposit" name="withdraw" type="radio" [value]="2" [(ngModel)]="withdraw"> إيداع في نقطة
+                                                بيع </label>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <div class="form-group col-md-12 text-right">
+                                        <label for="form_financial_val"> القيمه الماليه </label>
+                                        <input id="MoneyValue" name="MoneyValue" class="form-control" type="number"
+                                            [(ngModel)]="_addAdditionalCostEventModel.MoneyValue" #MoneyValue="ngModel"
+                                            required="required" minlength="1">
+
+                                        <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)"
+                                            class="alert alert-danger">
+
+                                            <p *ngIf="MoneyValue?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                                            <p *ngIf="MoneyValue?.errors.minlength">
+                                                <i class="fa fa-bug"></i> القيمة يجب ان تكون قيمة صحيحة
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="row">
+
+                                    <div class="form-group col-md-12 text-right">
+                                        <label> نقطة البيع</label>
+                                        <!-- تقرير شامل لكل نقاط البيع -->
+                                        <select class="form-control" style=" padding-top:0;" name="SalesPointID"
+                                            [(ngModel)]="_addAdditionalCostEventModel.SalesPointID" id="SalesPointID"
+                                            #SalesPointID="ngModel" required="required" (change) = "getSalesPointBalance(_addAdditionalCostEventModel.SalesPointID)">
+
+                                            <option *ngFor="let item of listSalesPointsModel" [value]="item.SalesPointID">
+                                                {{item.SalesPoint}} </option>
+                                        </select>
+
+
+                                        <div *ngIf="SalesPointID.invalid && (SalesPointID.dirty || SalesPointID.touched)"
+                                            class="alert alert-danger">
+
+                                            <p *ngIf="SalesPointID?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 text-right">
+                                        <label for="SalesPointBalance">  رصيد نقطة البيع </label>
+                                        <input class="form-control" type="number" disabled="disabled" name="SalesPointBalance" [(ngModel)]="SalesPointBalance">
+
+                                    </div>
+                                    <div class=" form-group col-md-12 text-right">
+                                        <label> سبب السحب والإيداع </label>
+                                        <select class="form-control" style=" padding-top:0;" name="SelectedReasonID"
+                                            [(ngModel)]="_addAdditionalCostEventModel.SelectedReasonID" id="SelectedReasonID"
+                                            #SelectedReasonID="ngModel" required="required">
+                                            <option *ngFor="let item of listWithdrawDepositReasons" [value]="item.ReasonID">{{item.Reason}}</option>
+
+                                        </select>
+                                        <div *ngIf="SelectedReasonID.invalid && (SelectedReasonID.dirty || SelectedReasonID.touched)"
+                                            class="alert alert-danger">
+
+                                            <p *ngIf="SelectedReasonID?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 text-right">
+                                        <label for="DateSubmit"> التاريخ </label>
+                                        <input id="DateSubmit" name="DateSubmit" class="form-control" type="date" name="DateSubmit"
+                                            [(ngModel)]="_addAdditionalCostEventModel.DateSubmit" id="DateSubmit"
+                                            #DateSubmit="ngModel" required="required">
+                                        <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)"
+                                            class="alert alert-danger">
+
+                                            <p *ngIf="DateSubmit?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 text-right">
+                                        <label for="form_pul_depo_details"> تفاصيل السحب و الإيداع </label>
+                                        <textarea class="form-control" type="date" name="Details" [(ngModel)]="_addAdditionalCostEventModel.Details"
+                                            id="Details" #Details="ngModel" required="required">
+                                                        </textarea>
+
+                                        <div *ngIf="Details.invalid && (Details.dirty || Details.touched)" class="alert alert-danger">
+
+                                            <p *ngIf="Details?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
+
+                        </form>
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-6 ">
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="panel-footer">
+
+                <div class="btntricks">
+
+                    <button class="btn  btn-style" [disabled]="AddWithdrawDepositForm.invalid" (click)="openModal(template)" >
+                        حفظ </button>
+
+                </div>
+                <ng-template #template>
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                            <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p> هل تريد حفظ هذه العملية بالفعل ؟</p>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn  pull-right" (click)="AddWithdrawDepositEvent(_addAdditionalCostEventModel , AddWithdrawDepositForm)"> نعم</button>
+                  
+                            <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                        </div>
+                    </div>
+                  
+                  
+                  
+                  
+                  </ng-template>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>

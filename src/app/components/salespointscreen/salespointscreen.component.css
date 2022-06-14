@@ -1,0 +1,99 @@
+ .salespointwrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    z-index: 500;
+    padding:0px;
+    direction: rtl;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+  }
+  .btn-success{
+    border: solid 1px #000;
+    border-radius: 0;
+   
+  }
+  #btn-half{
+    width:49%;
+  }
+  .salespointbodyleft .btn-success{
+    border: solid 1px #000;
+    border-radius: 0;
+    margin: 2px;
+    width: 32.3333%;
+  }
+  input[type='date']
+  {
+    width: 157px;
+  }
+  /* 
+  .salespointheader{
+    background-color: darkred;
+    width: 100%;
+    padding: 5px;
+    height: 7%;
+    color:#fff;
+  }
+  .salespointheader a{
+    font-size: 14px;
+    color:#fff;
+  }
+.actionwrapper{
+  direction: ltr;
+}
+.salespointbodyleft{
+  height: 100%;
+  width: 35%;
+  background-color: #eee;
+  margin: 5px;
+  padding: 10px;
+  clear: both;
+
+}
+.salespointbodyright{
+  height: 100%;
+  width: 63%;
+  background-color: #eee;
+  margin: 5px;
+  padding: 10px;
+}
+
+ */
+ .salespointbody{
+  width: 100%;
+}
+.salespointfooter{
+  width: 100%
+}
+#resetbox{
+  border: solid 1px #000;
+  border-radius: 5px;
+  padding: 5px;
+font-size: 11px !important;  
+width: 24%;
+direction: rtl;
+}
+#resetbox .table{
+  margin-bottom: 0px !important;
+}
+.invoicetitle{
+  border: dotted 1px #000;
+  border-radius: 5px;
+  padding: 5px;
+}
+.cashirinfo tr{
+  width: 100%;
+}
+.invoicekinds {
+  width:100%;
+}
+.invoicesummary{
+  width: 100%;
+}

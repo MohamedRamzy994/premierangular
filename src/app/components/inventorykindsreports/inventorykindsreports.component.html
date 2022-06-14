@@ -1,0 +1,164 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+            </li>
+
+            <li class="active"> تقرير جرد الأصناف </li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-4  text text-right">
+            <label> المخزن </label>
+            <select class="form-control" (change)="ListProductInventoryReport(storeID)" [(ngModel)]="storeID" >
+              <option *ngFor="let item of result.StoresList" [value]="item.StoreID">{{item.StoreName}}</option>
+          </select>
+
+
+      </div>
+      <div class="col-md-4  text text-right">
+        <label> المجموعه </label>
+        <select class="form-control" [(ngModel)]="groupName">
+            <option *ngFor="let item of resultlist.GroupsList" [value]="item.CatName">{{item.CatName}}   </option>
+        </select>
+  </div>
+                      <div class="col-md-4  text text-right">
+                            <label> المورد </label>
+                            <select class="form-control" [(ngModel)]="supplierID" (change) = "ListProductInventoryReport(storeID)">
+                              <option *ngFor="let item of resultSuppliers.SuppliersList" [value]="item.SupplierID">{{item.SupplierName}}   </option>
+                          </select>
+            
+
+                      </div>
+        </div>
+    </div>
+</div>
+</section>
+<section class="body-content" id="body-content">
+  <div class="container">
+      <br>
+      
+     
+      
+              <div class="panel panel-default">
+    
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-md-2 text-right">
+                              <img [src]="appSettings.Logo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;" class="userlogo" alt="User Avatar">  
+                          </div>
+                          <div class="col-md-8 text-center">
+                              <h3>  <span> تقرير جرد الأصناف </span> </h3>
+                             
+                      
+                          </div>
+                          <div class="col-md-2 text-left">
+                              <div class="printbrand">
+                                  {{appSettings.ShopName}}
+                              </div>
+                      
+                          </div>
+                        </div>
+      
+                       
+                          <div class="spacetoprint"></div>
+                      
+
+
+
+                    
+                  </div>
+                  <div class="panel-body">
+                      <hr>
+
+                      <div class="row">
+                          <div class="col-md-5 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default"> اسم المخزن </label>
+                              &nbsp; <span>{{storeName}}</span>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div style="overflow-x: auto;" class="text text-center">
+                           
+                            <table class="table text-center table-bordered  table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>  كود الصنف </th>
+                                        <th> اسم الصنف  </th>
+                                        <th>  المجموعة  </th>
+                                        <th> السعر  </th>
+                                        <th> المخزن  </th>
+                                        <th>   موقف البيع </th>
+                                        <th> موقف الشراء </th>
+                                        
+
+                                    </tr>
+                                </thead>
+                                <!-- |searchesuppliernamereport:supplierID  -->
+                               <tbody>
+                                    <tr *ngFor="let item of listProductMoveMentReportModel  
+                                    |searchegroupnamereport:groupName
+                                    
+                                            
+                                     let i = index;" [ngClass]="{'selectedrow':RowSelected(item)}">
+                      
+                                        <td>{{item.ProductID}}</td>
+                                        <td>{{item.ProductName}}</td>
+                                        <td>{{item.CatName}}</td>
+                                        <td>{{item.Price|currency}}</td>
+                                        <td>{{item.Stock| number:'1.2-2'}}</td>
+                                        <td><label class="labelcontainer"> <input type="checkbox" disabled="disabled" [ngModel]="item.StopBuy">
+                                          <span class="checkmark"></span> </label> </td>
+                                          <td><label class="labelcontainer"> <input type="checkbox" disabled="disabled" [ngModel]="item.StopSale">
+                                            <span class="checkmark"></span> </label> </td>
+                                        
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="text text-center alert alert-danger" *ngIf="(listProductMoveMentReportModel).length === 0">
+                                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td colspan="7" class="text text-center">
+                                            <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false" responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                            </pagination-controls>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div> 
+                    
+                    
+                  </div>
+                  <div class="panel-footer">
+                    <div class="btntricks">
+                        <button class="btn btn-style" (click)="PrintSupplierMoneyDetails()"><i class="fas fa-print"></i> طباعة</button>
+                    </div>
+                  </div>
+                  
+                  </div>
+        
+
+
+          
+
+
+  </div>
+</section>

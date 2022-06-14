@@ -1,0 +1,60 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+              </li>
+              <li>
+                  <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+              </li>
+
+            <li class="active"> تسويه كميات الأصناف   </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-6 col-sm-4 col-md-3 ">
+            <div class="item">
+                <div class="item-card">
+                    <h1>
+                        <i class="fas fa-2x fa-plus-square"></i>
+                    </h1>
+                </div>
+                <div class="item-footer">
+                    <h4>
+                        <a [routerLink]="[ '/kindquantitybill' ]" routerLinkActive="active">فاتورة تسويه كميات</a>
+
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 ">
+            <div class="item">
+                <div class="item-card">
+                    <h1>
+                        <i class="fas fa-2x fa-file-invoice"></i>
+                    </h1>
+                </div>
+                <div class="item-footer">
+                    <h4>
+                        <a [routerLink]="[ '/kindquantitybills' ]" routerLinkActive="active"> فواتير تسويه كميات سابقه</a>
+
+                    </h4>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</section>

@@ -1,0 +1,86 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+                <li>
+                    <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+                </li>
+
+                <li>
+
+                    <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+                </li>
+
+                <li class="active">تقرير مبيعات مندوب من شركة </li>
+            </ol>
+        </div>
+    </section>
+<section class="search-sec">
+    <div class="container">
+       
+            <div class="row">
+                    <div class="col-md-12">
+                            <div class="col-md-3 text text-right">
+                
+                                    <label> في الفتره من</label>
+                                    <div class="input-group">
+                                      <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFrom"
+                                        [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject" (ngModelChange)="GetDateFrom($event)" />
+                        
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                                          <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                                      </span>
+                                    </div>
+                        
+                                  </div>
+                                  <div class="col-md-3  text text-right">
+                        
+                                    <label> إلي الفتره</label>
+                                    <div class="input-group">
+                        
+                                      <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateTo"
+                                        [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject" (ngModelChange)="GetDateTo($event)" />
+                                      <span class="input-group-btn">
+                                        <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                                          <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
+                        
+                                      </span>
+                        
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3  text text-right">
+                                        <label> المندوب </label>
+                                        <select class="form-control">
+                                            <option> مورد 1 </option>
+                                            <option> مورد 2 </option>
+                                        </select>
+                        
+            
+                                  </div> 
+                                  <div class="col-md-3  text text-right">
+                                        <label> الشركة </label>
+                                        <select class="form-control">
+                                            <option> مورد 1 </option>
+                                            <option> مورد 2 </option>
+                                        </select>
+                        
+            
+                                  </div>  
+                        </div>
+                </div>
+
+
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+
+    </div>
+</section>

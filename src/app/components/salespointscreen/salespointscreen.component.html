@@ -1,0 +1,919 @@
+<div class="salespointwrapper">
+    <div class="salespointheader">
+
+        <div class="row">
+            <div class="col-md-3">
+
+
+
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">
+
+                    <img [src]="appSettings.Logo" class="userlogo" alt="User Avatar" style="width: 35px; height: 35px;">
+                    <span> {{appSettings.ShopName}} </span>
+                </a>
+
+
+
+
+
+            </div>
+            <div class="col-md-2">
+
+                <div class="clockwrapper">
+                    <button class="btn btn-success">
+                        <div class="fas fa-clock"> <span>{{clock}}</span></div>
+                    </button>&nbsp;
+
+
+                </div>
+
+
+
+            </div>
+            <div class="col-md-7">
+
+                <div class="actionwrapper">
+
+
+                    <button class="btn btn-success" (click)="CloseScreen(tricked)">
+                        <div class="fas fa-remove"></div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="ToggelFullScreen($event)">
+                        <div class="fas fa-expand "></div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="openCalculatorModal(templatecalculator)">
+                        <div class="fas fa-calculator "></div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="logOut()">
+                        <div class="fas fa-sign-out-alt "></div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="CloseScreen(tricked)">
+                        <div class="fas fa-key"> </div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="Refresh()">
+                        <div class="fas fa-refresh"> </div>
+                    </button>&nbsp;
+                    <button class="btn btn-success" (click)="ToggleMenu()">
+                        <div class="fas fa-bars"> </div>
+                    </button>&nbsp;
+                    <button class="btn btn-success">
+                        <div class="fas fa-user">{{user.UserName}}</div>
+                    </button>&nbsp;
+                    <button class="btn btn-success">
+                        <div class="fas fa-desktop"> {{currentsalespoint.SalesPoint}}</div>
+                    </button>&nbsp;
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+<div class="modal-backdrop" [hidden]="hiddenref" (click)="CloseMenu()"></div>
+
+    <div class="salespointbody" >
+        <aside class="salespointbodyleft pull-left">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                <select class="form-control" name="CustomerID"
+                                    [(ngModel)]="addProductSaleMain.CustomerID" #CustomerID="ngModel" required>
+                                    <option value="0">العميل</option>
+                                    <option *ngFor="let item of Customers" [value]="item.CustomerID">
+                                        {{item.CustomerName}}</option>
+                                </select>
+                                <span class="input-group-addon" id="basic-addon1">
+                                        <i class="fa fa-user"></i>
+                                      </span>
+
+                                <div *ngIf="CustomerID.invalid && (CustomerID.dirty || CustomerID.touched)"
+                                    class="alert alert-danger">
+
+                                    <p *ngIf="CustomerID?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                <select class="form-control" name="StoreID" [(ngModel)]="addProductSaleMain.StoreID"
+                                    (change)="getAllProductsInStore($event.target.value)" #StoreFromRef>
+                                    <option value="0">المخزن</option>
+
+                                    <option *ngFor="let item of ProductStores" [value]="item.StoreID">{{item.StoreName}}
+                                    </option>
+                                </select>
+                                <span class="input-group-addon" id="basic-addon1">
+                                        <i class="fa fa-home"></i>
+                                      </span>
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                
+                                <select class="form-control" name="SupplierID" [(ngModel)]="addProductSaleMain.EmpID"
+                                    #EmpID="ngModel" required>
+                                    <option value="0">المندوب</option>
+
+                                    <option *ngFor="let item of Employees" [value]="item.EmpID">{{item.EmpName}}
+                                    </option>
+                                </select>
+                                <span class="input-group-addon" id="basic-addon1">
+                                        <i class="fa fa-user"></i>
+                                      </span>
+                                <div *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched)" class="alert alert-danger">
+
+                                    <p *ngIf="EmpID?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+
+                                </div>
+                            </div>
+                            </div>
+                           
+                        
+                        </div>
+                        <div class="col-md-6">
+                          
+                            <div class="form-group">
+                                    <div class="input-group">
+        
+                                            <input name="paid-amount" class="form-control" type="number" [required]="!addProductBuySettings.PayedMoneyEnabled"
+                                            [(ngModel)]="addProductSaleMain.Cash" #Cash="ngModel" [disabled]="addProductBuySettings.PayedMoneyEnabled">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                    <i class="fa fa-money"></i>
+                                                  </span>
+
+                                            <div *ngIf="Cash.invalid && (Cash.dirty || Cash.touched)" class="alert alert-danger">
+       
+                                               <p *ngIf="Cash?.errors.required">
+                                                 <i class="fa fa-bug"></i> الحقل مطلوب
+                                               </p>
+                                             
+                                             </div>
+        
+                                      
+                                            </div>
+                                
+                                  
+                                    </div>
+                          
+                                    <div class="form-group">
+
+                                        <div class="input-group">
+
+                                        
+                                            <select id="SalesPointID" class="form-control " [required]="!addProductBuySettings.SalesPointEnabled"
+                                             name="SalesPointID" #SalesPointID="ngModel" [(ngModel)]="addProductSaleMain.SalesPointID" [disabled]="addProductBuySettings.SalesPointEnabled">
+    
+                                             <option value="0">نقطة البيع</option>
+                            <option *ngFor="let salespoint of activeSalesPoints "  [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+    
+                          </select>
+                          <span class="input-group-addon" id="basic-addon1">
+                            <i class="fa fa-desktop"></i>
+                          </span>
+    
+                          <div *ngIf="SalesPointID.invalid && (SalesPointID.dirty || SalesPointID.touched)" class="alert alert-danger">
+
+                            <p *ngIf="SalesPointID?.errors.required">
+                              <i class="fa fa-bug"></i> الحقل مطلوب
+                            </p>
+                          
+                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                            <div class="input-group">
+            
+                                                <input name="DateSubmit" class="form-control" type="date" [(ngModel)]="addProductSaleMain.DateSubmit" #DateSubmit="ngModel" required>
+                                                <span class="input-group-addon" id="basic-addon1">
+                                                    <i class="fa fa-calendar"></i>
+                                                  </span>
+                                
+                                        </div>
+                                        
+                                        <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+            
+                                                <p *ngIf="DateSubmit?.errors.required">
+                                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                                </p>
+                                        </div>
+                                    </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                              <div class="input-group">
+                                    <input id="productName" name="productName" class="form-control" [ngClass]="addProductSaleMain.StoreID === 0?'clickable': '' " type="text" [(ngModel)]="productName">
+                                    <span class="input-group-addon" id="basic-addon1">
+                                            <i class="fa fa-search"></i>
+                                          </span>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body" style="min-height: 300px;">
+                    <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+
+                        <!-- <div class="form-group text-right search-sec">
+                              <label for="productName"> اسم الصنف</label>
+                              <input id="productName" name="productName" class="form-control" [ngClass]="addProductSaleMain.StoreID === 0?'clickable': '' " type="text" [(ngModel)]="productName">
+                          </div> -->
+                        <div>
+                            <table class="table text-right table-bordered   table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th> كود </th>
+                                        <th> إسم الصنف </th>
+                                        <th style="width:5%;">إختر </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of result.ProductsList|searchproductsname:productName
+                                                        | paginate: { id:'mainsalesscreenfirst', itemsPerPage: 5, currentPage: m } ; let i=index"
+                                        [ngClass]="{'selectedrow':item.IsSelected}">
+                                        <td>{{item.ProductID}}</td>
+                                        <td> {{item.ProductName}} </td>
+                                        <td style="width:5%;">
+                                            <div class="checkbox"
+                                                [ngClass]="addProductSaleMain.StoreID == 0?'clickable': '' ">
+                                                <ng-container *ngIf="!item.Isselected">
+                                                    <button class="btncustom" [ngClass]="item.IsSelected?'':''"
+                                                        (click)="SelectRow(item)" [disabled]="item.IsSelected">
+                                                        <i class="fa fa-check"></i>
+
+                                                    </button>
+
+                                                </ng-container>
+
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text text-center alert alert-danger"
+                                            *ngIf="result.ProductsList.length == 0">
+                                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="3" class="text text-center">
+                                            <pagination-controls id="mainsalesscreenfirst" (pageChange)="m = $event"
+                                                maxSize="5" directionLinks="true" autoHide="false" responsive="true"
+                                                previousLabel="السابق" nextLabel="التالى"
+                                                screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                                screenReaderCurrentLabel="You're on page">
+                                            </pagination-controls>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    
+
+                    <button class="btn btn-success">
+                     
+                        <span>تعليق الفاتورة</span>
+                    </button>
+                    <button class="btn btn-success" (click)="PrintResetInvoice()">
+                       
+                        <span>طباعة الفاتورة</span>
+
+                    </button>
+                    <button class="btn btn-success">
+                       
+                        <span>  الغاء الفاتورة </span>
+
+                    </button> <button class="btn btn-success" id="btn-half" [disabled]="AddProductBuyForm.invalid" (click)="openModal(templateaddinvoice)">
+                   
+                        <span>دفع الفاتورة</span>
+
+                    </button>
+                <button class="btn btn-success" id="btn-half" (click)="openDeleteModal(templatedelete)">
+                   
+                    <span>تفريغ الفاتورة</span>
+
+                </button>
+                    
+
+
+
+
+                </div>
+            </div>
+        </aside>
+        <section class="salespointbodyright pull-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        
+                            <table class="table table-responsive table-border ">
+                                    <thead>
+                                        <tr>
+                                            <td>الاصناف</td>
+                                            <td>قيمة الفاتورة</td>
+                                            <td>إضافات</td>
+                                            <td>قيمة الخصم</td>
+                                            <td>بعد الخصم</td>
+                                            <td>المبلغ المدفوع</td>
+                                            <td>المتبقى</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+            
+                                        <tr>
+                                            <td>{{kindslength}}</td>
+                                            <td>{{addProductSaleMain.Total|number:'1.2-2'}}</td>
+                                            <td>{{addProductSaleMain.Addtions|number:'1.2-2'}}</td>
+                                            <td> {{addProductSaleMain.DiscLE|number:'1.2-2'}}</td>
+                                            <td> {{GetTotalAmount()|number:'1.2-2'}}</td>
+                                            <td> {{addProductSaleMain.Cash|number:'1.2-2'}}</td>
+                                            <td>{{(addProductSaleMain.Cash-addProductSaleMain.Net)|number:'1.2-2'}}</td>
+            
+            
+            
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                    </div>
+
+                </div>
+                <div class="panel-body" style="min-height: 412px;">
+                    <form #AddProductBuyForm="ngForm" name="AddProductBuyForm">
+                    <!-- <div class="form-group search-sec">
+                          
+                              <div class="row">
+                                  <div class="col-md-12">
+      
+      
+                                      <div class="col-md-4">
+      
+      
+                                          <label style="margin-bottom: 16px;"> الدفع</label>
+                                          <br>
+      
+                                          <div class="form-group">
+                                              <label for="form_radio1">
+                                              <input id="form_radio1" name="form_radio" type="radio" (click)="CashPaid()"
+                                                checked="addProductBuySettings.DefaultPaid"> نقدي </label> &nbsp; &nbsp;
+      
+                                              <label for="form_radio2">
+                                              <input id="form_radio2" name="form_radio" type="radio" (click)="OnAccountPaid()"> من الحساب </label>
+                                          </div>
+                                          <div class="form-group">
+                                              <label> العميل </label>
+                                              <select class="form-control" name="CustomerID" [(ngModel)]="addProductSaleMain.CustomerID" #CustomerID="ngModel" required>
+                                                  <option *ngFor="let item of Customers" [value]="item.CustomerID" >{{item.CustomerName}}</option>
+                                          </select>
+  
+                                          <div *ngIf="CustomerID.invalid && (CustomerID.dirty || CustomerID.touched)" class="alert alert-danger">
+
+                                              <p *ngIf="CustomerID?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                              </p>
+                                            
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="from-store"> المخزن </label>
+                                              <select class="form-control" name="StoreID" [(ngModel)]="addProductSaleMain.StoreID" (change)="getAllProductsInStore($event.target.value)" #StoreFromRef>
+                                                <option *ngFor="let item of ProductStores" [value]="item.StoreID">{{item.StoreName}} </option>
+                                              </select>
+                                          </div>
+                                         
+                                          <div class="form-group">
+                                                  <label> المندوب  </label>
+                                                  <select class="form-control" name="SupplierID" [(ngModel)]="addProductSaleMain.EmpID" #EmpID="ngModel" required>
+                                                      <option *ngFor="let item of Employees" [value]="item.EmpID" >{{item.EmpName}}</option>
+                                              </select>
+                                              <div *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched)" class="alert alert-danger">
+
+                                                  <p *ngIf="EmpID?.errors.required">
+                                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                                  </p>
+                                                
+                                                </div>
+                                              </div>
+      
+      
+                                      </div>
+      
+      
+                                      <div class="col-md-4">
+                                              <div class="form-group">
+      
+                                                      <label for="bill-value"> قيمه الفاتوره </label>
+                                                      <input name="bill-value" class="form-control" type="number" disabled="disabled" [value]="addProductSaleMain.Total">
+                                                  </div>
+                                                  <div class="form-group">
+      
+                                                          <label for="bill-value">  إضافات </label>
+                                                          <input name="bill-value" class="form-control" type="number"  [(ngModel)]="addProductSaleMain.Addtions">
+                                                      </div>
+                                          <div class="form-group">
+                                              <label for="discount-value"> قيمه الخصم </label>
+                                              <input name="discount-value" class="form-control" type="number" [(ngModel)]="addProductSaleMain.DiscLE">
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="after-discount"> بعد الخصم </label>
+                                              <input name="after-discount" class="form-control" type="number" disabled="disabled" [value]="GetTotalAmount()">
+                                          </div>
+                                        
+      
+                                      </div>
+      
+                                      
+                                      <div class="col-md-4">
+                                             
+                                            
+                                          <div class="form-group">
+                                              <label for="paid-amount"> المبلغ المدفوع </label>
+                                              <input name="paid-amount" class="form-control" type="number" [required]="!addProductBuySettings.PayedMoneyEnabled"
+                                               [(ngModel)]="addProductSaleMain.Cash" #Cash="ngModel" [disabled]="addProductBuySettings.PayedMoneyEnabled">
+                                               <div *ngIf="Cash.invalid && (Cash.dirty || Cash.touched)" class="alert alert-danger">
+
+                                                  <p *ngIf="Cash?.errors.required">
+                                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                                  </p>
+                                                
+                                                </div>
+                                              </div>
+
+                                          <div class="form-group">
+                                              <label for="sale-point"> نقطه البيع </label>
+                                              <select id="SalesPointID" class="form-control " [required]="!addProductBuySettings.SalesPointEnabled"
+                                               name="SalesPointID" #SalesPointID="ngModel" [(ngModel)]="addProductSaleMain.SalesPointID" [disabled]="addProductBuySettings.SalesPointEnabled">
+      
+                              <option *ngFor="let salespoint of activeSalesPoints "  [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+      
+                            </select>
+      
+                            <div *ngIf="SalesPointID.invalid && (SalesPointID.dirty || SalesPointID.touched)" class="alert alert-danger">
+
+                              <p *ngIf="SalesPointID?.errors.required">
+                                <i class="fa fa-bug"></i> الحقل مطلوب
+                              </p>
+                            
+                            </div>
+                                          </div>
+                                          <div class="form-group">
+      
+                                              <label for="bill-date"> تاريخ الفاتورة </label>
+                                              <input name="DateSubmit" class="form-control" type="date" [(ngModel)]="addProductSaleMain.DateSubmit" #DateSubmit="ngModel" required>
+                                              <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+
+                                                  <p *ngIf="DateSubmit?.errors.required">
+                                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                                  </p>
+                                                
+                                                </div>
+                                          </div>
+
+                                          <div class="form-group">
+      
+                                                  <label for="bill-value">  ملاحظــات إضافية </label>
+                                                  <input name="bill-value" class="form-control" type="text"  [(ngModel)]="addProductSaleMain.Notes">
+                                              </div>
+      
+                                      </div>
+      
+      
+                                  </div>
+                              </div> 
+                          </form>
+                      </div> -->
+
+
+
+                    <div style="overflow-x: auto;">
+                        <table class="table text-center table-bordered   table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%;"> كود </th>
+                                    <th style="width:15%;"> إسم الصنف </th>
+                                    <th style="width:10%;"> الكمية </th>
+                                    <th style="width:15%;"> الوحده </th>
+                                    <th style="width:10%;"> السعر </th>
+                                    <th style="width:10%;"> الخصم</th>
+                                    <th style="width:5%;"> النهائى </th>
+                                    <th style="width:5%;"> الاجمالى </th>
+                                    <th style="width:5%;"> المخزن </th>
+                                    <th style="width:20%;"> اختر</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of selectedproducts| paginate: { id:'mainsalesscreensecind', itemsPerPage: 4, currentPage: n } ; let i=index">
+                                    <td> {{item.ProductID}}</td>
+                                    <td>{{item.ProductName}} </td>
+                                    <td>
+                                        <input type="number" name="Num" class="form-control customform-control"
+                                            [(ngModel)]="item.Num">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="UnitID" [disabled]="item.DisabledUnits"
+                                            [(ngModel)]="item.UnitID">
+                                            <option *ngFor="let unititem of item.ProductUnits "
+                                                [value]="unititem.UnitID"
+                                                (click)="getStockTotalBySelectedUnit(item,unititem)">
+                                                {{unititem.UnitName}}</option>
+
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="Price" class="form-control customform-control"
+                                            [(ngModel)]="item.Price">
+
+                                    </td>
+                                    <td>
+                                        <input type="number" name="Discount" class="form-control customform-control"
+                                            [(ngModel)]="item.Discount">
+
+                                    </td>
+                                    <td>
+                                        <div class="text text-info"> {{item.NetPrice|currency}}</div>
+
+                                    </td>
+                                    <td>
+                                        <div class="text text-info"> {{(item.Num* item.NetPrice)|currency}}</div>
+                                    </td>
+                                    <td>
+                                        <div class="text text-info"> {{item.Stock|number:'1.2-2'}}</div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" (click)="DeleteKind(item)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <a>
+                                            &nbsp;
+                                            <button type="button" class="btn btn-info" (click)="goToEditKind(item)">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text text-center alert alert-danger"
+                                        *ngIf="selectedproducts.length == 0">
+                                        <h4>من فضلك يجب اختيار اصناف لحفظ الفاتورة </h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="10" class="text text-center">
+                                        <pagination-controls id="mainsalesscreensecind" (pageChange)="n= $event"
+                                            maxSize="4" directionLinks="true" autoHide="false" responsive="true"
+                                            previousLabel="السابق" nextLabel="التالى"
+                                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                            screenReaderCurrentLabel="You're on page">
+                                        </pagination-controls>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <ng-template #templatecalculator>
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                <h4 class="modal-title">
+                                    <img src="/bag.png" class="userlogo" />
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <ngx-calculator> </ngx-calculator>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </ng-template>
+
+                    <ng-template #templatedelete>
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                <h4 class="modal-title">
+                                    <img src="/bag.png" class="userlogo" />
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> هل تريد تفريغ الفاتورة بالفعل ؟</p>
+                            </div>
+                            <div class="modal-footer ">
+                                <button type="button" class="btn  pull-right" (click)="DeleteKinds()"> نعم</button>
+
+                                <button type="button" class="btn pull-left" (click)="modalRef.hide()">لا</button>
+                            </div>
+                        </div>
+
+
+
+
+                    </ng-template>
+                    <ng-template #templateaddinvoice>
+                    
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                <h4 class="modal-title">
+                                    <img src="/bag.png" class="userlogo" />
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> هل تريد حفظ الفاتورة بالفعل ؟</p>
+                            </div>
+                            <div class="modal-footer ">
+                                <button type="button" class="btn  pull-right" (click)="AddProductSaleMain(addProductSaleMain , AddProductBuyForm )"> نعم</button>
+        
+                                <button type="button" class="btn pull-left" (click)="modalRef.hide()">لا</button>
+                            </div>
+                        </div>
+        
+        
+        
+        
+                    </ng-template>
+                </form>
+                </div>
+                <div class="panel-footer">
+
+                  <div class="row">
+                      <div class="col-md-6">
+                            
+                                
+                                <div class="form-group form-control">
+                                        <label style="margin-bottom: 16px;"> الدفع</label>
+&nbsp;&nbsp;
+                                        <label for="form_radio1">
+                                        <input id="form_radio1" name="form_radio" type="radio" (click)="CashPaid()"
+                                          checked="addProductBuySettings.DefaultPaid"> نقدي </label> &nbsp; &nbsp;
+
+                                        <label for="form_radio2">
+                                        <input id="form_radio2" name="form_radio" type="radio" (click)="OnAccountPaid()"> من الحساب </label>
+                                    </div>
+                                    <div class="form-group">
+                                            <div class="input-group">
+                                                    <input name="bill-value" placeholder="ملاحظــات إضافية" class="form-control" type="text"  [(ngModel)]="addProductSaleMain.Notes">
+                                                    <span class="input-group-addon" id="basic-addon1">
+                                                        <i class="fa fa-edit"></i>
+                                                      </span>
+                                            </div>
+                                          
+                                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                            <div class="form-group">
+
+                                    <div class="input-group">
+        
+                                            <input name="bill-value" class="form-control" type="number"
+                                    [(ngModel)]="addProductSaleMain.Addtions" placeholder="إضافات">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                <i class="fa fa-plus"></i>
+                                              </span>
+                                            </div>
+                               
+                            </div>
+                            <div class="form-group">
+                                    <div class="input-group">
+        
+                                            <input name="discount-value" class="form-control" type="number"
+                                            [(ngModel)]="addProductSaleMain.DiscLE" placeholder="قيمة الخصم">
+                                            <span class="input-group-addon" id="basic-addon1">
+                                                <i class="fa fa-minus"></i>
+                                              </span>
+                                            </div>
+                             
+                            </div>
+
+                      </div>
+                  </div>
+
+
+
+
+                </div>
+            </div>
+
+
+
+        </section>
+
+    </div>
+
+    <footer class="salespointfooter">
+        <app-footer></app-footer>
+    </footer>
+
+            <div id="body-content" class="hidden">
+                <div id="resetbox">
+                <h5 class="text-center invoicetitle">وكالة النقيطى العطار</h5>
+                <h6 class="text-center invoicetitle">فاتورة بيع</h6>
+                <div class="cashirinfo">
+                        <table class="table table-borderless">
+                            <tbody>
+                                
+                            <tr>
+                                <td>
+                                    <strong>
+                                            رقم الفاتورة :
+                                    </strong>
+                                
+                                </td>
+                                <td>45</td>
+                                <td>
+                                    <strong>
+                                            التاريــخ :
+                                    </strong>
+                                    
+                                </td>
+                                <td>2019-03-05</td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                            الكاشــيــــر :
+                                    </strong>
+                                    
+                                </td>
+                                <td>محمد على </td>
+                                <td>
+                                    <strong>
+                                            رقم الكاشيـر :
+                                    </strong>
+                                
+                                </td>
+                                <td>12</td>
+
+                            </tr>
+                            
+                        </tbody>
+                        </table>
+                </div>
+                <div class="invoicekinds">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                        <td>
+                                            <strong>العدد</strong>
+                                             
+                                            </td>
+                                        <td style="width:40%;">
+                                                <strong>الصــنـف</strong>
+
+                                            
+                                        </td>
+                                        <td>
+                                                <strong>السعر</strong>
+
+                                            
+
+
+                                        </td>
+                                        <td>
+                                                <strong>القيمة</strong>
+                                        
+                                            
+                                        
+                                        </td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            <tr>
+                                <td> 25</td>
+                                <td>شيكولاتة كابرى</td>
+                                <td>10:00</td>
+                                <td>250:00</td>
+
+                            </tr>
+                            <tr>
+                                    <td> 25</td>
+                                    <td>شيكولاتة كابرى</td>
+                                    <td>10:00</td>
+                                    <td>250:00</td>
+    
+                                </tr>
+                                <tr>
+                                        <td> 25</td>
+                                        <td>شيكولاتة كابرى</td>
+                                        <td>10:00</td>
+                                        <td>250:00</td>
+        
+                                    </tr>
+                                    <tr>
+                                            <td> 25</td>
+                                            <td>شيكولاتة كابرى</td>
+                                            <td>10:00</td>
+                                            <td>250:00</td>
+            
+                                        </tr>
+                                        <tr>
+                                                <td> 25</td>
+                                                <td>شيكولاتة كابرى</td>
+                                                <td>10:00</td>
+                                                <td>250:00</td>
+                
+                                            </tr>
+                         
+                        </tbody>
+                        </table>
+                </div>
+                <div class="invoicesummary">
+ <table class="table table-borderless">
+     <thead>
+            <tr>
+                    <td>العدد </td>
+                    <td> الاجمالى  </td>
+                    <td> الصافى </td>
+                    <td> المدفوع</td>
+                    <td> الباقى</td>
+
+
+
+                </tr>
+     </thead>
+     <tbody>
+            <tr>
+                    <td>12:00</td>
+                    <td>12:00</td>
+                    <td>12:00</td>
+                    <td>12:00</td>
+                    <td>12:00</td>
+
+                </tr>
+     </tbody>
+ </table>
+                </div>
+                <hr>
+                <h6 class="text-center">
+                    البضاعة المباعة لا ترد الا من خلال الفاتورة
+                </h6>
+                <h6 class="text-center">
+                      خدمة التوصيل 0502380015/0502262131
+                    </h6>
+            </div>
+         
+
+        
+
+    </div>
+
+</div>
+<ng-template #templatecalculator style="z-index:1000000">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+            <h4 class="modal-title">
+                <img src="/bag.png" class="userlogo" />
+            </h4>
+        </div>
+        <div class="modal-body">
+            <ngx-calculator> </ngx-calculator>
+        </div>
+
+    </div>
+
+
+
+
+</ng-template>

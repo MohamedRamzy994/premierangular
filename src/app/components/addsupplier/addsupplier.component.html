@@ -1,0 +1,162 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+              </li>
+              <li>
+                  <a [routerLink]="[ '/suppliers' ]" routerLinkActive="active">موردين</a>
+
+                </li>
+
+            <li>
+                <a [routerLink]="[ '/supplierslist' ]" routerLinkActive="active">قائمه الموردين </a>
+
+            </li>
+            <li class="active"> إضافه مورد </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <div class="row">
+            
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <h4 class="text-right"> بيانات المورد </h4>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-2 text-left">
+                                            <a>
+                                    
+                                                <button (click)="Refresh()" class="btn btn-link">
+                                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                                </button>
+                                              </a>
+                                        </div>
+                                    </div>
+                           
+            
+                        </div>
+                        <div class="panel-body">
+            <div class="col-xs-12 col-sm-6 col-md-4 ">
+
+
+                <form #AddSupplierForm="ngForm" name="AddSupplierForm" class="clearfix ">
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group col-md-12 text-right">
+                                <label for="SupplierName"> اسم المورد </label>
+                                <input id="SupplierName" #SupplierName="ngModel" name="SupplierName" [(ngModel)]="addSupplier.SupplierName"
+                                class="form-control" type="text"
+                                required="required" maxlength="50" minlength="5">
+                                <div *ngIf="SupplierName.invalid && (SupplierName.dirty || SupplierName.touched)" class="alert alert-danger">
+
+                                    <p *ngIf="SupplierName?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="SupplierName?.errors.minlength">
+                                      <i class="fa fa-bug"></i> اسم المورد بين 5-50 حرف
+                                    </p>
+                                  </div>
+
+                              </div>
+                            <div class="form-group col-md-12 text-right">
+                                <label for="Mobile1"> موبايل 1</label>
+                                <input id="Mobile1" #Mobile1="ngModel" name="Mobile1" [(ngModel)]="addSupplier.Mobile1"
+                                 class="form-control" type="tel"
+                                 required="required" maxlength="15" minlength="5">
+                                <div *ngIf="Mobile1.invalid && (Mobile1.dirty || Mobile1.touched)" class="alert alert-danger">
+
+                                    <p *ngIf="Mobile1?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="Mobile1?.errors.minlength">
+                                      <i class="fa fa-bug"></i> رقم موبايل المورد بين 10-15 رقم
+                                    </p>
+                                  </div>
+
+                              </div>
+                            <div class="form-group col-md-12 text-right">
+                                <label for="Mobile2"> موبايل 2 </label>
+                                <input id="Mobile2" #Mobile2="ngModel" name="Mobile2" [(ngModel)]="addSupplier.Mobile2"
+                                 class="form-control" type="tel"
+                                 required="required" maxlength="15" minlength="5">
+
+                                <div *ngIf="Mobile2.invalid && (Mobile2.dirty || Mobile2.touched)" class="alert alert-danger">
+
+                                    <p *ngIf="Mobile2?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="Mobile2?.errors.minlength">
+                                      <i class="fa fa-bug"></i> رقم موبايل المورد بين 10-15 رقم
+                                    </p>
+                                  </div>
+
+                              </div>
+                        </div>
+
+                    </fieldset>
+                    <fieldset class="text-right">
+
+                        <h5>
+                            <label class="labelcontainer pull-right">
+                               <input type="checkbox" name="Stopped" [(ngModel)]="addSupplier.Stopped">
+                              <span class="checkmark" style="border-radius:1px;"></span> </label>
+                              &nbsp;
+                              <span class="text-colored pull-right"> إيقاف التعامل مع المورد</span>
+                            </h5>
+
+
+
+                    </fieldset>
+
+                  
+                </form>
+
+            </div>
+            </div>
+            <div class="panel-footer">
+
+                <div class="btntricks">
+                   <button class="btn  btn-style" [disabled]="AddSupplierForm.invalid" (click)="openModal(template)" >
+                        <i class="fa fa-save"></i>  حفظ </button>
+                </div>
+                   
+          <ng-template #template>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                    <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                </div>
+                <div class="modal-body">
+                    <p> هل تريد حفظ هذا المورد بالفعل ؟</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn  pull-right"  (click)="AddSupplier(addSupplier,AddSupplierForm)" > نعم</button>
+
+                    <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                </div>
+            </div>
+
+
+
+
+  </ng-template>
+            </div>
+                </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-8 ">
+
+
+            </div>
+        </div>
+    </div>
+</section>

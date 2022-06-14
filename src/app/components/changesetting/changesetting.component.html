@@ -1,0 +1,448 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+                <li>
+                    <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+                </li>
+
+                <li>
+                    <a [routerLink]="[ '/tools' ]" routerLinkActive="active">الأدوات</a>
+
+                </li>
+
+                <li class="active"> تغيير إعدادات النظام </li>
+            </ol>
+        </div>
+    </section>
+    <section class="body-content change-tools">
+        <div class="container">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#main-info" aria-controls="main-info" role="tab" data-toggle="tab">البيانات الأساسيه</a>
+                </li>
+                <!-- <li role="presentation">
+                    <a href="#handle-setting" aria-controls="handle-setting" role="tab" data-toggle="tab"> إعدادات التعامل مع النظام</a>
+                </li> -->
+                <li role="presentation">
+                    <a href="#system-designs" aria-controls="system-designs" role="tab" data-toggle="tab"> تصميمات النظام </a>
+                </li>
+                <li role="presentation">
+                    <a href="#database" aria-controls="database" role="tab" data-toggle="tab"> قاعده البيانات </a>
+                </li>
+
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content text-right">
+                <div role="tabpanel" class="tab-pane fade in active" id="main-info">
+                  
+                            <form name="AddEmployeeForm" (submit)="SystemUpdateSettings($event, AddEmployeeForm)" class="clearfix"
+                            #AddEmployeeForm=ngForm>
+        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                    <div class="row">
+                                            <div class="col-md-4">
+                                                    <h5 class="text-right">
+                                                            البيانات الاساسية
+                                                        </h5>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-2 text-left">
+                                                <a>
+                                        
+                                                    <button (click)="Refresh()" class="btn btn-link">
+                                                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                                    </button>
+                                                  </a>
+                                            </div>
+                                        </div>
+                               
+                            </div>
+                            <div class="panel-body">
+
+                                
+                                        <div class="col-xs-12 col-sm-6 col-md-4 ">
+                
+                
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 text-right">
+                                                        <label for="ShopName"> اسم الشركه </label>
+                                                        <input id="ShopName" #ShopName="ngModel" name="ShopName"
+                                                            [(ngModel)]="settingsModel.ShopName" class="form-control" type="text"
+                                                            required="required" maxlength="50" minlength="5">
+                                                        <div *ngIf="ShopName.invalid && (ShopName.dirty || ShopName.touched)"
+                                                            class="alert alert-danger">
+                
+                                                            <p *ngIf="ShopName?.errors.required">
+                                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                                            </p>
+                                                            <p *ngIf="ShopName?.errors.minlength">
+                                                                <i class="fa fa-bug"></i> اسم الشركة بين 5-50 حرف
+                                                            </p>
+                                                        </div>
+                
+                                                    </div>
+                                                    <div class="form-group col-md-12 text-right">
+                                                        <label for="WorkType"> طبيعه العمل </label>
+                                                        <input id="WorkType" #WorkType="ngModel" name="WorkType" [(ngModel)]="settingsModel.WorkType"
+                                                            class="form-control" type="text" required="required" maxlength="100"
+                                                            minlength="5">
+                
+                                                        <div *ngIf="WorkType.invalid && (WorkType.dirty || WorkType.touched)" class="alert alert-danger">
+                
+                                                            <p *ngIf="WorkType?.errors.required">
+                                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                                            </p>
+                                                            <p *ngIf="WorkType?.errors.minlength">
+                                                                <i class="fa fa-bug"></i> طبيعة العمل  بين 5-100 حرف
+                                                            </p>
+                                                        </div>
+                
+                                                    </div>
+                                                    <div class="form-group col-md-12 text-right">
+                                                        <label for="Address"> العنوان في سطر واحد </label>
+                                                        <input id="Address" #Address="ngModel" name="Address" [(ngModel)]="settingsModel.Address"
+                                                            class="form-control" type="text" required="required" minlength="1">
+                
+                                                        <div *ngIf="Address.invalid && (Address.dirty || Address.touched)" class="alert alert-danger">
+                
+                                                            <p *ngIf="Address?.errors.required">
+                                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                                            </p>
+                                                            <p *ngIf="Address?.errors.minlength">
+                                                                <i class="fa fa-bug"></i> يجب ان تحدد راتب للموظف من فضلك
+                                                            </p>
+                                                        </div>
+                
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        
+                
+                                        </div>
+                
+                                        <div class="col-xs-12 col-md-4 ">
+                                            <h5 class="text-colored"> شعار التقارير </h5>
+                
+                                            <input type="file" name="pic" class="form-control" accept="image/*" #pic (change)="ImagePreviewChange($event)">
+                                            <img class="img  img-thumbnail" [src]="imagepreview" height="200">
+                                        </div>
+
+                              
+
+                        </div>
+                        <div class="panel-footer">
+
+                            <div class="btntricks text text-right">
+                                <button type="submit" class="btn  btn-style" [disabled]="AddEmployeeForm.invalid">
+                                <i class="fa fa-save"></i>    حفظ</button>
+    
+                            </div>
+                                </div>
+                      
+
+                        </div>
+                    </form>
+                   
+
+                </div>
+                <!-- <div role="tabpanel" class="tab-pane fade" id="handle-setting">
+              
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+
+                                <h5 class="text-right">
+                                    اعدادات التعامل مع النظام
+                                </h5>
+                            </div>
+                            <div class="panel-body">
+                                    <div class="col-md-4">
+                                            <h5 class="text-colored"> الإعدادات الرئيسيه</h5>
+                                            <br>
+                                            <form action="#" method="POST">
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox">
+                                                            <input id="form_checkbox" name="form_checkbox" type="checkbox"> السؤال قبل حفظ فواتير المخازن </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox2">
+                                                            <input id="form_checkbox2" name="form_checkbox2" type="checkbox"> السؤال قبل حفظ فواتير البيع </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox3">
+                                                            <input id="form_checkbox3" name="form_checkbox3" type="checkbox"> السؤال عن طباعه فاتورة البيع </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox4">
+                                                            <input id="form_checkbox4" name="form_checkbox4" type="checkbox"> السؤال عن طباعه الباكورد </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox5">
+                                                            <input id="form_checkbox5" name="form_checkbox5" type="checkbox"> تحديث سعر شراء الصنف تلقائيا بعد عمليه الشراء </label>
+                                                    </div>
+                                                </div>
+                
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox6">
+                                                            <input id="form_checkbox6" name="form_checkbox6" type="checkbox"> تفعيل خاصية الإجمالى </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <div class="radio" style="margin-right:25px;">
+                                                        <label for="form_radio">
+                                                            <input id="form_radio" name="form_radio" type="radio" checked> استخدام سعر البيع في خاصية الإجمالى </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <div class="radio" style="margin-right:25px;">
+                                                        <label for="form_radio2">
+                                                            <input id="form_radio2" name="form_radio" type="radio"> استخدام الكميه في خاصية الإجمالى </label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                
+                                        <div class="col-md-4">
+                                            <h5 class="text-colored"> الإعدادات الفرعيه </h5>
+                                            <br>
+                                            <form action="#" method="POST">
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox7">
+                                                            <input id="form_checkbox7" name="form_checkbox7" type="checkbox"> تثبيت مخزن البيع </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox8">
+                                                            <input id="form_checkbox8" name="form_checkbox8" type="checkbox"> إظهار (البائع او المندوب ) في فواتير البيع </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox9">
+                                                            <input id="form_checkbox9" name="form_checkbox9" type="checkbox"> إظهار (خاصية الإضافات ) في فواتير البيع</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox10">
+                                                            <input id="form_checkbox10" name="form_checkbox10" type="checkbox"> إظهار (خاصية الفيزا ) في فواتير البيع</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox11">
+                                                            <input id="form_checkbox11" name="form_checkbox11" type="checkbox"> السماح بتغيير تاريخ فاتوره البيع </label>
+                                                    </div>
+                                                </div>
+                
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox12">
+                                                            <input id="form_checkbox12" name="form_checkbox12" type="checkbox"> السماح بتغيير سعر بيع الصنف في فاتوره البيع </label>
+                                                    </div>
+                                                </div>
+                
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox13">
+                                                            <input id="form_checkbox13" name="form_checkbox13" type="checkbox"> إدخال سعر بيع الصنف تلقائيا إلي فاتوره البيع </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox14">
+                                                            <input id="form_checkbox14" name="form_checkbox14" type="checkbox">السماح ببيع أصناف بسعر أقل من الحد الأدني للبيع </label>
+                                                    </div>
+                                                </div>
+                
+                                            </form>
+                                        </div>
+                
+                                        <div class="col-md-4">
+                                            <h5 class="text-colored">  إعدادات الباكورد </h5>
+                                            <br>
+                                            <form action="#" method="POST">
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox15">
+                                                            <input id="form_checkbox15" name="form_checkbox15" type="checkbox">إظهار إسم الشركه </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox16">
+                                                            <input id="form_checkbox16" name="form_checkbox16" type="checkbox"> إظهار إسم المنتج</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
+                
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox17">
+                                                            <input id="form_checkbox17" name="form_checkbox17" type="checkbox"> إظهار سعر المنتج </label>
+                                                    </div>
+                                                </div>
+                
+                
+                
+                                            </form>
+                                      
+
+                            </div>
+                            <div class="panel-footer">
+
+<div class="btntricks">
+        <button class="btn  btn-style"> حفظ </button>
+</div>
+                            </div>
+
+                        </div>
+                      
+                     
+
+                    </div>
+                </div> -->
+
+                <div role="tabpanel" class="tab-pane fade" id="system-designs">
+                        <form name="ChangeThemeForm" (submit)="SystemSelectSettingsThemes()" class="clearfix"
+                        #ChangeThemeForm=ngForm>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <h5 class="text-colored">التصميمات</h5>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-2 text-left">
+                                            <a>
+                                    
+                                                <button (click)="Refresh()" class="btn btn-link">
+                                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                                </button>
+                                              </a>
+                                        </div>
+                                    </div>
+                              
+
+                        </div>
+                        <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ThemID">  التصميمات </label>
+                                                <select id="ThemID" #ThemID="ngModel" name="ThemID" class="form-control disp-inl-bl" 
+                                                required="required"
+                                                [(ngModel)]="updateSettingsThemesModel.ThemID">
+                                                    <option *ngFor="let item of settingsThemesModel; let i=index" [value]="item.ThemID">{{item.ThemName}}  </option>
+                                                 
+                                                </select>
+
+                                                <div *ngIf="ThemID.invalid && (ThemID.dirty || ThemID.touched)" class="alert alert-danger">
+                
+                                                        <p *ngIf="ThemID?.errors.required">
+                                                            <i class="fa fa-bug"></i> الحقل مطلوب
+                                                        </p>
+                                                       
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              
+                              
+                        </div>
+                        <div class="panel-footer">
+                                <div class="btntricks text text-right">
+                                        <button type="submit" class="btn  btn-style" [disabled]="ChangeThemeForm.invalid">
+                                            <i class="fa fa-save"></i>      حفظ</button>
+            
+                                    </div>
+                        </div>
+                   
+                    </div>
+                </form>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="database">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                                <div class="row">
+                                        <div class="col-md-4">
+                                                <h5 class="text-right">
+                                                        قاعدة البيانات
+                                                    </h5>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-2 text-left">
+                                            <a>
+                                    
+                                                <button (click)="Refresh()" class="btn btn-link">
+                                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                                </button>
+                                              </a>
+                                        </div>
+                                    </div>
+ 
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="alert alert-info">
+                                    <i class="fas fa-2x fa-database"></i>
+                                 يمكنك الان نسخ قاعدة البيانات  من خلال الضغط  على الزر الاسفل 
+                            
+                                </div>
+                            
+                        </div>
+                        <div class="panel-footer">
+                            <div class="btntricks">
+
+                                    <button class="btn  btn-style" (click)="systemDataBaseFullBackup()" >
+                                            <i class="fa fa-print"></i> نسخ قاعده البيانات </button>
+                    
+                            </div>
+                                
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+        </div>
+    </section>
+

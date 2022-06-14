@@ -1,0 +1,112 @@
+<app-header></app-header>
+
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>
+<notifier-container></notifier-container>
+<ng-http-loader></ng-http-loader>
+<div class="actionbutton">
+  <div class="menu-toggle">
+    <button type="button" style="background-color: transparent; border: none; vertical-align: middle;margin-top: 15px;" (click)="ToggleMenu()" >
+        <span class="fa fa-plus"></span> 
+    </button>
+   
+  </div>
+
+
+</div>
+<div class="modal-backdrop" [hidden]="hiddenref" (click)="CloseMenu()"></div>
+<div class="fade in" [hidden]="hiddenref" id="slideme">
+    <div id="templatedialog" [ngClass]="{'csstrick': hiddenref}">
+        <div id="templatecontent">
+         
+            <div class="row">
+              <div class="col-md-2" ><a  [ngClass]="authenticatedUser.BuyInvoice==false?'disclick': '' " [routerLink]="[ '/purchasebill']" class="btn"><span class="fas fa-file-invoice-dollar"> &nbsp; فاتورة شراء </span></a></div>
+              <div class="col-md-2" > <a [ngClass]="authenticatedUser.SalesInvoice==false?'disclick': '' "  [routerLink]="[ '/salesbill']" class="btn" ><span class="fas fa-file-invoice-dollar">  &nbsp;فاتورة بيع</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.SalesInvoice==false?'disclick': '' " [routerLink]="[ '/oldsalesbills']" class="btn" ><span class="fas fa-file-invoice"> &nbsp; فواتير بيع</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.BuyInvoice==false?'disclick': '' " [routerLink]="[ '/oldpurchasebill']" class="btn" ><span class="fas fa-file-invoice"> &nbsp; فواتير شراء </span></a> </div>
+              <div class="col-md-2" > <a [ngClass]="(authenticatedUser.StoreAdd==false||authenticatedUser.StoreEdit==false||authenticatedUser.StoreDelete==false)?'disclick': '' " [routerLink]="[ '/liststorekinds']" class="btn" ><span class="fas fa-store"> &nbsp; المخــازن</span></a> </div>
+              <div class="col-md-2"> <a  [ngClass]="(authenticatedUser.ProductAdd==false
+                ||authenticatedUser.ProductDelete==false||authenticatedUser.ProductEdit==false)?'disclick': '' " [routerLink]="[ '/kinds']" class="btn" ><span class="fas fa-bars"> &nbsp; الأصنـاف</span></a> </div>
+           
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-2" > <a [ngClass]="authenticatedUser.StoreTransferBalance==false?'disclick': '' " [routerLink]="[ '/transkindbalance']" class="btn"><span class="fas fa-store"> &nbsp; تحويل رصيد </span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.StoreTransferBalance==false?'disclick': '' " [routerLink]="[ '/oldtranskindbalbils']" class="btn" ><span class="fas fa-file-invoice"> &nbsp; فواتير تحويل</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="(authenticatedUser.ProductAdd==false||authenticatedUser.ProductEdit==false||authenticatedUser.ProductDelete==false)?'disclick': '' " [routerLink]="[ '/kindgroup']" class="btn" ><span class="fas fa-sitemap"> &nbsp;مجموعات الأصناف</span></a> </div>
+             
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.ProductOpen==false?'disclick': '' " [routerLink]="[ '/openbalancebill']" class="btn" ><span class="fas fa-plus-square">&nbsp;رصيد افتتاحى</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.ProductOpen==false?'disclick': '' " [routerLink]="[ '/openbalancebills']" class="btn" ><span class="fas fa-file-invoice">&nbsp; فواتير افتتاحى</span></a> </div>
+              <div class="col-md-2" > <a [ngClass]="authenticatedUser.ProductResetStock==false?'disclick': '' " [routerLink]="[ '/kindquantitybill']" class="btn" ><span class="fas fa-trash">&nbsp; تسوية كميات </span></a> </div>
+    
+            </div>
+            <br>
+    
+            <div class="row">
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.ProductResetStock==false?'disclick': '' " [routerLink]="[ '/kindquantitybills']" class="btn"><span class="fas fa-file-invoice"> &nbsp;  فواتير تسوية  </span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.SystemSettings==false?'disclick': '' "  [routerLink]="[ '/kindsbarcodegenerator']" class="btn"><span class="fas fa-print"> &nbsp;  طباعة باركود</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="(authenticatedUser.SupplierAdd==false||authenticatedUser.SupplierEdit==false||authenticatedUser.SupplierDelete==false)?'disclick': '' " [routerLink]="[ '/supplierslist']" class="btn"><span class="fas fa-truck"> &nbsp; قائمة الموردين</span></a> </div>
+             
+              <div class="col-md-2"   > <a [ngClass]="authenticatedUser.BuyDiscard==false?'disclick': '' " [routerLink]="[ '/buybackwithbill']" class="btn"><span class="fas fa-file-invoice-dollar">&nbsp;مرتجع شراء </span></a> </div>
+              <div class="col-md-2" > <a  [ngClass]="authenticatedUser.SalesDiscard==false?'disclick': '' "  [routerLink]="[ '/salebackwithbill']" class="btn"><span class="fas fa-file-invoice-dollar">&nbsp; مرتجع بيع</span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="(authenticatedUser.EmpAdd==false||authenticatedUser.EmpDelete==false||authenticatedUser.EmpEdit==false)?'disclick': '' " [routerLink]="[ '/employeeslist']" class="btn" ><span class="fas fa-user-tie">&nbsp; قائمة الموظفين  </span></a> </div>
+    
+            </div>
+            <br>
+    
+            <div class="row">
+              <div class="col-md-2"  > <a [ngClass]="(authenticatedUser.CustomerAdd==false||authenticatedUser.CustomerEdit==false||authenticatedUser.CustomerDelete==false)?'disclick': '' " [routerLink]="[ '/clientslist']" class="btn" ><span class="fas fa-handshake"> &nbsp;  قائمة العملاء  </span></a> </div>
+              <div class="col-md-2" > <a [ngClass]="authenticatedUser.SalesInvoice==false?'disclick': '' "  [routerLink]="[ '/dailysales']" class="btn" ><span class="fas fa-calendar"> &nbsp;  مبيعات اليومية</span></a> </div>
+              <div class="col-md-2" > <a [ngClass]="authenticatedUser.SalesManSummaryReport==false?'disclick': '' " [routerLink]="[ '/salesmanaccountstate']" class="btn"><span class="fas fa-file-invoice-dollar"> &nbsp; حساب مندوب </span></a> </div>
+             
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.SalesInvoice==false?'disclick': '' " [routerLink]="[ '/salesbillsprofit']" class="btn"><span class="fas fa-file-invoice-dollar">&nbsp;أرباح المبيعات </span></a> </div>
+              <div class="col-md-2"  > <a [ngClass]="authenticatedUser.AdditionalCost==false?'disclick': '' " [routerLink]="[ '/addexpenses']" class="btn"><span class="fas fa-file-invoice-dollar">&nbsp;  تسجيل مصروف</span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="authenticatedUser.SalesPointDepositWithdrow==false?'disclick': '' "  [routerLink]="[ '/pulldepositdrawerstorage']" class="btn"><span class="fas fa-file-invoice-dollar">&nbsp; سحب وايداع  </span></a> </div>
+    
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-2"> <a [ngClass]="authenticatedUser.SalesPointTransferMoney==false?'disclick': '' " [routerLink]="[ '/moneytransferbetpointssale']" class="btn" ><span class="fas fa-file-invoice-dollar"> &nbsp;   تحويل أموال  </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="authenticatedUser.ReportTotalMoneyInfo==false?'disclick': '' " [routerLink]="[ '/drawerstoragereports']" class="btn"><span class="fas fa-pie-chart"> &nbsp;   المالية الشاملة</span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.SupplierAddMoney==false||authenticatedUser.CustomerAddMoney==false||authenticatedUser.SupplierDeleteMoney==false||authenticatedUser.CustomerCancelMoney==false)?'disclick': '' " [routerLink]="[ '/banks']" class="btn" ><span class="fas fa-bank"> &nbsp;  البنوك </span></a> </div>
+             
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.SupplierAddMoney==false||authenticatedUser.CustomerAddMoney==false||authenticatedUser.SupplierDeleteMoney==false||authenticatedUser.CustomerCancelMoney==false)?'disclick': '' " [routerLink]="[ '/checks']" class="btn"><span class="fas fa-money-check">&nbsp; الشيكات </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.ReportCustomerSales==false
+                ||authenticatedUser.ReportProductMove==false||authenticatedUser.ReportProfitLose==false
+                ||authenticatedUser.ReportSalesManSales==false
+                ||authenticatedUser.ReportStoreStock==false
+                ||authenticatedUser.ReportSupplierBuys==false
+                ||authenticatedUser.ReportTotalMoneyInfo==false
+                ||authenticatedUser.SalesManSummaryReport==false
+                ||authenticatedUser.SalesPointReport==false)?'disclick': '' " [routerLink]="[ '/reports']" class="btn"><span class="fas fa-chart-line">&nbsp;  التقارير </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="authenticatedUser.SystemSettings==false?'disclick': '' " [routerLink]="[ '/changesetting']" class="btn" ><span class="fas fa-gears">&nbsp;  الاعدادات  </span></a> </div>
+    
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.AccessActivitiesRecord==false)?'disclick': '' " [routerLink]="[ '/listactivities']" class="btn" ><span class="fas fa-bell"> &nbsp;    سجل النشاطات  </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.AccessStoreNotifications==false)?'disclick': '' " [routerLink]="[ '/listnotifications']" class="btn" ><span class="fas fa-bell"> &nbsp;   سجل المخزون</span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.AccessSalesPointNotifications==false)?'disclick': '' " [routerLink]="[ '/listsalesnotifications']" class="btn"><span class="fas fa-bell"> &nbsp;  سجل نقاط البيع </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.AddBranch==false||authenticatedUser.EditBranch==false||authenticatedUser.DeleteBranch==false)?'disclick': '' " [routerLink]="[ '/branches']" class="btn" ><span class="fas fa-home"> &nbsp;    قائمة الفروع </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.AddSalesPoint==false||authenticatedUser.EditSalesPoint==false||authenticatedUser.DeleteSalesPoint==false)?'disclick': '' " [routerLink]="[ '/listsalespoints']" class="btn" ><span class="fas fa-desktop"> &nbsp;    قائمة نقاط البيع </span></a> </div>
+              <div class="col-md-2"> <a [ngClass]="(authenticatedUser.UserAdd==false||authenticatedUser.UserEdit==false||authenticatedUser.UserDelete==false)?'disclick': '' " [routerLink]="[ '/userslist']" class="btn"><span class="fas fa-users"> &nbsp;    قائمة  المستخدمين </span></a> </div>
+             
+            </div>
+    
+    
+    
+          </div>
+    
+    </div>
+</div>
+
+<ul id="AccessSalesPoint" >
+  <li (click)="ToggleScreen()">فتح شاشة البيع <i class="fas fa-desktop"></i></li>
+</ul>
+
+<app-salespointscreen id="SalesScreen" [ngClass]="{'hidden': hiddenscreen}" (closed)="CloseScreenIndex($event)"></app-salespointscreen>
+
+ 
+  

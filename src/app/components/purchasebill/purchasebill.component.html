@@ -1,0 +1,425 @@
+<audio id="my_audio" src="../../../assets/beep.mp3" autoplay="autoplay"></audio>
+
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+            </li>
+
+            <li>
+                <a [routerLink]="[ '/purchases' ]" routerLinkActive="active">مشتريات</a>
+
+            </li>
+
+            <li class="active"> فاتوره شراء </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-3">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading text-right">
+                            <div class="row">
+                                    <div class="col-md-8">
+                                            <h5>قائمة الاصناف</h5>
+                                    </div>
+                                   
+                                    <div class="col-md-4 text-left">
+                                        <a>
+                                
+                                            <button (click)="Refresh()" class="btn btn-link">
+                                              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                           <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                            </button>
+                                          </a>
+                                    </div>
+                                </div>
+
+                    </div>
+                    <div class="panel-body">
+                            <div class="all-kinds" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+
+                                    <div class="form-group text-right search-sec">
+                                        <label for="productName"> اسم الصنف</label>
+                                        <input id="productName" name="productName" class="form-control" [ngClass]="addProductBuyMain.StoreID === 0?'clickable': '' " type="text" [(ngModel)]="productName">
+                                    </div>
+                                    <div>
+                                        <table class="table text-right table-bordered   table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th> كود </th>
+                                                    <th> إسم الصنف </th>
+                                                    <th style="width:5%;">إختر </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of result.ProductsList|searchproductsname:productName
+                                                                  | paginate: { itemsPerPage: 10, currentPage: p } ; let i=index" [ngClass]="{'selectedrow':item.IsSelected}">
+                                                    <td>{{item.ProductID}}</td>
+                                                    <td> {{item.ProductName}} </td>
+                                                    <td style="width:5%;">
+                                                        <div class="checkbox" [ngClass]="addProductBuyMain.StoreID == 0?'clickable': '' ">
+                                                            <ng-container *ngIf="!item.Isselected">
+                                                                <button class="btncustom" [ngClass]="item.IsSelected?'':''" (click)="SelectRow(item)" [disabled]="item.IsSelected">
+                                                                    <i class="fa fa-check"></i>
+                
+                                                                </button>
+                
+                                                            </ng-container>
+                
+                
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="text text-center alert alert-danger" *ngIf="result.ProductsList.length == 0">
+                                                        <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                                    </td>
+                                                </tr>
+                
+                
+                                                <tr>
+                                                    <td colspan="3" class="text text-center">
+                                                        <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false" responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                                        </pagination-controls>
+                                                    </td>
+                                                </tr>
+                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                
+                                </div>
+                    </div>
+                    <div class="panel-footer">
+<br>
+<br>
+                    </div>
+
+                </div>
+               
+
+            </div>
+            <div class="col-md-9">
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+            <div class="row">
+                    <div class="col-md-10 text-right">
+                            <h5>  فاتوره شراء</h5>
+                    </div>
+                
+                    <div class="col-md-2 text-left">
+                        <a>
+                
+                            <button (click)="Refresh()" class="btn btn-link">
+                              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                           <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                            </button>
+                          </a>
+                    </div>
+                </div>
+        
+
+    </div>
+    <div class="panel-body" style="min-height: 565px;">
+  
+            <div class="form-group search-sec">
+                    <form #AddProductBuyForm="ngForm" name="AddProductBuyForm">
+                        <div class="row">
+                            <div class="col-md-12">
+
+
+                                <div class="col-md-4">
+
+
+                                    <label style="margin-bottom: 16px;"> الدفع</label>
+                                    <br>
+
+                                    <div class="form-group">
+                                        <label for="form_radio1">
+                                        <input id="form_radio1" name="form_radio" type="radio" (click)="CashPaid()"
+                                          checked="addProductBuySettings.DefaultPaid"> نقدي </label> &nbsp; &nbsp;
+
+                                        <label for="form_radio2">
+                                        <input id="form_radio2" name="form_radio" type="radio" (click)="OnAccountPaid()"> من الحساب </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> المورد </label>
+                                        <select class="form-control" #SupplierID="ngModel" name="SupplierID" required="required"  [(ngModel)]="addProductBuyMain.SupplierID">
+                                            <option *ngFor="let item of Suppliers" [value]="item.SupplierID" >{{item.SupplierName}}</option>
+                                    </select>
+                                    <div *ngIf="SupplierID.invalid && (SupplierID.dirty || SupplierID.touched)" class="alert alert-danger">
+
+                                        <p *ngIf="SupplierID?.errors.required">
+                                          <i class="fa fa-bug"></i> الحقل مطلوب
+                                        </p>
+                  
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="from-store"> المخزن </label>
+                                        <select class="form-control" #StoreID="ngModel" name="StoreID" required="required"  [(ngModel)]="addProductBuyMain.StoreID" (change)="getAllProductsInStore($event.target.value)" #StoreFromRef>
+                                          <option *ngFor="let item of ProductStores" [value]="item.StoreID">{{item.StoreName}} </option>
+                                        </select>
+                                        <div *ngIf="StoreID.invalid && (StoreID.dirty || StoreID.touched)" class="alert alert-danger">
+
+                                            <p *ngIf="StoreID?.errors.required">
+                                              <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                      
+                                          </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+
+                                        <label for="bill-value"> قيمه الفاتوره </label>
+                                        <input name="bill-value" class="form-control" type="text" disabled="disabled" [value]="addProductBuyMain.Total">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="discount-value"> قيمه الخصم </label>
+                                        <input name="discount-value" class="form-control" type="text" [(ngModel)]="addProductBuyMain.DiscountCash">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="after-discount"> بعد الخصم </label>
+                                        <input name="after-discount" class="form-control" type="text" disabled="disabled" [value]="GetTotalAmount()">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="paid-amount"> المبلغ المدفوع </label>
+                                        <input name="paid-amount" #PayedMoney="ngModel" [required]="!addProductBuySettings.PayedMoneyEnabled" class="form-control" type="text" [(ngModel)]="addProductBuyMain.PayedMoney" [disabled]="addProductBuySettings.PayedMoneyEnabled">
+                                  
+                                        <div *ngIf="PayedMoney.invalid && (PayedMoney.dirty || PayedMoney.touched)" class="alert alert-danger">
+
+                                            <p *ngIf="PayedMoney?.errors.required">
+                                              <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                      
+                                          </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sale-point"> نقطه البيع </label>
+                                        <select id="SalesPointID" class="form-control " #SalesPointID="ngModel" [required]="!addProductBuySettings.SalesPointEnabled" name="SalesPointID" [(ngModel)]="addProductBuyMain.SalesPointID" [disabled]="addProductBuySettings.SalesPointEnabled">
+
+                        <option *ngFor="let salespoint of activeSalesPoints " [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+
+                      </select>
+                      <div *ngIf="SalesPointID.invalid && (SalesPointID.dirty || SalesPointID.touched)" class="alert alert-danger">
+
+                        <p *ngIf="SalesPointID?.errors.required">
+                          <i class="fa fa-bug"></i> الحقل مطلوب
+                        </p>
+  
+                      </div>
+
+                                </div>
+                                    <div class="form-group">
+
+                                        <label for="bill-date"> تاريخ الفاتورة </label>
+                                        <input name="bill-date" #DateSubmit="ngModel" class="form-control" type="date" required="required" [(ngModel)]="addProductBuyMain.DateTime">
+                                        <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+
+                                            <p *ngIf="DateSubmit?.errors.required">
+                                              <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                      
+                                          </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div style="overflow-x: auto;">
+                    <table class="table text-center table-bordered   table-responsive">
+                        <thead>
+                            <tr>
+                                <th style="width:5%;"> كود </th>
+                                <th style="width:20%;"> إسم الصنف </th>
+                                <th style="width:10%;"> الكمية </th>
+                                <th style="width:15%;"> الوحده </th>
+                                <th style="width:10%;"> السعر </th>
+                                <th style="width:10%;"> الاجمالى </th>
+                                <th style="width:5%;"> المخزن </th>
+                                <th> اختر</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedproducts| paginate: { itemsPerPage: 6, currentPage: s } ; let i=index">
+                                <td> {{item.ProductID}}</td>
+                                <td>{{item.ProductName}} </td>
+                                <td>
+                                    <input type="number" class="form-control customform-control" [(ngModel)]="item.Num">
+                                </td>
+                                <td>
+                                    <select class="form-control" [disabled]="item.DisabledUnits" [(ngModel)]="item.UnitID">
+                                  <option *ngFor="let unititem of item.ProductUnits " [value]="unititem.UnitID" (click)="getStockTotalBySelectedUnit(item,unititem)">{{unititem.UnitName}}</option>
+
+                                </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control customform-control" [(ngModel)]="item.P_Price">
+
+                                </td>
+                                <td>
+                                    <div class="text text-info"> {{(item.P_Price* item.Num)|currency}}</div>
+                                </td>
+                                <td>
+                                    <div class="text text-info"> {{item.Stock|number:'1.2-2'}}</div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" (click)="DeleteKind(item)">
+                                  <i class="fa fa-trash"></i>
+                                </button>
+                                    <a>
+                                  &nbsp;
+                                  <button type="button" class="btn btn-info" (click)="goToEditKind(item)">
+                                    <i class="fa fa-edit"></i>
+                                  </button>
+                                </a>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="text text-center alert alert-danger" *ngIf="selectedproducts.length == 0">
+                                    <h4>من فضلك يجب اختيار اصناف لحفظ الفاتورة </h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="text text-center">
+                                    <pagination-controls (pageChange)="s= $event" maxSize="10" directionLinks="true" autoHide="false" responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                    </pagination-controls>
+                                </td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+
+    </div>
+    <div class="panel-footer">
+            <div class="btntricks">
+                    <button type="button" class="btn btn-style" (click)="openModal(template)" #BtnSubmitInvoice [disabled]="AddProductBuyForm.invalid" >
+                     <i class="fa fa-save"></i>   حفظ الفاتوره </button>
+
+                    <button type="button" class="btn btn-style" (click)="openDeleteModal(templatedelete)">
+                            <i class="fa fa-trash"></i>   تفريغ الفاتوره </button>
+
+
+                    <button type="button" class="btn btn-style" (click)="openCalculatorModal(templatecalculator)">
+                        <i class="fa fa-calculator"></i> الحاسبة </button>
+
+                    </div>
+
+    </div>
+
+
+</div>
+<ng-template #template>
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+            <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+        </div>
+        <div class="modal-body">
+            <p> هل تريد حفظ فاتورة الشراء  بالفعل ؟</p>
+        </div>
+        <div class="modal-footer ">
+            <button type="button" class="btn  pull-right" (click)="AddProductBuyMain(addProductBuyMain , AddProductBuyForm )"> نعم</button>
+
+            <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+        </div>
+    </div>
+
+
+
+
+</ng-template>
+
+
+                    <ng-template #templatecalculator>
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                <h4 class="modal-title">
+                                    <img src="/bag.png" class="userlogo" />
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <ngx-calculator> </ngx-calculator>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </ng-template>
+
+                    <ng-template #templatedelete>
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                <h4 class="modal-title">
+                                    <img src="/bag.png" class="userlogo" />
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p> هل تريد تفريغ الفاتورة بالفعل ؟</p>
+                            </div>
+                            <div class="modal-footer ">
+                                <button type="button" class="btn  pull-right" (click)="DeleteKinds()"> نعم</button>
+
+                                <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                            </div>
+                        </div>
+
+
+
+
+                    </ng-template>
+
+                
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+</section>

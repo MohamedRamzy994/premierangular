@@ -1,0 +1,211 @@
+<section class="page-title">
+    <div class="container">
+      <ol class="breadcrumb">
+
+        <li class="active">
+          الرئيسيه
+        </li>
+
+      </ol>
+    </div>
+</section>
+  <section class="body-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3" *ngIf="authenticatedUser.UserAdd==true||
+        authenticatedUser.UserDelete==true||authenticatedUser.UserEdit==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-user-lock "></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+
+                <a routerLink="/users">المستخدمين</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.StoreAdd==true||authenticatedUser.StoreEdit==true
+        ||authenticatedUser.StoreDelete==true||authenticatedUser.StoreTransferBalance==true||authenticatedUser.ProductAdd==true
+        ||authenticatedUser.ProductDelete==true||authenticatedUser.ProductEdit==true||authenticatedUser.ProductOpen==true
+        ||authenticatedUser.ProductResetStock==true||authenticatedUser.ProductOpenCancel==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+
+          <i class="fas fa-store-alt"></i> 
+                 </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                <a [routerLink]="[ '/stores' ]" routerLinkActive="active">المخازن</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SupplierAdd==true||authenticatedUser.SupplierDelete==true
+        ||authenticatedUser.SupplierEdit==true||authenticatedUser.SupplierAddMoney==true||authenticatedUser.SupplierDeleteMoney==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-truck "></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/suppliers' ]" routerLinkActive="active">الموردين</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.BuyInvoice==true||authenticatedUser.BuyDiscard==true
+        ||authenticatedUser.BuyInvoiceCancel==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-cart-plus"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+
+                  <a [routerLink]="[ '/purchases' ]" routerLinkActive="active">المشتريات</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.EmpAdd==true||authenticatedUser.EmpSalary==true||authenticatedUser.EmpPunish==true||
+        authenticatedUser.EmpEdit==true||authenticatedUser.EmpDelete==true||authenticatedUser.EmpDebit==true||authenticatedUser.EmpComm==true||
+        authenticatedUser.EmpCancelPunish==true||authenticatedUser.EmpCancelComm==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-user-tie"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/employees' ]" routerLinkActive="active">الموظفين</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.CustomerAdd==true||authenticatedUser.CustomerAddMoney==true||authenticatedUser.CustomerCancelMoney==true||
+        authenticatedUser.CustomerDelete==true||authenticatedUser.CustomerEdit==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-handshake"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                <a [routerLink]="[ '/clients' ]" routerLinkActive="active">العملاء</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesDiscard==true||authenticatedUser.SalesDiscount==true||authenticatedUser.SalesInvoice==true||
+        authenticatedUser.SalesInvoiceCancel==true||authenticatedUser.SalesManSummaryReport==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fa fa-2x fa-cart-arrow-down"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+
+                  <a [routerLink]="[ '/sales' ]" routerLinkActive="active">المبيعات</a>
+
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesPointDepositWithdrow==true||authenticatedUser.SalesPointReport==true
+        ||authenticatedUser.SalesPointTransferMoney==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-money-bill-alt"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active"> المصروفات</a>
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportAddCost==true||authenticatedUser.ReportCustomerSales==true||authenticatedUser.ReportProductMove==true||authenticatedUser.ReportProfitLose==true
+        ||authenticatedUser.ReportTotalMoneyInfo==true||authenticatedUser.ReportSupplierBuys==true||authenticatedUser.ReportStoreStock==true||authenticatedUser.ReportSalesManSales==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-chart-line "></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+
+                  <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AccessActivitiesRecord==true||authenticatedUser.AccessStoreNotifications==true||authenticatedUser.AccessSalesPointNotifications==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fas fa-2x fa-bell"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/activities' ]" routerLinkActive="active">  السـجـلات   </a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+       
+       
+        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SystemSettings==true">
+          <div class="item">
+            <div class="item-card">
+              <h1>
+                <i class="fa fa-2x fa-cogs"></i>
+              </h1>
+            </div>
+            <div class="item-footer">
+              <h4>
+                  <a [routerLink]="[ '/tools' ]" routerLinkActive="active">الاعدادات</a>
+
+
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

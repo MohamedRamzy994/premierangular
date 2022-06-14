@@ -1,0 +1,1414 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+
+            </li>
+
+            <li>
+                <a [routerLink]="[ '/clients' ]" routerLinkActive="active">عملاء</a>
+
+            </li>
+
+            <li>
+                <a [routerLink]="[ '/clientslist' ]" routerLinkActive="active">قائمه العملاء</a>
+
+
+            </li>
+            <li class="active"> ملف العميل </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content file-supplier">
+        <div class="container">
+      
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+      
+            <li role="presentation" class="active">
+              <a href="#account-state" aria-controls="account-state" role="tab" data-toggle="tab"> كشف الحساب</a>
+            </li>
+            <li role="presentation">
+              <a href="#payments" aria-controls="payments" role="tab" data-toggle="tab">الدفعات </a>
+            </li>
+            <li role="presentation">
+              <a href="#canceled-accounts" aria-controls="canceled-accounts" role="tab" data-toggle="tab"> حسابات تم إلغائها</a>
+            </li>
+            <li role="presentation">
+              <a href="#main-info" aria-controls="main-info" role="tab" data-toggle="tab">البيانات الأساسيه</a>
+            </li>
+          </ul>
+      
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="account-state">
+      
+               <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h4 class="text-right"> كشف حساب</h4>
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-2 text-left">
+                                            <a>
+                                    
+                                                <button (click)="Refresh()" class="btn btn-link">
+                                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                                </button>
+                                              </a>
+                                        </div>
+                                    </div>
+                                    
+                    
+                                </div>
+                                <div class="panel-body">
+              <div class="row">
+      
+                <div class="col-md-6 text text-right">
+    
+                  <label> في الفتره من</label>
+                  <div class="input-group">
+                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstFrom"
+                      [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromFirstObject" (ngModelChange)="GetDateFirstFrom($event)" />
+      
+                    <span class="input-group-btn">
+                      <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+                    </span>
+                  </div>
+      
+                </div>
+                <div class="col-md-6  text text-right">
+      
+                  <label> إلي الفتره</label>
+                  <div class="input-group">
+      
+                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstTo"
+                      [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToFirstObject" (ngModelChange)="GetDateFirstTo($event)" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                      </button>
+      
+                    </span>
+      
+                  </div>
+                </div>
+      
+              </div>
+     
+              <div class="row">
+                <div class="col-md-12">
+                  <br>
+                  <div style="overflow-x: auto;">
+                    <table class="table text-center table-bordered  table-responsive">
+                      <thead>
+                        <tr>
+                          <th> الكود</th>
+                          <th> المستخدم</th>
+                          <th style="width:15%">التاريخ </th>
+                          <th> العمليه </th>
+                          <th> نقطه البيع </th>
+                          <th> المبلغ </th>
+                          <th> اجمالي الحساب </th>
+                          <th style="width:5%"> اختر</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of allCustomerMoneyDetails
+                        |searchsuppliermoneydetailsfromtodate:DateFirstFrom:DateFirstTo
+                        | paginate: { id:'first', itemsPerPage: 10, currentPage: f };
+                         let i=index;"
+                          [ngClass]="{'selectedrow':RowSelected(item)}">
+                          <td> {{item.PayID}}</td>
+      
+                          <td> {{item.UserName}} </td>
+                          <td> {{item.DateSubmit|date}}</td>
+                          <td>{{item.Reason}}</td>
+                          <td> {{item.SalesPoint}}</td>
+                          <td class="text "> {{item.MoneyValue| currency}} </td>
+                          <td class="text "> {{item.BalanceAfter| currency}}</td>
+                          <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                              <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                <a class="label label-primary" (click)="SelectRow(item)">
+                                  <i class="fa fa-check"></i> تحـديـد
+                                </a>
+                              </ng-container>
+                              <ng-template #RemoveSelect>
+                                <a class="label label-primary" (click)="RemoveSelection(item)">
+                                  <i class="fa fa-remove"></i> الـــغـــاء
+      
+                                </a>
+                              </ng-template>
+      
+                            </div>
+                          </td>
+      
+                        </tr>
+                        <tr>
+                          <td colspan="8" class="text text-center alert alert-danger" *ngIf="(allCustomerMoneyDetails).length === 0">
+                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                          </td>
+                        </tr>
+      
+      
+                        <tr>
+                          <td colspan="8" class="text text-center">
+                            <pagination-controls id="first" (pageChange)="f = $event" maxSize="10" directionLinks="true" autoHide="false"
+                              responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br>
+                  <div style="overflow-x: auto;">
+                    <table class="table text-center table-bordered  table-responsive">
+                      <thead>
+                        <tr>
+                          <th> إجمالي التعامل</th>
+                          <th> إجمالي المسدد </th>
+                          <th> باقي الحساب </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text text-primary"><label class="label label-info">
+                              {{customerTotalCommunicationSummaryModel.TotalCommunication| currency }}</label></td>
+                          <td class="text text-success"><label class="label label-success">{{customerTotalCommunicationSummaryModel.CompletedCommunication|
+                              currency }}</label></td>
+                          <td class="text text-danger"><label class="label label-danger">
+                              {{customerTotalCommunicationSummaryModel.RestCommunication| currency}}</label></td>
+      
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+      
+                </div>
+      
+              </div>
+            </div>
+            <div class="panel-footer">
+                <div class="btntricks">
+                    <button type="button" class="btn btn-style" style="padding:6px 3px;" (click)="openAddAccountModal(templatefilesupplieraddaccount)">
+                      <i class="fa fa-plus"></i> إضافه حساب جديد </button>
+
+
+                    <button type="button" class="btn btn-style" (click)="openCancleMoneyModal(templatedelete)">
+                      <i class="fa fa-times"></i> إلغاء العمليه </button>
+
+                    <button type="button" class="btn btn-style" (click)="goToPrintMoneyDetails()">
+                      <i class="fa fa-print"></i> طباعه الحساب </button>
+
+                    <button type="button" class="btn btn-style" (click)="openMoneyDetailsModal(templatedetails)">
+                      <i class="fa fa-edit"></i> عرض التفاصيل </button>
+
+                  </div>
+            </div>
+          </div>
+            </div>
+              <div role="tabpanel" class="tab-pane fade" id="payments">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <h4 class="text-right"> كشف الدفعات</h4>
+                              </div>
+                              <div class="col-md-6"></div>
+                              <div class="col-md-2 text-left">
+                                  <a>
+                          
+                                      <button (click)="Refresh()" class="btn btn-link">
+                                        <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                     <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                      </button>
+                                    </a>
+                              </div>
+                          </div>
+                        
+          
+                      </div>
+                      <div class="panel-body">
+                <div class="row">
+      
+                  <div class="col-md-6 text text-right ">
+      
+      
+                    <label> في الفتره من</label>
+                    <div class="input-group">
+                      <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateSecondFrom"
+                        [options]="myOptions" #dpsecond="ngx-mydatepicker" [(ngModel)]="DateFromSecondObject" (ngModelChange)="GetDateSecondFrom($event)" />
+      
+                      <span class="input-group-btn">
+                        <button type="button" class="btn " (click)="dpsecond.toggleCalendar()" style="height: 40px;">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                      </span>
+                    </div>
+      
+                  </div>
+                  <div class="col-md-6 text text-right">
+      
+                    <label> إلي الفتره</label>
+                    <div class="input-group">
+      
+                      <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateSecondTo"
+                        [options]="myOptions" #dposecond="ngx-mydatepicker" [(ngModel)]="DateToSecondObject" (ngModelChange)="GetDateSecondTo($event)" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn " (click)="dposecond.toggleCalendar()" style="height: 40px;">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+      
+                      </span>
+      
+                    </div>
+                  </div>
+      
+                </div>
+                <br>
+      
+                <div class="row">
+                  <div class="col-md-12">
+                    <br>
+                    <div style="overflow-x: auto;">
+                      <table class="table text-center table-bordered  table-responsive">
+                        <thead>
+                          <tr>
+                            <th> الكود</th>
+                            <th> المستخدم</th>
+                            <th style="width:15%">التاريخ </th>
+                            <th> العمليه </th>
+                            <th> نقطه البيع </th>
+                            <th> المبلغ </th>
+                            <th> اجمالي الحساب </th>
+      
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of allCustomerAdvancePaymentsDetails
+                        | paginate: { id:'second', itemsPerPage: 10, currentPage: s };
+                         let i=index;">
+                            <td> {{item.PayID}}</td>
+                            <td> {{item.UserName}} </td>
+                            <td> {{item.DateSubmit|date}}</td>
+                            <td>{{item.Reason}}</td>
+                            <td> {{item.SalesPoint}}</td>
+                            <td class="text "> {{item.MoneyValue| currency}} </td>
+                            <td class="text "> {{item.BalanceAfter| currency}}</td>
+      
+                          </tr>
+                          <tr>
+                            <td colspan="9" class="text text-center alert alert-danger" *ngIf="(allCustomerAdvancePaymentsDetails).length === 0">
+                              <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                            </td>
+                          </tr>
+      
+      
+                          <tr>
+                            <td colspan="9" class="text text-center">
+                              <pagination-controls id="second" (pageChange)="s = $event" maxSize="10" directionLinks="true" autoHide="false"
+                                responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                              </pagination-controls>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+      
+                  </div>
+      
+                </div>
+      
+              </div>
+              <div class="panel-footer">
+                  <div class="btntricks">
+                      <button type="button" class="btn btn-style" (click)="goToPrintAdvancePaymentsDetails()">
+                        <i class="fa fa-print"></i> طباعه الحساب </button>
+
+                    </div>
+              </div>
+            </div>
+      
+              </div>
+      
+              <div role="tabpanel" class="tab-pane fade" id="canceled-accounts">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <h4 class="text-right"> كشف حسابات تم الغائها</h4>
+                              </div>
+                              <div class="col-md-6"></div>
+                              <div class="col-md-2 text-left">
+                                  <a>
+                          
+                                      <button (click)="Refresh()" class="btn btn-link">
+                                        <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                     <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                      </button>
+                                    </a>
+                              </div>
+                          </div>
+                        
+          
+                      </div>
+                      <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <br>
+                    <div style="overflow-x: auto;">
+                      <table class="table text-center table-bordered  table-responsive">
+                        <thead>
+                          <tr>
+                            <th> الكود</th>
+                            <th> المستخدم</th>
+                            <th style="width:15%">التاريخ </th>
+                            <th> العمليه </th>
+                            <th> نقطه البيع </th>
+                            <th>المندوب</th>
+                            <th> المبلغ </th>
+                            <th> اجمالي الحساب </th>
+      
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of allCustomerCancledMoneyDetails
+                        | paginate: { id:'third', itemsPerPage: 10, currentPage: t };
+                         let i=index;">
+                            <td> {{item.PayID}}</td>
+                            <td> {{item.UserName}} </td>
+                            <td> {{item.DateSubmit|date}}</td>
+                            <td>{{item.Reason}}</td>
+                            <td> {{item.SalesPoint}}</td>
+                            <td> {{item.EmpName}}</td>
+                            <td class="text "> {{item.MoneyValue| currency}} </td>
+                            <td class="text "> {{item.BalanceAfter| currency}}</td>
+      
+                          </tr>
+                          <tr>
+                            <td colspan="9" class="text text-center alert alert-danger" *ngIf="(allCustomerCancledMoneyDetails).length === 0">
+                              <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                            </td>
+                          </tr>
+      
+      
+                          <tr>
+                            <td colspan="9" class="text text-center">
+                              <pagination-controls id="third" (pageChange)="t = $event" maxSize="10" directionLinks="true" autoHide="false"
+                                responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                              </pagination-controls>
+                            </td>
+                          </tr>
+      
+                        </tbody>
+                      </table>
+                    </div>
+      
+                  </div>
+                </div>
+      </div>
+      <div class="panel-footer">
+        <br>
+        <br>
+      </div>
+      </div>
+      
+      
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="main-info">
+       
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h4 class="text-right"> بيانات العميل </h4>
+                          </div>
+                          <div class="col-md-6"></div>
+                          <div class="col-md-2 text-left">
+                              <a>
+                      
+                                  <button (click)="Refresh()" class="btn btn-link">
+                                    <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                 <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                  </button>
+                                </a>
+                          </div>
+                      </div>
+                     
+      
+                  </div>
+                  <div class="panel-body">
+                          <div class="col-xs-12 col-sm-6 col-md-4 ">
+           <form #AddCustomerForm="ngForm" name="AddCustomerForm" class="clearfix ">
+            <fieldset>
+                <div class="row">
+                      <div class="form-group col-md-12 text-right">
+                              <label for="ClientName"> اسم العميل </label>
+                              <input id="ClientName" #ClientName="ngModel" name="ClientName" [(ngModel)]="addCustomer.Name"
+                              class="form-control" type="text"
+                              required="required" maxlength="50" minlength="5">
+                              <div *ngIf="ClientName.invalid && (ClientName.dirty || ClientName.touched)" class="alert alert-danger">
+
+                                  <p *ngIf="ClientName?.errors.required">
+                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                  </p>
+                                  <p *ngIf="ClientName?.errors.minlength">
+                                    <i class="fa fa-bug"></i> اسم العميل بين 5-50 حرف
+                                  </p>
+                                </div>
+
+                            </div>
+                          <div class="form-group col-md-12 text-right">
+                              <label for="Mobile1"> موبايل 1</label>
+                              <input id="Mobile1" #Mobile1="ngModel" name="Mobile1" [(ngModel)]="addCustomer.Mob1"
+                               class="form-control" type="tel"
+                               required="required" maxlength="15" minlength="5">
+                              <div *ngIf="Mobile1.invalid && (Mobile1.dirty || Mobile1.touched)" class="alert alert-danger">
+
+                                  <p *ngIf="Mobile1?.errors.required">
+                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                  </p>
+                                  <p *ngIf="Mobile1?.errors.minlength">
+                                    <i class="fa fa-bug"></i> رقم موبايل العميل بين 10-15 رقم
+                                  </p>
+                                </div>
+
+                            </div>
+                          <div class="form-group col-md-12 text-right">
+                              <label for="Mobile2"> موبايل 2 </label>
+                              <input id="Mobile2" #Mobile2="ngModel" name="Mobile2" [(ngModel)]="addCustomer.Mob2"
+                               class="form-control" type="tel"
+                               required="required" maxlength="15" minlength="5">
+
+                              <div *ngIf="Mobile2.invalid && (Mobile2.dirty || Mobile2.touched)" class="alert alert-danger">
+
+                                  <p *ngIf="Mobile2?.errors.required">
+                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                  </p>
+                                  <p *ngIf="Mobile2?.errors.minlength">
+                                    <i class="fa fa-bug"></i> رقم موبايل العميل بين 10-15 رقم
+                                  </p>
+                                </div>
+
+                            </div>
+
+                    <div class="form-group col-md-12 text-right">
+                          <label for="form_clint_kind">  نوع العميل </label>
+                               <br>
+                               <div class="radio disp-inl-bl " style="margin-right:25px;">
+                                  <label for="form_radio1">
+                                      <input id="form_radio1" #CatID="ngModel" name="CatID" type="radio" [value]="1" [checked]="addCustomer.CatID === 1" [(ngModel)]="addCustomer.CatID"> جمله </label>
+                              </div>
+
+                              <div class="radio disp-inl-bl">
+                                  <label for="form_radio2">
+                                      <input id="form_radio2" #CatID="ngModel" name="CatID" type="radio" [value]="2" [checked]="addCustomer.CatID === 2" [(ngModel)]="addCustomer.CatID"> قطاعي </label>
+                              </div>
+
+                              <div *ngIf="CatID.invalid && (CatID.dirty || CatID.touched)" class="alert alert-danger">
+
+                                      <p *ngIf="CatID?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                      </p>
+                                     
+                                    </div>
+
+                      </div>
+                </div>
+
+            </fieldset>
+
+
+          
+        </form>
+        </div>
+        </div>
+        <div class="panel-footer">
+
+          <div class="btntricks">
+              <button class="btn  btn-style" [disabled]="AddCustomerForm.invalid" (click)="openModal(templatecustomeredit)">
+                <i class="fa fa-save"></i> حفظ </button>
+
+          </div>
+        </div>
+
+    </div>
+
+
+              </div>
+            </div>
+            <ng-template #templatefilesupplieraddaccount>
+      
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" (click)="CloseModal()">&times;</button>
+                  <h4 class="modal-title"><img src="/bag.png" class="userlogo" /> <b class="text text-center"> 
+
+                   العميل - {{addCustomer.Name}}
+                    
+                  </b></h4>
+                </div>
+                <div class="modal-body">
+                  <ul class="nav nav-tabs" role="tablist">
+      
+                    <li role="presentation" class="active">
+                      <a href="#rebate" aria-controls="rebate" role="tab" data-toggle="tab"> تنزيل</a>
+                    </li>
+                    <li role="presentation">
+                      <a href="#previousbalance" aria-controls="previousbalance" role="tab" data-toggle="tab">رصيد سابق </a>
+                    </li>
+                    <li role="presentation">
+                      <a href="#advancepayment" aria-controls="advancepayment" role="tab" data-toggle="tab">دفعة مقدمة</a>
+                    </li>
+                    <li role="presentation">
+                      <a href="#cashdiscount" aria-controls="cashdiscount" role="tab" data-toggle="tab">خصم نقدى</a>
+                    </li>
+                    <li role="presentation">
+                      <a href="#check" aria-controls="check" role="tab" data-toggle="tab">شيك</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content text-right">
+                    <div role="tabpanel" class="tab-pane fade in active" id="rebate">
+                      <div class="row">
+                        <form name="AddRebateActionForm" #AddRebateActionForm="ngForm" novalidate="novalidate">
+                          <br>
+                          <div class="col-md-12">
+      
+                            <div class="form-group">
+                              <label for="form_facial-move"> القيمه الماليه </label>
+                              <input id="form_facial-move" name="form_facial-move" class="form-control" type="number"
+                                [(ngModel)]="addCustomerRebateActionModel.MoneyValue" #MoneyValue="ngModel" required="required" max="1000000"
+                                minlength="1">
+                              <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="MoneyValue?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="MoneyValue?.errors.minlength">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                <p *ngIf="MoneyValue?.errors.max">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                              </div>
+      
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> نقطة البيع </label>
+                              <select id="SalesPointIDRebate" class="form-control " name="SalesPointIDRebate" [(ngModel)]="addCustomerRebateActionModel.SalesPointID"
+                                #SalesPointIDRebate="ngModel" required="required">
+      
+                                <option *ngFor="let salespoint of activeSalesPoints " [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+      
+                              </select>
+                              <div *ngIf="SalesPointIDRebate.invalid && (SalesPointIDRebate.dirty || SalesPointIDRebate.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="SalesPointIDRebate?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> المندوب    </label>
+                              <select id="EmpID" class="form-control " name="EmpID" [(ngModel)]="addCustomerRebateActionModel.EmpID"
+                                #EmpID="ngModel" required="required">
+      
+                                <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+      
+                              </select>
+                              <div *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="EmpID?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="Details">تفاصيل إضافيه (ليست إجباريه)</label>
+                              <textarea class="form-control" name="Details" [(ngModel)]="addCustomerRebateActionModel.Details"
+                                #Details="ngModel"></textarea>
+                            </div>
+                          </div>
+                          <br>
+                         
+      
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="move-date"> تاريخ الحركه الماليه </label>
+                              <input name="move-date" class="form-control " [(ngModel)]="addCustomerRebateActionModel.DateSubmit"
+                                #DateSubmit="ngModel" required="required" type="date">
+      
+                              <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="DateSubmit?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                            <br>
+                         
+      
+                          </div>
+                          <div class="col-md-12">
+      
+                            <div class="modal-footer ">   
+                              <button type="button" class="btn  pull-right" [disabled]="AddRebateActionForm.invalid"
+                               (click)="openModal(templateustomerrebate)"> حفظ</button>
+                              <button type="button" class="btn  pull-left" (click)="CloseModal()">إغلاق</button>
+                           
+                              <ng-template #templateustomerrebate>
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حفظ عملية التنزيل بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" 
+                                          (click)="addCustomerRebateAction(addCustomerRebateActionModel, AddRebateActionForm)"> نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                      </ng-template>
+                    
+                            </div>
+    
+                          </div>
+      
+                        </form>
+      
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="previousbalance">
+      
+                      <div class="row">
+                        <form name="AddPostBalanceActionForm" #AddPostBalanceActionForm="ngForm" novalidate="novalidate">
+                         
+                            <br>
+                            <div class="col-md-12">
+        
+                              <div class="form-group">
+                                <label for="form_facial-move"> القيمه الماليه </label>
+                                <input id="form_facial-move" name="form_facial-move" class="form-control" type="number"
+                                  [(ngModel)]="addCustomerPostBalanceActionModel.MoneyValue" #MoneyValue="ngModel" required="required" max="1000000"
+                                  minlength="1">
+                                <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)" class="alert alert-danger">
+        
+                                  <p *ngIf="MoneyValue?.errors.required">
+                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                  </p>
+                                  <p *ngIf="MoneyValue?.errors.minlength">
+                                    <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                  <p *ngIf="MoneyValue?.errors.max">
+                                    <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                </div>
+        
+                              </div>
+                            </div>
+                            <br>
+                            
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> نقطة البيع </label>
+                              <select id="SalesPointIDPostBalance" class="form-control " name="SalesPointIDPostBalance" [(ngModel)]="addCustomerPostBalanceActionModel.SalesPointID"
+                                #SalesPointIDPostBalance="ngModel" required="required">
+      
+                                <option *ngFor="let salespoint of activeSalesPoints " [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+      
+                              </select>
+                              <div *ngIf="SalesPointIDPostBalance.invalid && (SalesPointIDPostBalance.dirty || SalesPointIDPostBalance.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="SalesPointIDPostBalance?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> المنــدوب </label>
+                              <select id="EmpIDPostBalance" class="form-control " name="EmpIDPostBalancePostBalance" [(ngModel)]="addCustomerPostBalanceActionModel.EmpID"
+                                #EmpIDPostBalance="ngModel" required="required">
+      
+                                <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+      
+                              </select>
+                              <div *ngIf="EmpIDPostBalance.invalid && (EmpIDPostBalance.dirty || EmpIDPostBalance.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="EmpIDPostBalance?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="Details">تفاصيل إضافيه (ليست إجباريه)</label>
+                                <textarea class="form-control" name="Details" [(ngModel)]="addCustomerPostBalanceActionModel.Details"
+                                  #Details="ngModel"></textarea>
+                              </div>
+                            </div>
+                            <br>
+                          
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label for="move-date"> تاريخ الحركه الماليه </label>
+                                <input name="move-date" class="form-control " [(ngModel)]="addCustomerPostBalanceActionModel.DateSubmit"
+                                  #DateSubmit="ngModel" required="required" type="date">
+        
+                                <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+        
+                                  <p *ngIf="DateSubmit?.errors.required">
+                                    <i class="fa fa-bug"></i> الحقل مطلوب
+                                  </p>
+        
+                                </div>
+        
+                               
+                              <br>
+                            </div>
+                      
+                          </div>
+                          <div class="col-md-12">
+      
+                            <div class="modal-footer ">
+      
+                              <button type="button" class="btn  pull-right" [disabled]="AddPostBalanceActionForm.invalid"
+                              (click)="openModal(templatecustomerpostbalance)"> حفظ</button>
+                              <button type="button" class="btn  pull-left" (click)="CloseModal()">إغلاق</button>
+                              <ng-template #templatecustomerpostbalance>
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حفظ الرصيد السابق  بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" 
+                                        (click)="addCustomerPostBalanceAction(addCustomerPostBalanceActionModel, AddPostBalanceActionForm)"> نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                      </ng-template>
+                    
+                            
+                            </div>
+      
+                          </div>
+                        </form>
+      
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="advancepayment">
+                      <div class="row">
+                        <form name="AddAdvancedPaymentActionForm" #AddAdvancedPaymentActionForm="ngForm" novalidate="novalidate">
+                          <br>
+                          <div class="col-md-12">
+      
+                            <div class="form-group">
+                              <label for="form_facial-move"> القيمه الماليه </label>
+                              <input id="form_facial-move" name="form_facial-move" class="form-control" type="number"
+                                [(ngModel)]="addCustomerAdvancePaymentActionModel.MoneyValue" #MoneyValue="ngModel" required="required"
+                                max="1000000" minlength="1">
+                              <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="MoneyValue?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="MoneyValue?.errors.minlength">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                <p *ngIf="MoneyValue?.errors.max">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                              </div>
+      
+      
+      
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> نقطة البيع </label>
+                              <select id="SalesPointIDAdvancedPayment" class="form-control " name="SalesPointIDAdvancedPayment" [(ngModel)]="addCustomerAdvancePaymentActionModel.SalesPointID"
+                                #SalesPointIDAdvancedPayment="ngModel" required="required">
+      
+                                <option *ngFor="let salespoint of activeSalesPoints " [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+      
+                              </select>
+                              <div *ngIf="SalesPointIDAdvancedPayment.invalid && (SalesPointIDAdvancedPayment.dirty || SalesPointIDAdvancedPayment.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="SalesPointIDAdvancedPayment?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> المنــدوب </label>
+                              <select id="EmpIDAdvancedPayment" class="form-control " name="EmpIDAdvancedPaymentPostBalance" [(ngModel)]="addCustomerAdvancePaymentActionModel.EmpID"
+                                #EmpIDAdvancedPayment="ngModel" required="required">
+      
+                                <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+      
+                              </select>
+                              <div *ngIf="EmpIDAdvancedPayment.invalid && (EmpIDAdvancedPayment.dirty || EmpIDAdvancedPayment.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="EmpIDAdvancedPayment?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+
+
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="Details">تفاصيل إضافيه (ليست إجباريه)</label>
+                              <textarea class="form-control" name="Details" [(ngModel)]="addCustomerAdvancePaymentActionModel.Details"
+                                #Details="ngModel"></textarea>
+                            </div>
+                          </div>
+                          <br>
+      
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="move-date"> تاريخ الحركه الماليه </label>
+                              <input name="move-date" class="form-control " [(ngModel)]="addCustomerAdvancePaymentActionModel.DateSubmit"
+                                #DateSubmit="ngModel" required="required" type="date">
+      
+                              <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="DateSubmit?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                            <br>
+                           
+      
+                              <div class="modal-footer ">
+      
+                                <button type="button" class="btn  pull-right" [disabled]="AddAdvancedPaymentActionForm.invalid"
+                                (click)="openModal(templatecustomeradvancepayment)"
+                                > حفظ</button>
+                                <button type="button" class="btn  pull-left" (click)="CloseModal()">إغلاق</button>
+                            
+                                <ng-template #templatecustomeradvancepayment>
+
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                          <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p> هل تريد حفظ الدفعة المقدمة   بالفعل ؟</p>
+                                      </div>
+                                      <div class="modal-footer ">
+                                          <button type="button" class="btn  pull-right" 
+                                          (click)="addCustomerAdvancedPaymentAction(addCustomerAdvancePaymentActionModel, AddAdvancedPaymentActionForm)"> نعم</button>
+                      
+                                          <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                                      </div>
+                                  </div>
+                      
+                      
+                      
+                      
+                        </ng-template>
+
+                           
+      
+                            </div>
+      
+                          </div>
+      
+      
+      
+      
+                        </form>
+      
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="cashdiscount">
+      
+      
+      
+                      <div class="row">
+                        <form name="AddCashdisCountActionForm" #AddCashdisCountActionForm="ngForm" novalidate="novalidate"> 
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="MoneyValue"> القيمه الماليه </label>
+                              <input id="MoneyValue" name="MoneyValue" class="form-control" type="number" [(ngModel)]="addCustomerCashdisCountActionModel.MoneyValue"
+                                #MoneyValue="ngModel" required="required" max="1000000" minlength="1">
+                              <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="MoneyValue?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="MoneyValue?.errors.minlength">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                <p *ngIf="MoneyValue?.errors.max">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                              </div>
+      
+      
+      
+      
+                            </div>
+                          </div>
+                            <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> نقطة البيع </label>
+                              <select id="SalesPointIDCashDiscound" class="form-control " name="SalesPointIDCashDiscound" [(ngModel)]="addCustomerCashdisCountActionModel.SalesPointID"
+                                #SalesPointIDCashDiscound="ngModel" required="required">
+      
+                                <option *ngFor="let salespoint of activeSalesPoints " [value]="salespoint.SalesPointID">{{salespoint.SalesPoint}}</option>
+      
+                              </select>
+                              <div *ngIf="SalesPointIDCashDiscound.invalid && (SalesPointIDCashDiscound.dirty || SalesPointIDCashDiscound.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="SalesPointIDCashDiscound?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> المنــدوب </label>
+                              <select id="EmpIDCashDiscound" class="form-control " name="EmpIDCashDiscoundPostBalance" [(ngModel)]="addCustomerCashdisCountActionModel.EmpID"
+                                #EmpIDCashDiscound="ngModel" required="required">
+      
+                                <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+      
+                              </select>
+                              <div *ngIf="EmpIDCashDiscound.invalid && (EmpIDCashDiscound.dirty || EmpIDCashDiscound.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="EmpIDCashDiscound?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+      
+                        
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="Details">تفاصيل إضافيه (ليست إجباريه)</label>
+                              <textarea class="form-control" name="Details" [(ngModel)]="addCustomerCashdisCountActionModel.Details"
+                                #Details="ngModel"></textarea>
+                            </div>
+                          </div>
+                          <br>
+      
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="DateSubmit"> تاريخ الحركه الماليه </label>
+                              <input name="DateSubmit" class="form-control " [(ngModel)]="addCustomerCashdisCountActionModel.DateSubmit"
+                                #DateSubmit="ngModel" required="required" type="date">
+      
+                              <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="DateSubmit?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+                          <br>
+      
+                          <div class="col-md-12">
+      
+                            <div class="modal-footer ">
+      
+                              <button type="button" class="btn  pull-right" [disabled]="AddCashdisCountActionForm.invalid"
+                              (click)="openModal(templatecustomercashdiscount)"  
+                              > حفظ</button>
+                              <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                            
+                              <ng-template #templatecustomercashdiscount>
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حفظ الخصم النقدى بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" 
+                                        (click)="addCustomerCashdisCountAction(addCustomerCashdisCountActionModel, AddCashdisCountActionForm)"> نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                      </ng-template>
+
+                            </div>
+      
+                          </div>
+      
+                        </form>
+      
+                      </div>
+      
+      
+      
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="check">
+      
+                      <div class="row">
+      
+                        <form name="AddCheckRebateActionForm" #AddCheckRebateActionForm="ngForm" novalidate="novalidate">
+      
+      
+      
+                          <div class="col-md-12">
+      
+                            <div class="form-group">
+                              <label for="MoneyValue"> القيمه الماليه </label>
+                              <input id="MoneyValue" name="MoneyValue" class="form-control" type="number" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.MoneyValue"
+                                #MoneyValue="ngModel" required="required" max="1000000" minlength="1">
+                              <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="MoneyValue?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="MoneyValue?.errors.minlength">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                                <p *ngIf="MoneyValue?.errors.max">
+                                  <i class="fa fa-bug"></i>القيمة المالية غير صحيحة </p>
+                              </div>
+      
+      
+      
+      
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_facial-move">البنك </label>
+                              <select class="form-control" #BankID="ngModel" required="required" name="BankID" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.BankID">
+                                <option *ngFor="let item of allBanks" [value]="item.BankID">{{item.BankName}}</option>
+      
+                              </select>
+                              <div *ngIf="BankID.invalid && (BankID.dirty || BankID.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="BankID?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+      
+      
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="ChequeNum"> رقم الشيك </label>
+                              <input id="ChequeNum" name="ChequeNum" required="required" #ChequeNum="ngModel" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.ChequeNum"
+                                class="form-control" type="text">
+                              <div *ngIf="ChequeNum.invalid && (ChequeNum.dirty || ChequeNum.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="ChequeNum?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+
+      
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_facial-move"> تاريخ الاستحقاق </label>
+                              <input id="DueDate" #DueDate="ngModel" name="DueDate" class="form-control" type="date" required="required"
+                                [(ngModel)]="addCustomerCheckTanzelRebateActionModel.DueDate">
+      
+                              <div *ngIf="DueDate.invalid && (DueDate.dirty || DueDate.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="DueDate?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+      
+                            </div>
+                          </div>
+      
+                     <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="form_pay-method"> المنــدوب </label>
+                              <select id="EmpIDCheck" class="form-control " name="EmpIDCheck" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.EmpID"
+                                #EmpIDCheck="ngModel" required="required">
+      
+                                <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+      
+                              </select>
+                              <div *ngIf="EmpIDCheck.invalid && (EmpIDCheck.dirty || EmpIDCheck.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="EmpIDCheck?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+
+
+                                
+      
+                              </div>
+      
+                            </div>
+                          </div>
+                          <br>
+      
+      
+      
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="Details">تفاصيل إضافيه (ليست إجباريه)</label>
+                              <textarea class="form-control" name="Details" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.Details"
+                                #Details="ngModel"></textarea>
+                            </div>
+                          </div>
+                          <br>
+      
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label for="DateSubmit"> تاريخ الحركه الماليه </label>
+                              <input name="DateSubmit" class="form-control " [(ngModel)]="addCustomerCheckTanzelRebateActionModel.DateSubmit"
+                                #DateSubmit="ngModel" required="required" type="date">
+      
+                              <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)" class="alert alert-danger">
+      
+                                <p *ngIf="DateSubmit?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+      
+                              </div>
+      
+                            </div>
+                          </div>
+      
+                          <br>
+                          
+                          <div class="col-md-12">
+                            <div class="modal-footer ">
+      
+                              <button type="button" class="btn  pull-right" [disabled]="AddCheckRebateActionForm.invalid"
+                              (click)="openModal(templatecustomercheckrebate)"
+                             > حفظ</button>
+                              <button type="button" class="btn  pull-left" (click)="CloseModal()">إغلاق</button>
+                            
+                              <ng-template #templatecustomercheckrebate>
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حفظ هذا الشيك بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" 
+
+                                        (click)="addCustomerCheckRebateAction(addCustomerCheckTanzelRebateActionModel,AddCheckRebateActionForm)"> نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                      </ng-template>
+
+                            </div>
+                          </div>
+                         
+                        </form>
+      
+                      </div>
+                    </div>
+                  </div>
+      
+                </div>
+      
+              </div>
+      
+      
+      
+      
+            </ng-template>
+      
+            <ng-template #templatedelete>
+      
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                  <h4 class="modal-title"><img src="/bag.png" class="userlogo" /> &nbsp; هل تريد الغاء هذه العملية بالفعل ؟ &nbsp;</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="form_pay-method"> المنــدوب </label>
+                      <select id="EmpIDCancle" class="form-control " name="EmpIDCancle" [(ngModel)]="addCustomerCheckTanzelRebateActionModel.EmpID"
+                        #EmpIDCancle="ngModel" required="required">
+
+                        <option *ngFor="let emp of allEmployees " [value]="emp.EmpID">{{emp.EmpName}}</option>
+
+                      </select>
+                      <div *ngIf="EmpIDCancle.invalid && (EmpIDCancle.dirty || EmpIDCancle.touched)" class="alert alert-danger">
+
+                        <p *ngIf="EmpIDCancle?.errors.required">
+                          <i class="fa fa-bug"></i> الحقل مطلوب
+                        </p>
+
+
+                        
+
+                      </div>
+
+                    </div>
+               
+                  <br>
+                </div>
+                <div class="modal-footer ">
+                  <button type="button" class="btn pull-right" [disabled]="EmpIDCancle.invalid" (click)="addCustomerCancelMoneyAction(addSelectedCustomerMoneyDetails)">
+                    نعم</button>
+      
+                  <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                </div>
+              </div>
+      
+      
+      
+            </ng-template>
+      
+      
+            <ng-template #templatedetails>
+      
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                  <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                </div>
+                <div class="modal-body">
+                  <p class="text text-right">{{customerMoneyActionDetails.Details}}</p>
+                </div>
+                <div class="modal-footer ">
+      
+                  <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                </div>
+              </div>
+      
+      
+      
+            </ng-template>
+
+            <ng-template #templatecustomeredit>
+      
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                  <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                </div>
+                <div class="modal-body">
+                  <p class="text text-right"> هل تريد تعديل بيانات العميل بالفعل ؟</p>
+                </div>
+                <div class="modal-footer ">
+                  <button type="button" class="btn pull-right" [disabled]="AddCustomerForm.invalid" (click)="EditCustomer(addCustomer)">
+                    نعم</button>
+                  <button type="button" class="btn  pull-left" (click)="modalRef.hide()">إغلاق</button>
+                </div>
+              </div>
+      
+      
+      
+            </ng-template>
+          </div>
+      </section>
+

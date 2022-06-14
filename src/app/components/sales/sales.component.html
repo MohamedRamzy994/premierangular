@@ -1,0 +1,130 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li class="active"> مبيعات </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesInvoice==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-plus-square"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+                            <a [routerLink]="[ '/salesbill' ]" routerLinkActive="active">فاتوره بيع</a>
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesInvoice==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-file-invoice"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+                            <a [routerLink]="[ '/oldsalesbills' ]" routerLinkActive="active">فواتير بيع سابقه</a>
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesDiscard==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-plus-square"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+                            <a [routerLink]="[ '/saleback' ]" routerLinkActive="active">مرتجع بيع</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesDiscard==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-file-invoice"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+                            <a [routerLink]="[ '/oldsaleback' ]" routerLinkActive="active">مرتجعات بيع سابقه</a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesInvoice==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-file-invoice-dollar"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+
+                            <a [routerLink]="[ '/salesbillsprofit' ]" routerLinkActive="active">ربحيه فواتير البيع</a>
+
+
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesInvoice==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-file-invoice-dollar"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+                            <a [routerLink]="[ '/dailysales' ]" routerLinkActive="active">مبيعات اليوميه</a>
+
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesManSummaryReport==true">
+                <div class="item">
+                    <div class="item-card">
+                        <h1>
+                            <i class="fas fa-2x fa-file-excel"></i>
+                        </h1>
+                    </div>
+                    <div class="item-footer">
+                        <h4>
+
+                            <a [routerLink]="[ '/salesmanaccountstate' ]" routerLinkActive="active"> حساب مندوب المبيعات</a>
+
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

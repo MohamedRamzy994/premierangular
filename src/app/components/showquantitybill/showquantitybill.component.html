@@ -1,0 +1,276 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+                <li>
+                    <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+                  </li>
+                  <li>
+                      <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+                  </li>
+                <li>
+                    <a [routerLink]="[ '/kindquantity' ]" routerLinkActive="active">تسويه كميات الأصناف</a>
+
+                </li>
+                <li>
+                    <a [routerLink]="[ '/kindquantitybills' ]" routerLinkActive="active">فواتير تسويه كميات سابقه</a>
+
+                </li>
+                <li class="active">   عرض فاتورة تسويه كميات سابقه</li>
+            </ol>
+        </div>
+    </section>
+<section class="search-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <h4>تفاصيل الفاتورة</h4>
+
+                    <div class="form-group disp-inl-bl ">
+                        <label> المخزن </label>
+                        <select class="form-control p-0">
+                            <option> المخزن الرئيسي </option>
+                            <option> المخزن الفرعي </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group disp-inl-bl">
+
+                        <label for="date"> التاريخ </label>
+                        <input name="date" class="form-control" type="date">
+
+                    </div>
+                    <div class="form-group disp-inl-bl">
+                        <label for="user"> المستخدم </label>
+                        <input name="user" class="form-control" type="text">
+
+                    </div>
+                    <br>
+
+                    <button type="button" class="btn  btn-style pull-right">
+                        <i class="fa fa-print"></i> طباعه </button>
+                    <button type="button" class="btn  btn-style">
+                        <i class="fa fa-times"></i> إلغاء الفاتورة </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <br>
+        <div style="overflow-x: auto;">                     <table class="table text-right table-bordered  table-responsive ">
+            <thead>
+                <tr>
+                    <th style="width:10%;">كود الصنف</th>
+                    <th> إسم الصنف </th>
+                    <th style="width:10%;"> كميه التحويل </th>
+                    <th style="width:10%;"> الوحده </th>
+                    <th style="width:15%;"> سبب التسويه </th>
+                    <th style="width:10%;"> رصيد المخزن </th>
+                    <th style="width:5%;">إختر</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>100</td>
+                    <td>قطعه</td>
+                    <td>خطأ ف الرصيد الافتتاحي </td>
+                    <td>3.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+
+
+            </tbody>
+          </table>                     </div>
+
+
+    </div>
+</section>

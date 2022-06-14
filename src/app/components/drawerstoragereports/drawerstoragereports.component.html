@@ -1,0 +1,169 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active"> المصروفات</a>
+
+
+            </li>
+            <li class="active">تقرير المالية</li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <label> في الفتره من</label>
+                <div class="input-group">
+                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFrom"
+                        [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject" (ngModelChange)="GetDateFrom($event)" />
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <label> إلي الفتره</label>
+                <div class="input-group">
+
+                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateTo"
+                        [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject" (ngModelChange)="GetDateTo($event)" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+
+                    </span>
+
+                </div>
+
+            </div>
+            <div class="col-md-4">
+
+                <label> نقطة البيع </label>
+                <select class="form-control" style=" padding-top:0;" name="SalesPointID"
+                 id="SalesPointID" [(ngModel)]="SalesPointID" (change)="GetStartBalance(SalesPointID, DateFrom, DateTo)" >
+
+                    <option *ngFor="let item of listSalesPointsModel" [value]="item.SalesPointID">
+                        {{item.SalesPoint}} </option>
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+</section>
+
+<section class="body-content">
+    <div class="container">
+        <br>
+
+        <div class="panel panel-default">
+            <div class="panel-heading text-right">
+                    <div class="row">
+                            <div class="col-md-4">
+                                    <h4> تقرير المالية </h4>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-2 text-left">
+                                <a>
+                        
+                                    <button (click)="Refresh()" class="btn btn-link">
+                                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                    </button>
+                                  </a>
+                            </div>
+                        </div>
+               
+            </div>
+            <div class="panel-body">
+                <div style="overflow-x: auto;" class="text text-center">
+                    <table class="table text-center table-bordered  table-responsive">
+                        <thead>
+                            <tr>
+                                <th> مدفوعات العملاء </th>
+                                <th> الايــداع </th>
+                                <th> التحويل الى </th>
+                                <th> السحــب </th>
+                                <th> التحويل من </th>
+                                <th> مدفوعات الموردين </th>
+                                <th> مرتجعات العملاء </th>
+                                <th> مرتجعات العملاء الملغية </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> {{listGetStartBalanceModel.CustomerPayed| currency}} </td>
+                                <td>{{listGetStartBalanceModel.Deposit| currency}}</td>
+                                <td>{{listGetStartBalanceModel.TransferToThis| currency}}</td>
+                                <td>{{listGetStartBalanceModel.Withdraw| currency}}</td>
+                                <td>{{listGetStartBalanceModel.TransferFromThis| currency}}</td>
+                                <td>{{listGetStartBalanceModel.SupplierPayed| currency}}</td>
+                                <td>{{listGetStartBalanceModel.CustomerRetrieve| currency}}</td>
+                                <td>{{listGetStartBalanceModel.CustomerRetrieveCancel| currency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table text-center table-bordered  table-responsive">
+                        <thead>
+                            <tr>
+
+                                <th> المرتبات </th>
+                                <th> سلف الموظفين </th>
+                                <th> تنزيلات العملاء </th>
+                                <th> تنزيلات الموردين </th>
+                                <th> الرصيد </th>
+                                <th> التكاليف الاضافية </th>
+                                <th> مصروفات الموظفين </th>
+                                <th> تسديد السلف المباشرة </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>{{listGetStartBalanceModel.Salary| currency}}</td>
+                                <td>{{listGetStartBalanceModel.EmpDebits| currency}}</td>
+                                <td>{{listGetStartBalanceModel.CustomerTanzelCancel| currency}}</td>
+                                <td>{{listGetStartBalanceModel.SupplierTanzelCancel| currency}}</td>
+                                <td>{{listGetStartBalanceModel.Balance| currency}}</td>
+                                <td>{{listGetStartBalanceModel.AddCost| currency}}</td>
+                                <td>{{listGetStartBalanceModel.EmpGivedMoney| currency}}</td>
+                                <td>{{listGetStartBalanceModel.EmpPayedDebitDirect| currency}}</td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <br><br>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</section>

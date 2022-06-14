@@ -1,0 +1,206 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+                <li>
+                    <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+                </li>
+
+                <li>
+
+                    <a [routerLink]="[ '/sales' ]" routerLinkActive="active">مبيعات</a>
+
+
+                </li>
+
+                <li>
+                    <a [routerLink]="[ '/oldsaleback' ]" routerLinkActive="active">مرتجعات بيع سابقه </a>
+
+                </li>
+                <li class="active"> مرتجعات بيع سابقة غير مرتبطة بفاتوره </li>
+            </ol>
+        </div>
+    </section>
+ 
+
+    <section class="search-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <label> في الفتره من</label>
+                    <div class="input-group">
+                        <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                            name="DateFrom" [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject"
+                            (ngModelChange)="GetDateFrom($event)" />
+    
+                        <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <label> إلي الفتره</label>
+                    <div class="input-group">
+    
+                        <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                            name="DateTo" [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject"
+                            (ngModelChange)="GetDateTo($event)" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+    
+                        </span>
+    
+                    </div>
+    
+    
+    
+                </div>
+    
+                <div class="col-md-4">
+    
+    
+                    <label> المخزن </label>
+                    <select class="form-control" [(ngModel)]="StoreName">
+                        <option *ngFor="let item of ProductStores" [value]="item.StoreName"
+                            (change)="GetSumTotal(DateFrom,DateTo,StoreName,SupplierName)">{{item.StoreName}}</option>
+    
+                    </select>
+                    <label>اسم المستخدم </label>
+                    <input name="UserName" class="form-control" type="text" [(ngModel)]="UserName">
+    
+    
+                </div>
+                <div class="col-md-4">
+                    <label> العميل </label>
+                    <select class="form-control" [(ngModel)]="SupplierName">
+                        <option *ngFor="let item of Customers" [value]="item.CustomerName"
+                            (change)="GetSumTotal(DateFrom,DateTo,StoreName,SupplierName)">{{item.CustomerName}} </option>
+                    </select>
+                    <label for="bill-num"> رقم الفاتوره </label>
+                    <input name="bill-num" class="form-control" type="text" [(ngModel)]="InvoiceID">
+    
+    
+    
+                </div>
+    
+    
+    
+    
+            </div>
+        </div>
+    </section>
+
+
+          <section class="body-content">
+            <div class="container">
+                <br>
+                <div class="panel panel-default">
+                    <div class="panel-heading text-right">
+                            <div class="row">
+                                    <div class="col-md-4">
+                                            <h4>مرتجعات سابقة غير مرتبطة بفاتورة</h4>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-2 text-left">
+                                        <a>
+                                
+                                            <button (click)="Refresh()" class="btn btn-link">
+                                              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                           <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                            </button>
+                                          </a>
+                                    </div>
+                                </div>
+                        </div>
+                    <div class="panel-body">
+                            <div style="overflow-x: auto;">
+                                    <table class="table text-center table-bordered  table-responsive">
+                                        <thead>
+                                            <tr>
+                                                    <th> مسلسل</th>
+                                           
+                                                <th> العميل</th>
+                                                <th> المخزن </th>
+                                                <th> تاريخ المرتجع </th>
+                                                <th> المستخدم </th>
+                                                <th> قيمة المرتجع </th>
+                                                <th style="width:5%"> إختر </th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr *ngFor="let item of AllProductSaleDiscardMainInvoices 
+                                            |searchbacksalesbillsfromtodate:DateFrom:DateTo  
+                                            |searchbacksalesstorename:StoreName
+                                            |searchbacksalesusername:UserName
+                                            |searchbacksalesinvoicenumber:InvoiceID
+                                            |searchbacksalescustomername:SupplierName
+                                            | paginate: { itemsPerPage: 10, currentPage: p } ;
+                                             let i = index;" [ngClass]="{'selectedrow':RowSelected(item)}">
+                                             <td>{{i+1}}</td>                                
+                                             <td>{{item.CustomerName}}</td>
+                                                <td>{{item.StoreName}}</td>
+                                                <td>{{item.DateSubmit| date}}</td>
+                                                <td>{{item.UserName}}</td>
+                                                <td>{{item.DiscardValue | currency}}</td>
+                                                <td>
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                        <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                                            <a class="label label-primary" (click)="SelectRow(item)">
+                                                                <i class="fa fa-check"></i> تحـديـد
+                                                            </a>
+                                                        </ng-container>
+                                                        <ng-template #RemoveSelect>
+                                                            <a class="label label-primary" (click)="RemoveSelection(item)">
+                                                                <i class="fa fa-remove"></i> الـــغـــاء
+                          
+                                                            </a>
+                                                        </ng-template>
+                          
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" class="text text-center alert alert-danger" *ngIf="(AllProductSaleDiscardMainInvoices).length === 0
+                                                ||
+                                               (AllProductSaleDiscardMainInvoices 
+                                            |searchbacksalesbillsfromtodate:DateFrom:DateTo  
+                                            |searchbacksalesstorename:StoreName
+                                            |searchbacksalesusername:UserName
+                                            |searchbacksalesinvoicenumber:InvoiceID
+                                            |searchbacksalescustomername:SupplierName).length===0">
+                                                    <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="9" class="text text-center">
+                                                    <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false" responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                                    </pagination-controls>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                    </div>
+                    <div class="panel-footer">
+
+                            <div class="btnshowtricks text-center">                               
+                                                                      
+                                                                        
+                                    <button type="button" class="btn btn-style" (click)="goToShowOldSaleBackBill()">
+                                            <i class="fa fa-eye"></i> عرض الفاتوره </button>
+                                          
+                                              </div>
+
+                    </div>
+                </div>
+                              
+          
+          
+            </div>
+          </section>

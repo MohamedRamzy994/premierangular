@@ -1,0 +1,988 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+              </li>
+              <li>
+                <a [routerLink]="[ '/users' ]" routerLinkActive="active">المستخدم</a>
+
+
+              </li>
+          <li>
+              <a [routerLink]="[ '/userslist' ]" routerLinkActive="active">قائمه المستخدمين</a>
+
+          </li>
+            <li class="active"> تعديل صلاحيات المستخدم </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <form #UserForm="ngForm" novalidate="novalidate"class="clearfix text-right ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-4">
+                        <h4 class="text-right"> الصلاحيات</h4>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-2 text-left">
+                        <a>
+                
+                            <button (click)="Refresh()" class="btn btn-link">
+                              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                           <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                            </button>
+                          </a>
+                    </div>
+
+                  </div>
+                  
+      
+                </div>
+                <div class="panel-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                          <div class="panel panel-default">
+                            <div class="panel-heading"><h5 class="text-right"> المستخدمين</h5> </div>
+                            <div class="panel-pody">
+                              
+                                      <div class="checkbox">
+                                        <label for="UserAdd">
+                                          <input id="UserAdd" name="UserAdd" type="checkbox" [(ngModel)]="user.UserAdd" #UserAdd="ngModel">
+                                          اضافه مستخدم</label>
+                                      </div>
+                                   
+                              
+                                      <div class="checkbox">
+                                        <label for="UserEdit">
+                                          <input id="UserEdit" name="UserEdit" type="checkbox" [(ngModel)]="user.UserEdit" #UserEdit="ngModel">
+                                          تعديل مستخدم </label>
+                                      </div>
+                                  
+                                  
+                                      <div class="checkbox">
+                                        <label for="UserDelete">
+                                          <input id="UserDelete" name="UserDelete" type="checkbox" [(ngModel)]="user.UserDelete"
+                                            #UserDelete="ngModel"> حذف مستخدم </label>
+                                      </div>
+                                   
+                               
+                               
+                            </div>
+                            <div class="panel-footer">
+                              <br>
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"> <h5 class="text-right"> المخازن</h5> </div>
+                                <div class="panel-pody">
+                                 
+                                          <div class="checkbox">
+                                            <label for="StoreAdd">
+                                              <input id="StoreAdd" name="StoreAdd" type="checkbox" [(ngModel)]="user.StoreAdd" #StoreAdd="ngModel">
+                                              اضافه مخزن </label>
+                                          </div>
+                                          <div class="checkbox">
+                                            <label for="StoreEdit">
+                                              <input id="StoreEdit" name="StoreEdit" type="checkbox" [(ngModel)]="user.StoreEdit"
+                                                #StoreEdit="ngModel"> تعديل مخزن </label>
+                                          </div>
+                                          <div class="checkbox">
+                                            <label for="StoreDelete">
+                                              <input id="StoreDelete" name="StoreDelete" type="checkbox" [(ngModel)]="user.StoreDelete"
+                                                #StoreDelete="ngModel"> حذف مخزن </label>
+                                          </div>
+                                         
+                                </div>
+                                <div class="panel-footer">
+                                  <br>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading"><h5 class="text-right"> الاصناف</h5></div>
+                                  <div class="panel-pody">
+                                          <div class="checkbox">
+                                            <label for="ProductAdd">
+                                              <input id="ProductAdd" name="ProductAdd" type="checkbox" [(ngModel)]="user.ProductAdd"
+                                                #ProductAdd="ngModel"> اضافه صنف </label>
+                                          </div>
+                                          <div class="checkbox">
+                                            <label for="ProductEdit">
+                                              <input id="ProductEdit" name="ProductEdit" type="checkbox" [(ngModel)]="user.ProductEdit"
+                                                #ProductEdit="ngModel"> تعديل صنف </label>
+                                          </div>
+                                          <div class="checkbox">
+                                            <label for="ProductDelete">
+                                              <input id="ProductDelete" name="ProductDelete" type="checkbox" [(ngModel)]="user.ProductDelete"
+                                                #ProductDelete="ngModel"> حذف صنف </label>
+                                          </div>
+                                    
+                      
+                                  </div>
+                                  <div class="panel-footer">
+                                    <br>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h5 class="text-right"> أرصدة افتتاحية</h5></div>
+                                    <div class="panel-pody">
+                                        <div class="checkbox">
+                                            <label for="StoreTransferBalance">
+                                              <input id="StoreTransferBalance" name="StoreTransferBalance" type="checkbox" [(ngModel)]="user.StoreTransferBalance"
+                                                #StoreTransferBalance="ngModel"> تحويل أرصده </label>
+                                          </div>
+                                            <div class="checkbox">
+                                              <label for="ProductOpen">
+                                                <input id="ProductOpen" name="ProductOpen" type="checkbox" [(ngModel)]="user.ProductOpen"
+                                                  #ProductOpen="ngModel"> رصيد افتتاحي </label>
+                                            </div>
+                        
+                                            <div class="checkbox">
+                                              <label for="ProductOpenCancel">
+                                                <input id="ProductOpenCancel" name="ProductOpenCancel" type="checkbox" [(ngModel)]="user.ProductOpenCancel"
+                                                  #ProductOpenCancel="ngModel"> تعديل رصيد افتتاحي </label>
+                                            </div>
+                        
+                                            <div class="checkbox">
+                                              <label for="ProductResetStock">
+                                                <input id="ProductResetStock" name="ProductResetStock" type="checkbox" [(ngModel)]="user.ProductResetStock"
+                                                  #ProductResetStock="ngModel"> تسويه كميات </label>
+                                            </div>
+                                            <br>
+                                  
+                                    </div>
+                                    <div class="panel-footer">
+                                      <br>
+                                    </div>
+                                  </div>
+                              </div>
+                          <div class="col-md-4">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading">  <h5 class="text-right"> الموردين</h5> </div>
+                                  <div class="panel-pody">
+          
+                                            <div class="checkbox">
+                                              <label for="SupplierAdd">
+                                                <input id="SupplierAdd" name="SupplierAdd" type="checkbox" [(ngModel)]="user.SupplierAdd"
+                                                  #SupplierAdd="ngModel"> اضافه مورد </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label for="SupplierEdit">
+                                                <input id="SupplierEdit" name="SupplierEdit" type="checkbox" [(ngModel)]="user.SupplierEdit"
+                                                  #SupplierEdit="ngModel"> تعديل مورد </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label for="SupplierDelete">
+                                                <input id="SupplierDelete" name="SupplierDelete" type="checkbox" [(ngModel)]="user.SupplierDelete"
+                                                  #SupplierDelete="ngModel"> حذف مورد </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label for="SupplierAddMoney">
+                                                  <input id="SupplierAddMoney" name="SupplierAddMoney" type="checkbox" [(ngModel)]="user.SupplierAddMoney"
+                                                    #SupplierAddMoney="ngModel"> اضافه تعامل مالي </label>
+                                              </div>
+                                              <div class="checkbox">
+                                                <label for="SupplierDeleteMoney">
+                                                  <input id="SupplierDeleteMoney" name="SupplierDeleteMoney" type="checkbox" [(ngModel)]="user.SupplierDeleteMoney"
+                                                    #SupplierDeleteMoney="ngModel"> تعديل تعامل مالي </label>
+                                              </div>
+                                        
+                                     
+                    
+                                   
+          
+                                  </div>
+                                  <div class="panel-footer">
+                                    <br>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"> <h5 class="text-right"> مشتريات</h5> </div>
+                                    <div class="panel-pody">
+                                     
+                                                <div class="checkbox">
+                                                  <label for="BuyInvoice">
+                                                    <input id="BuyInvoice" name="BuyInvoice" type="checkbox" [(ngModel)]="user.BuyInvoice"
+                                                      #BuyInvoice="ngModel"> فاتوره شراء</label>
+                                                </div>
+                                           
+                                                <div class="checkbox">
+                                                  <label for="BuyInvoiceCancel">
+                                                    <input id="BuyInvoiceCancel" name="BuyInvoiceCancel" type="checkbox" [(ngModel)]="user.BuyInvoiceCancel"
+                                                      #BuyInvoiceCancel="ngModel"> إلغاء فاتوره شراء </label>
+                                                </div>
+                                           
+                                                <div class="checkbox">
+                                                  <label for="BuyDiscard">
+                                                    <input id="BuyDiscard" name="BuyDiscard" type="checkbox" [(ngModel)]="user.BuyDiscard"
+                                                      #BuyDiscard="ngModel"> مرتجع شراء </label>
+                                                </div>
+                                         <br>
+                                         <br>
+                                         <br>
+          
+                        
+                                    </div>
+                                    <div class="panel-footer">
+                                      <br>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading"><h5 class="text-right"> الفروع</h5> </div>
+                                  <div class="panel-pody">
+                                    
+                                            <div class="checkbox">
+                                              <label for="AddBranch">
+                                                <input id="AddBranch" name="AddBranch" type="checkbox" [(ngModel)]="user.AddBranch" #AddBranch="ngModel">
+                                                اضافه فرع</label>
+                                            </div>
+                                         
+                                    
+                                            <div class="checkbox">
+                                              <label for="EditBranch">
+                                                <input id="EditBranch" name="EditBranch" type="checkbox" [(ngModel)]="user.EditBranch" #EditBranch="ngModel">
+                                                تعديل فرع </label>
+                                            </div>
+                                        
+                                        
+                                            <div class="checkbox">
+                                              <label for="DeleteBranch">
+                                                <input id="DeleteBranch" name="DeleteBranch" type="checkbox" [(ngModel)]="user.DeleteBranch"
+                                                  #DeleteBranch="ngModel"> حذف فرع </label>
+                                            </div>
+          
+                                  </div>
+                                  <div class="panel-footer">
+                                    <br>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">   <h5 class="text-right"> العملاء</h5></div>
+                                        <div class="panel-pody">
+                                         
+                                                    <div class="checkbox">
+                                                      <label for="CustomerAdd">
+                                                        <input id="CustomerAdd" name="CustomerAdd" type="checkbox" [(ngModel)]="user.CustomerAdd"
+                                                          #CustomerAdd="ngModel"> اضافه عميل </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="CustomerEdit">
+                                                        <input id="CustomerEdit" name="CustomerEdit" type="checkbox" [(ngModel)]="user.CustomerEdit"
+                                                          #CustomerEdit="ngModel"> تعديل عميل </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="CustomerDelete">
+                                                        <input id="CustomerDelete" name="CustomerDelete" type="checkbox" [(ngModel)]="user.CustomerDelete"
+                                                          #CustomerDelete="ngModel"> حذف عميل </label>
+                                                    </div>
+                                             
+                                                    <div class="checkbox">
+                                                      <label for="CustomerAddMoney">
+                                                        <input id="CustomerAddMoney" name="CustomerAddMoney" type="checkbox" [(ngModel)]="user.CustomerAddMoney"
+                                                          #CustomerAddMoney="ngModel"> اضافه تعامل مالي </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="CustomerCancelMoney">
+                                                        <input id="CustomerCancelMoney" name="CustomerCancelMoney" type="checkbox" [(ngModel)]="user.CustomerCancelMoney"
+                                                          #CustomerCancelMoney="ngModel"> تعديل تعامل مالي </label>
+                                                    </div>
+                            
+                                              
+                                        </div>
+                                        <div class="panel-footer">
+                                          <br>
+                                        </div>
+                                      </div>
+                                  </div>
+          
+                                  <div class="col-md-4">
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">    <h5 class="text-right"> المبيعات</h5></div>
+                                          <div class="panel-pody">
+                                          
+                                                      <div class="checkbox">
+                                                        <label for="SalesInvoice">
+                                                          <input id="SalesInvoice" name="SalesInvoice" type="checkbox" [(ngModel)]="user.SalesInvoice"
+                                                            #SalesInvoice="ngModel"> فاتوره بيع </label>
+                                                      </div>
+                                                      <div class="checkbox">
+                                                        <label for="SalesDiscount">
+                                                          <input id="SalesDiscount" name="SalesDiscount" type="checkbox" [(ngModel)]="user.SalesDiscount"
+                                                            #SalesDiscount="ngModel"> خصومات </label>
+                                                      </div>
+                                                      <div class="checkbox">
+                                                        <label for="SalesInvoiceCancel">
+                                                          <input id="SalesInvoiceCancel" name="SalesInvoiceCancel" type="checkbox" [(ngModel)]="user.SalesInvoiceCancel"
+                                                            #SalesInvoiceCancel="ngModel"> إلغاء فاتوره بيع </label>
+                                                      </div>
+                                              
+                                                      <div class="checkbox">
+                                                        <label for="SalesDiscard">
+                                                          <input id="SalesDiscard" name="SalesDiscard" type="checkbox" [(ngModel)]="user.SalesDiscard"
+                                                            #SalesDiscard="ngModel"> مرتجع بيع </label>
+                                                      </div>
+                                                      <div class="checkbox">
+                                                        <label for="SalesManSummaryReport">
+                                                          <input id="SalesManSummaryReport" name="SalesManSummaryReport" type="checkbox" [(ngModel)]="user.SalesManSummaryReport"
+                                                            #SalesManSummaryReport="ngModel"> طباعه كشف حساب مندوب </label>
+                                                      </div>
+                              
+                                          </div>
+                                          <div class="panel-footer">
+                                            <br>
+                                          </div>
+                                        </div>
+                                    </div>
+                              <div class="col-md-4">
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                          <h5 class="text-right"> الموظفين</h5>
+                                      </div>
+                                      <div class="panel-pody">
+          
+                                                  <div class="checkbox">
+                                                    <label for="EmpAdd">
+                                                      <input id="EmpAdd" name="EmpAdd" type="checkbox" [(ngModel)]="user.EmpAdd" #EmpAdd="ngModel">
+                                                      اضافه موظف </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpEdit">
+                                                      <input id="EmpEdit" name="EmpEdit" type="checkbox" [(ngModel)]="user.EmpEdit" #EmpEdit="ngModel">
+                                                      تعديل موظف </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpDelete">
+                                                      <input id="EmpDelete" name="EmpDelete" type="checkbox" [(ngModel)]="user.EmpDelete"
+                                                        #EmpDelete="ngModel"> حذف موظف </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpComm">
+                                                      <input id="EmpComm" name="EmpComm" type="checkbox" [(ngModel)]="user.EmpComm" #EmpComm="ngModel">
+                                                      إعطاء مكافئه </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpCancelComm">
+                                                      <input id="EmpCancelComm" name="EmpCancelComm" type="checkbox" [(ngModel)]="user.EmpCancelComm"
+                                                        #EmpCancelComm="ngModel"> تعديل مكافئه </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpPunish">
+                                                      <input id="EmpPunish" name="EmpPunish" type="checkbox" [(ngModel)]="user.EmpPunish"
+                                                        #EmpPunish="ngModel"> إعطاء خصم </label>
+                                                  </div>
+                                                  <div class="checkbox">
+                                                    <label for="EmpCancelPunish">
+                                                      <input id="EmpCancelPunish" name="EmpCancelPunish" type="checkbox" [(ngModel)]="user.EmpCancelPunish"
+                                                        #EmpCancelPunish="ngModel"> حذف خصم </label>
+                                                  </div>
+                          
+                                                  <div class="checkbox">
+                                                    <label for="EmpDebit">
+                                                      <input id="EmpDebit" name="EmpDebit" type="checkbox" [(ngModel)]="user.EmpDebit" #EmpDebit="ngModel">
+                                                      إعطاء سُلفه </label>
+                                                  </div>
+                          
+                                                  <div class="checkbox">
+                                                    <label for="EmpSalary">
+                                                      <input id="EmpSalary" name="EmpSalary" type="checkbox" [(ngModel)]="user.EmpSalary"
+                                                        #EmpSalary="ngModel"> إعطاء راتب </label>
+                                                  </div>
+          
+                                      </div>
+                                      <div class="panel-footer">
+                                        <br>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><h5 class="text-right"> التقارير</h5></div>
+                                        <div class="panel-pody">
+          
+                              <div class="checkbox">
+                                <label for="ReportProductMove">
+                                  <input id="ReportProductMove" name="ReportProductMove" type="checkbox" [(ngModel)]="user.ReportProductMove"
+                                    #ReportProductMove="ngModel"> تقرير حركات صنف </label>
+                              </div>
+                              <div class="checkbox">
+                                <label for="ReportStoreStock">
+                                  <input id="ReportStoreStock" name="ReportStoreStock" type="checkbox" [(ngModel)]="user.ReportStoreStock"
+                                    #ReportStoreStock="ngModel"> تقرير جرد مخازن </label>
+                              </div>
+                              <div class="checkbox">
+                                <label for="ReportSupplierBuys">
+          
+                                  <input id="ReportSupplierBuys" name="ReportSupplierBuys" type="checkbox" [(ngModel)]="user.ReportSupplierBuys"
+                                    #ReportSupplierBuys="ngModel"> تقرير مشتريات موردين </label>
+                              </div>
+                              <div class="checkbox">
+                                <label for="ReportAddCost">
+                                  <input id="ReportAddCost" name="ReportAddCost" type="checkbox" [(ngModel)]="user.ReportAddCost"
+                                    #ReportAddCost="ngModel"> تقرير المصروفات </label>
+                              </div>
+                        
+                              <div class="checkbox">
+                                <label for="ReportCustomerSales">
+                                  <input id="ReportCustomerSales" name="ReportCustomerSales" type="checkbox" [(ngModel)]="user.ReportCustomerSales"
+                                    #ReportCustomerSales="ngModel"> تقرير مبيعات عملاء </label>
+                              </div>
+                              <div class="checkbox">
+                                <label for="ReportSalesManSales">
+                                  <input id="ReportSalesManSales" name="ReportSalesManSales" type="checkbox" [(ngModel)]="user.ReportSalesManSales"
+                                    #ReportSalesManSales="ngModel"> تقرير مبيعات مندوبين </label>
+                              </div>
+                              <div class="checkbox">
+                                <label for="ReportProfitLose">
+                                  <input id="ReportProfitLose" name="ReportProfitLose" type="checkbox" [(ngModel)]="user.ReportProfitLose"
+                                    #ReportProfitLose="ngModel"> تقرير أرباح و خسائر </label>
+                              </div>
+          
+                              <div class="checkbox">
+                                <label for="ReportTotalMoneyInfo">
+                                  <input id="ReportTotalMoneyInfo" name="ReportTotalMoneyInfo" type="checkbox" [(ngModel)]="user.ReportTotalMoneyInfo"
+                                    #ReportTotalMoneyInfo="ngModel"> تقرير مالي ثابت </label>
+                              </div>
+          <br>
+                                        </div>
+                                        <div class="panel-footer">
+                                          <br>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h5 class="text-right"> نقاط البيع</h5>
+                                        </div>
+                                        <div class="panel-pody">
+                                                    <div class="checkbox">
+                                                      <label for="SalesPointDepositWithdrow">
+                                                        <input id="SalesPointDepositWithdrow" name="SalesPointDepositWithdrow" type="checkbox"
+                                                          [(ngModel)]="user.SalesPointDepositWithdrow" #SalesPointDepositWithdrow="ngModel"> سحب و
+                                                        إيداع </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="SalesPointTransferMoney">
+                                                        <input id="SalesPointTransferMoney" name="SalesPointTransferMoney" type="checkbox"
+                                                          [(ngModel)]="user.SalesPointTransferMoney" #SalesPointTransferMoney="ngModel"> تحويل
+                                                        أموال </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="AdditionalCost">
+                                                        <input id="AdditionalCost" name="AdditionalCost" type="checkbox" [(ngModel)]="user.AdditionalCost"
+                                                          #AdditionalCost="ngModel"> مصروفات </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="SalesPointReport">
+                                                        <input id="SalesPointReport" name="SalesPointReport" type="checkbox" [(ngModel)]="user.SalesPointReport"
+                                                          #SalesPointReport="ngModel"> تقرير نقطه البيع </label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                      <label for="AddSalesPoint">
+                                                        <input id="AddSalesPoint" name="AddSalesPoint" type="checkbox" [(ngModel)]="user.AddSalesPoint" #AddSalesPoint="ngModel">
+                                                        اضافه نقطة بيع</label>
+                                                    </div>
+                                                 
+                                            
+                                                    <div class="checkbox">
+                                                      <label for="EditSalesPoint">
+                                                        <input id="EditSalesPoint" name="EditSalesPoint" type="checkbox" [(ngModel)]="user.EditSalesPoint" #EditSalesPoint="ngModel">
+                                                        تعديل نقطة بيع </label>
+                                                    </div>
+                                                
+                                                
+                                                    <div class="checkbox">
+                                                      <label for="DeleteSalesPoint">
+                                                        <input id="DeleteSalesPoint" name="DeleteSalesPoint" type="checkbox" [(ngModel)]="user.DeleteSalesPoint"
+                                                          #DeleteSalesPoint="ngModel"> حذف نقطة بيع </label>
+                                                    </div>
+                                                    <br>
+                                        </div>
+                                        <div class="panel-footer">
+                                          <br>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="panel panel-default">
+                          <div class="panel-heading"><h5 class="text-right"> السجلات</h5> </div>
+                          <div class="panel-pody">
+                          
+                                  <div class="checkbox">
+                                    <label for="AccessActivitiesRecord">
+                                      <input id="AccessActivitiesRecord" name="AccessActivitiesRecord" type="checkbox" [(ngModel)]="user.AccessActivitiesRecord" #AccessActivitiesRecord="ngModel">
+                                       سجل النشاطات</label>
+                                  </div>
+                               
+                          
+                                  <div class="checkbox">
+                                    <label for="AccessStoreNotifications">
+                                      <input id="AccessStoreNotifications" name="AccessStoreNotifications" type="checkbox" [(ngModel)]="user.AccessStoreNotifications" #AccessStoreNotifications="ngModel">
+                                      سجل المخزون </label>
+                                  </div>
+                              
+                              
+                                  <div class="checkbox">
+                                    <label for="AccessSalesPointNotifications">
+                                      <input id="AccessSalesPointNotifications" name="AccessSalesPointNotifications" type="checkbox" [(ngModel)]="user.AccessSalesPointNotifications"
+                                        #AccessSalesPointNotifications="ngModel"> سجل نقاط البيع </label>
+                                  </div>
+                          
+                          </div>
+                          <div class="panel-footer">
+                          <br>
+                          </div>
+                          </div>
+                          
+                          </div>
+                     
+                          
+                    
+                              <div class="col-md-4">
+                                  <div class="panel panel-default">
+                                      <div class="panel-heading"><h5 class="text-right">اعدادات النظام</h5></div>
+                                      <div class="panel-pody">
+                                        <div class="checkbox">
+                                            <label for="SystemSettings">
+                                                <input id="SystemSettings" name="SystemSettings" type="checkbox" [(ngModel)]="user.SystemSettings"
+                                                  #SystemSettings="ngModel"> التحكم في إعدادات النظام </label>
+                                        </div>
+                                     
+                                      </div>
+                                      <div class="panel-footer">
+                                        <br>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                </div>
+                              </div>
+
+
+
+
+
+                    <!-- <fieldset>
+                        <legend class="text-right">الصلاحيات</legend>
+                        <ul class="permtion">
+                          <li>
+                            <h5 class="text-right"> المستخدمين</h5>
+                            <ul>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="UserAdd">
+                                    <input id="UserAdd" name="UserAdd" type="checkbox" [(ngModel)]="user.UserAdd" #UserAdd="ngModel" > اضافه مستخدم</label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="UserEdit">
+                                    <input id="UserEdit"  name="UserEdit" type="checkbox" [(ngModel)]="user.UserEdit" #UserEdit="ngModel" > تعديل مستخدم </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="UserDelete">
+                                    <input id="UserDelete" name="UserDelete" type="checkbox" [(ngModel)]="user.UserDelete" #UserDelete="ngModel" > حذف مستخدم </label>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> المخازن</h5>
+                            <ul class="disp-inl-bl">
+        
+                              <li>
+                                <div class="checkbox">
+                                  <label for="StoreAdd">
+                                    <input id="StoreAdd" name="StoreAdd" type="checkbox" [(ngModel)]="user.StoreAdd" #StoreAdd="ngModel"> اضافه مخزن </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="StoreEdit">
+                                    <input id="StoreEdit" name="StoreEdit" type="checkbox" [(ngModel)]="user.StoreEdit" #StoreEdit="ngModel"> تعديل مخزن </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="StoreDelete">
+                                    <input id="StoreDelete" name="StoreDelete" type="checkbox" [(ngModel)]="user.StoreDelete" #StoreDelete="ngModel"> حذف مخزن </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="StoreTransferBalance">
+                                    <input id="StoreTransferBalance" name="StoreTransferBalance" type="checkbox" [(ngModel)]="user.StoreTransferBalance" #StoreTransferBalance="ngModel"> تحويل أرصده </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="ProductAdd">
+                                    <input id="ProductAdd" name="ProductAdd" type="checkbox" [(ngModel)]="user.ProductAdd" #ProductAdd="ngModel"> اضافه صنف </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ProductEdit">
+                                    <input id="ProductEdit" name="ProductEdit" type="checkbox" [(ngModel)]="user.ProductEdit" #ProductEdit="ngModel"> تعديل صنف </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ProductDelete">
+                                    <input id="ProductDelete" name="ProductDelete" type="checkbox" [(ngModel)]="user.ProductDelete" #ProductDelete="ngModel"> حذف صنف </label>
+                                </div>
+                              </li>
+        
+                              <li>
+                                <div class="checkbox">
+                                  <label for="ProductOpen">
+                                    <input id="ProductOpen" name="ProductOpen" type="checkbox" [(ngModel)]="user.ProductOpen" #ProductOpen="ngModel"> رصيد افتتاحي </label>
+                                </div>
+        
+                                <div class="checkbox">
+                                  <label for="ProductOpenCancel">
+                                    <input id="ProductOpenCancel" name="ProductOpenCancel" type="checkbox" [(ngModel)]="user.ProductOpenCancel" #ProductOpenCancel="ngModel"> تعديل رصيد افتتاحي </label>
+                                </div>
+        
+                                <div class="checkbox">
+                                  <label for="ProductResetStock">
+                                    <input id="ProductResetStock" name="ProductResetStock" type="checkbox" [(ngModel)]="user.ProductResetStock" #ProductResetStock="ngModel"> تسويه كميات </label>
+                                </div>
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> الموردين</h5>
+                            <ul class="disp-inl-bl">
+                              <li>
+                                <div class="checkbox">
+                                  <label for="SupplierAdd">
+                                    <input id="SupplierAdd" name="SupplierAdd" type="checkbox" [(ngModel)]="user.SupplierAdd" #SupplierAdd="ngModel"> اضافه مورد </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SupplierEdit">
+                                    <input id="SupplierEdit" name="SupplierEdit" type="checkbox" [(ngModel)]="user.SupplierEdit" #SupplierEdit="ngModel"> تعديل مورد </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SupplierDelete">
+                                    <input id="SupplierDelete" name="SupplierDelete" type="checkbox" [(ngModel)]="user.SupplierDelete" #SupplierDelete="ngModel"> حذف مورد </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="SupplierAddMoney">
+                                    <input id="SupplierAddMoney" name="SupplierAddMoney" type="checkbox" [(ngModel)]="user.SupplierAddMoney" #SupplierAddMoney="ngModel"> اضافه تعامل مالي </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SupplierDeleteMoney">
+                                    <input id="SupplierDeleteMoney" name="SupplierDeleteMoney" type="checkbox" [(ngModel)]="user.SupplierDeleteMoney" #SupplierDeleteMoney="ngModel"> تعديل تعامل مالي </label>
+                                </div>
+        
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                        </ul>
+                        <hr>
+                        <ul class="permtion">
+                          <li>
+                            <h5 class="text-right"> مشتريات</h5>
+                            <ul>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="BuyInvoice">
+                                    <input id="BuyInvoice" name="BuyInvoice" type="checkbox" [(ngModel)]="user.BuyInvoice" #BuyInvoice="ngModel"> فاتوره شراء</label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="BuyInvoiceCancel">
+                                    <input id="BuyInvoiceCancel" name="BuyInvoiceCancel" type="checkbox" [(ngModel)]="user.BuyInvoiceCancel" #BuyInvoiceCancel="ngModel"> إلغاء فاتوره شراء </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="BuyDiscard">
+                                    <input id="BuyDiscard" name="BuyDiscard" type="checkbox" [(ngModel)]="user.BuyDiscard" #BuyDiscard="ngModel"> مرتجع شراء </label>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> الموظفين</h5>
+                            <ul class="disp-inl-bl">
+                              <li>
+                                <div class="checkbox">
+                                  <label for="EmpAdd">
+                                    <input id="EmpAdd" name="EmpAdd" type="checkbox" [(ngModel)]="user.EmpAdd" #EmpAdd="ngModel"> اضافه موظف </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="EmpEdit">
+                                    <input id="EmpEdit" name="EmpEdit" type="checkbox" [(ngModel)]="user.EmpEdit" #EmpEdit="ngModel"> تعديل موظف </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="EmpDelete">
+                                    <input id="EmpDelete" name="EmpDelete" type="checkbox" [(ngModel)]="user.EmpDelete" #EmpDelete="ngModel"> حذف موظف </label>
+                                </div>
+        
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="EmpComm">
+                                    <input id="EmpComm" name="EmpComm" type="checkbox" [(ngModel)]="user.EmpComm" #EmpComm="ngModel"> إعطاء مكافئه </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="EmpCancelComm">
+                                    <input id="EmpCancelComm" name="EmpCancelComm" type="checkbox" [(ngModel)]="user.EmpCancelComm" #EmpCancelComm="ngModel"> تعديل مكافئه </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="EmpPunish">
+                                    <input id="EmpPunish" name="EmpPunish" type="checkbox" [(ngModel)]="user.EmpPunish" #EmpPunish="ngModel"> إعطاء خصم </label>
+                                </div>
+                              </li>
+        
+                              <li>
+                                <div class="checkbox">
+                                  <label for="EmpCancelPunish">
+                                    <input id="EmpCancelPunish" name="EmpCancelPunish" type="checkbox" [(ngModel)]="user.EmpCancelPunish" #EmpCancelPunish="ngModel"> حذف خصم </label>
+                                </div>
+        
+                                <div class="checkbox">
+                                  <label for="EmpDebit">
+                                    <input id="EmpDebit" name="EmpDebit" type="checkbox" [(ngModel)]="user.EmpDebit" #EmpDebit="ngModel"> إعطاء سُلفه </label>
+                                </div>
+        
+                                <div class="checkbox">
+                                  <label for="EmpSalary">
+                                    <input id="EmpSalary" name="EmpSalary" type="checkbox" [(ngModel)]="user.EmpSalary" #EmpSalary="ngModel"> إعطاء راتب </label>
+                                </div>
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> العملاء</h5>
+                            <ul class="disp-inl-bl">
+                              <li>
+                                <div class="checkbox">
+                                  <label for="CustomerAdd">
+                                    <input id="CustomerAdd" name="CustomerAdd" type="checkbox" [(ngModel)]="user.CustomerAdd" #CustomerAdd="ngModel"> اضافه عميل </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="CustomerEdit">
+                                    <input id="CustomerEdit" name="CustomerEdit" type="checkbox" [(ngModel)]="user.CustomerEdit" #CustomerEdit="ngModel"> تعديل عميل </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="CustomerDelete">
+                                    <input id="CustomerDelete" name="CustomerDelete" type="checkbox" [(ngModel)]="user.CustomerDelete" #CustomerDelete="ngModel"> حذف عميل </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="CustomerAddMoney">
+                                    <input id="CustomerAddMoney" name="CustomerAddMoney" type="checkbox" [(ngModel)]="user.CustomerAddMoney" #CustomerAddMoney="ngModel"> اضافه تعامل مالي </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="CustomerCancelMoney">
+                                    <input id="CustomerCancelMoney" name="CustomerCancelMoney" type="checkbox" [(ngModel)]="user.CustomerCancelMoney" #CustomerCancelMoney="ngModel"> تعديل تعامل مالي </label>
+                                </div>
+        
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                        </ul>
+                        <hr>
+                        <ul class="permtion">
+                          <li>
+                            <h5 class="text-right"> المبيعات</h5>
+                            <ul class="disp-inl-bl">
+                              <li>
+                                <div class="checkbox">
+                                  <label for="SalesInvoice">
+                                    <input id="SalesInvoice" name="SalesInvoice" type="checkbox" [(ngModel)]="user.SalesInvoice" #SalesInvoice="ngModel"> فاتوره بيع </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SalesDiscount">
+                                    <input id="SalesDiscount" name="SalesDiscount" type="checkbox" [(ngModel)]="user.SalesDiscount" #SalesDiscount="ngModel"> خصومات </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SalesInvoiceCancel">
+                                    <input id="SalesInvoiceCancel" name="SalesInvoiceCancel" type="checkbox" [(ngModel)]="user.SalesInvoiceCancel" #SalesInvoiceCancel="ngModel"> إلغاء فاتوره بيع </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="SalesDiscard">
+                                    <input id="SalesDiscard" name="SalesDiscard" type="checkbox" [(ngModel)]="user.SalesDiscard" #SalesDiscard="ngModel"> مرتجع بيع </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SalesManSummaryReport">
+                                    <input id="SalesManSummaryReport" name="SalesManSummaryReport" type="checkbox" [(ngModel)]="user.SalesManSummaryReport" #SalesManSummaryReport="ngModel"> طباعه كشف حساب مندوب </label>
+                                </div>
+        
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> نقاط البيع</h5>
+                            <ul class="disp-inl-bl">
+        
+        
+                              <li>
+                                <div class="checkbox">
+                                  <label for="SalesPointDepositWithdrow">
+                                    <input id="SalesPointDepositWithdrow" name="SalesPointDepositWithdrow" type="checkbox" [(ngModel)]="user.SalesPointDepositWithdrow" #SalesPointDepositWithdrow="ngModel"> سحب و إيداع </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SalesPointTransferMoney">
+                                    <input id="SalesPointTransferMoney" name="SalesPointTransferMoney" type="checkbox" [(ngModel)]="user.SalesPointTransferMoney" #SalesPointTransferMoney="ngModel"> تحويل أموال </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="AdditionalCost">
+                                    <input id="AdditionalCost" name="AdditionalCost" type="checkbox" [(ngModel)]="user.AdditionalCost" #AdditionalCost="ngModel"> مصروفات </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="SalesPointReport">
+                                    <input id="SalesPointReport" name="SalesPointReport" type="checkbox" [(ngModel)]="user.SalesPointReport" #SalesPointReport="ngModel"> تقرير نقطه البيع </label>
+                                </div>
+                              </li>
+        
+        
+        
+                            </ul>
+                          </li>
+        
+                          <li class="bor-right">
+                            <h5 class="text-right"> التقارير</h5>
+                            <ul class="disp-inl-bl">
+                              <li>
+                                <div class="checkbox">
+                                  <label for="ReportProductMove">
+                                    <input id="ReportProductMove" name="ReportProductMove" type="checkbox" [(ngModel)]="user.ReportProductMove" #ReportProductMove="ngModel"> تقرير حركات صنف </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ReportStoreStock">
+                                    <input id="ReportStoreStock" name="ReportStoreStock" type="checkbox" [(ngModel)]="user.ReportStoreStock" #ReportStoreStock="ngModel"> تقرير جرد مخازن </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ReportSupplierBuys">
+        
+                                    <input id="ReportSupplierBuys" name="ReportSupplierBuys" type="checkbox" [(ngModel)]="user.ReportSupplierBuys" #ReportSupplierBuys="ngModel"> تقرير مشتريات موردين </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ReportAddCost">
+                                    <input id="ReportAddCost" name="ReportAddCost" type="checkbox" [(ngModel)]="user.ReportAddCost" #ReportAddCost="ngModel"> تقرير المصروفات </label>
+                                </div>
+                              </li>
+                              <li>
+                                <div class="checkbox">
+                                  <label for="ReportCustomerSales">
+                                    <input id="ReportCustomerSales" name="ReportCustomerSales" type="checkbox" [(ngModel)]="user.ReportCustomerSales" #ReportCustomerSales="ngModel"> تقرير مبيعات عملاء </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ReportSalesManSales">
+                                    <input id="ReportSalesManSales" name="ReportSalesManSales" type="checkbox" [(ngModel)]="user.ReportSalesManSales" #ReportSalesManSales="ngModel"> تقرير مبيعات مندوبين </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label for="ReportProfitLose">
+                                    <input id="ReportProfitLose" name="ReportProfitLose" type="checkbox" [(ngModel)]="user.ReportProfitLose" #ReportProfitLose="ngModel"> تقرير أرباح و خسائر </label>
+                                </div>
+        
+                                <div class="checkbox">
+                                  <label for="ReportTotalMoneyInfo">
+                                    <input  id="ReportTotalMoneyInfo" name="ReportTotalMoneyInfo" type="checkbox" [(ngModel)]="user.ReportTotalMoneyInfo" #ReportTotalMoneyInfo="ngModel"> تقرير مالي ثابت </label>
+                                </div>
+        
+                              </li>
+        
+                            </ul>
+                          </li>
+        
+                        </ul>
+                        <hr>
+                        <div class="checkbox pull-right">
+                          <label for="SystemSettings">
+                            <input id="SystemSettings" name="SystemSettings" type="checkbox" [(ngModel)]="user.SystemSettings" #SystemSettings="ngModel"> التحكم في إعدادات النظام </label>
+                        </div>
+                     
+        
+        
+                      </fieldset> -->
+
+
+
+   <br>
+
+
+
+
+                    </div>    
+<div class="panel-footer">
+
+    <div class="btntricks">
+        <button class="btn  btn-style" [disabled]="UserForm.invalid" (click)="openModal(template)" >
+          <i class="fa fa-save"></i> حفظ</button>
+      </div>
+
+      
+      <ng-template #template>
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+            </div>
+            <div class="modal-body">
+                <p> هل تريد حفظ هذا المستخدم بالفعل ؟</p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn  pull-right"  (click)="onSubmit(user)"> نعم</button>
+
+                <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+            </div>
+        </div>
+
+
+
+
+</ng-template>
+</div>
+</div>  
+           
+
+        </form>
+
+    </div>
+
+</section>

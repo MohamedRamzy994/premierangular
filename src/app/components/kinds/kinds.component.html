@@ -1,0 +1,244 @@
+<section class="page-title">
+  <div class="container">
+    <ol class="breadcrumb">
+
+      <li>
+        <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+      </li>
+      <li>
+        <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+
+      </li>
+      <li class="active"> قائمه الأصناف</li>
+    </ol>
+  </div>
+</section>
+<section class="search-sec">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+
+        <label for="StoreID"> المخزن </label>
+        <select class="form-control"  name="StoreID" (change)="getAllProductsInStore($event.target.value)" >
+          <option [value]="0">كل المخازن</option>
+          <option *ngFor="let item of ProductStores" [value]="item.StoreID" >{{item.StoreName}} </option>
+
+
+        </select>
+        <label> المجموعه</label>
+        <select id="CatID" class="form-control" name="CatID" [(ngModel)]="searchterm.CatName"
+        required="required">
+        <option [value]="''">كل المجموعات</option>
+
+        <option *ngFor="let item of productgroups" [value]="item.CatName">{{item.CatName}}</option>
+
+      </select>
+
+
+
+      </div>
+
+      <div class="col-md-3">
+
+        <label for="ProductName"> اسم الصنف </label>
+        <input name="ProductName" class="form-control " type="text" [(ngModel)]="searchterm.ProductName">
+
+        <label for="ProductCode"> كود الصنف </label>
+        <input name="ProductCode" class="form-control " type="text" [(ngModel)]="searchterm.ProductCode">
+
+
+
+
+      </div>
+
+      <div class="col-md-3">
+        <label> سعر البيع </label>
+
+        <input name="PriceFrom" class="form-control " type="number" [(ngModel)]="searchterm.PriceFrom" >
+        <label> إلي</label>
+        <input name="PriceTo" class="form-control " type="number" [(ngModel)]="searchterm.PriceTo" >
+
+
+      </div>
+
+      <div class="col-md-3">
+
+        <label> المورد</label>
+        <select class="form-control" name="SupplierID"  (change)="getAllProductsWithSupplier($event.target.value)" >
+          <option [value]="0">كل الموردين</option>
+          <option *ngFor="let item of Suppliers" [value]="item.SupplierID" >{{item.SupplierName}}</option>
+
+       </select>
+
+
+
+
+
+
+        <div class="form-group">
+          <label for="HasNoStock">
+            <input id="HasNoStock" name="HasNoStock" class="form-check" type="checkbox" [(ngModel)]="searchterm.HasNoStock"> أصناف بدون رصيد </label>
+          &nbsp;
+          <label for="StopBuy">
+            <input id="StopBuy" name="StopBuy" class="form-check" type="checkbox" [(ngModel)]="searchterm.StopBuy" > موقف الشراء </label>
+
+        </div>
+        <div class="form-group">
+          <label for="HasStock">
+            <input id="HasStock" name="HasStock" class="form-check" type="checkbox" [(ngModel)]="searchterm.HasStock"> أصناف لها رصيد </label>
+          &nbsp; &nbsp;
+          <label for="StopSale">
+            <input id="StopSale" name="StopSale" class="form-check" type="checkbox" [(ngModel)]="searchterm.StopSale" > موقف البيع </label>
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+</section>
+<section class="body-content">
+  <div class="container">
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-md-4">
+                  <h5 class="text-right">
+
+                      قائمه الأصناف
+          
+                  </h5>
+              </div>
+              <div class="col-md-6"></div>
+              <div class="col-md-2 text-left">
+                  <a>
+          
+                      <button (click)="Refresh()" class="btn btn-link">
+                        <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                     <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                      </button>
+                    </a>
+              </div>
+          </div>
+       
+      </div>
+      <div class="panel-body">
+          <div style="overflow-x: auto;">
+              <table class="table text-center table-bordered   table-responsive">
+                <thead>
+                  <tr>
+                    <th>الكود</th>
+                    <th> إسم الصنف </th>
+                    <th>كود الصنف</th>
+                    <th> المجموعه </th>
+                    <th> موقف البيع </th>
+                    <th> موقف الشراء </th>
+                    <th> السعر </th>
+                    <th> رصيد المخزن </th>
+                    <th style="width:5%">إختر </th>
+        
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of result.ProductsList | searchproductsname:searchterm.ProductName
+                    |searchproductsgroup : searchterm.CatName | searchproductscode:searchterm.ProductCode
+                    |searchproductsstopbuy:searchterm.StopBuy |searchproductsstopsale:searchterm.StopSale
+                    |searchproductshasstock:searchterm.HasStock|searchproductshasnostock:searchterm.HasNoStock
+                    |searchproductsprice: searchterm.PriceFrom:searchterm.PriceTo
+                   | paginate: { itemsPerPage: 10, currentPage: p } ; let i=index"
+                    [ngClass]="{'selectedrow':RowSelected(item)}">
+                    <td>{{item.ProductID}}</td>
+                    <td> {{item.ProductName}} </td>
+                    <td>{{item.ProductCode}}</td>
+        
+                    <td>{{item.CatName}}</td>
+        
+                    <td><label class="labelcontainer"> <input type="checkbox" disabled="disabled" [ngModel]="item.StopSale">
+                        <span class="checkmark"></span> </label> </td>
+                    <td><label class="labelcontainer"> <input type="checkbox" disabled="disabled" [ngModel]="item.StopBuy">
+                        <span class="checkmark"></span> </label> </td>
+                    <td><label class="text text-colored">{{item.Price|currency}}</label></td>
+                    <td>{{item.Stock|number:'1.2-2'}}</td>
+                    <td>
+                      <div class="checkbox " style="margin-right:25px;">
+                        <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                          <a class="label label-primary" (click)="SelectRow(item)">
+                            <i class="fa fa-check"></i> تحـديـد
+        
+                          </a>
+                        </ng-container>
+                        <ng-template #RemoveSelect>
+                          <a class="label label-primary" (click)="RemoveSelection(item)">
+                            <i class="fa fa-remove"></i> الـــغـــاء
+        
+                          </a>
+                        </ng-template>
+        
+                      </div>
+                    </td>
+                  </tr>
+                  <tr><td colspan="10" class="text text-center alert alert-danger"  *ngIf="(result.ProductsList).length === 0" ><h4>نأسف لم يتم العثور على اى نتائج</h4></td></tr>
+        
+        
+                  <tr>
+                    <td colspan="10" class="text text-center">
+                      <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false"
+                        responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                        screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+      </div>
+      <div class="panel-footer">
+          <div class="btntricks">
+              <a>
+                <button type="button" class="btn btn-style " [disabled]="authenticatedUser.ProductEdit==false" (click)="goToEditKind(product)" >
+                  <i class="fa fa-edit"></i> تعديل</button>
+              </a>
+          
+              
+                <button type="button" class="btn btn-style" #ButtonAdd [disabled]="authenticatedUser.ProductAdd==false">
+                  <i class="fa fa-plus"></i><a [routerLink]="[ '/addkind' ]" routerLinkActive="active">
+                    إضافه </a></button>
+             
+              <button type="button" class="btn btn-style" (click)="openDeleteModal(templatedelete)" [disabled]="authenticatedUser.ProductDelete==false">
+                <i class="fa fa-times"></i> حذف</button>
+              </div>
+      </div>
+
+    </div>
+   
+  
+    <ng-template #templatedelete>
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+          <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+        </div>
+        <div class="modal-body">
+          <p> هل تريد حذف هذا الصنف بالفعل ؟</p>
+        </div>
+        <div class="modal-footer ">
+          <button type="button" class="btn  pull-right" (click)="DeleteProduct(product)"> نعم</button>
+
+          <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+        </div>
+      </div>
+
+
+
+
+    </ng-template>
+    </div>
+</section>

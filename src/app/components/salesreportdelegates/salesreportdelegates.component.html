@@ -1,0 +1,226 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+            </li>
+
+            <li class="active">تقرير مبيعات مندوبين </li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+        
+                <div class="col-md-4 text text-right">
+    
+                        <label> في الفتره من</label>
+                        <div class="input-group">
+                          <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstFrom"
+                            [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject" (ngModelChange)="GetDateFrom($event)" />
+            
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </span>
+                        </div>
+            
+                      </div>
+                      <div class="col-md-4  text text-right">
+            
+                        <label> إلي الفتره</label>
+                        <div class="input-group">
+            
+                          <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstTo"
+                            [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject" (ngModelChange)="GetDateTo($event)" />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+            
+                          </span>
+            
+                        </div>
+                      </div>
+                      <div class="col-md-4  text text-right">
+                            <label> المندوب </label>
+                            <select class="form-control" [(ngModel)]="employeeID" (change) = "getAllProductSaleMainInvoices(employeeID)">
+                                <option *ngFor="let item of resultEmployees.EmployeesList ; let i=index" [value]="item.EmpID">{{item.EmpName}} </option>
+                            </select>
+            
+
+                      </div>  
+        
+        </div>
+    </div>
+</div>
+</section>
+<section class="body-content" id="body-content">
+  <div class="container">
+      <br>
+              <div class="panel panel-default">
+    
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-md-2 text-right">
+                              <img [src]="appSettings.Logo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;" class="userlogo" alt="User Avatar">  
+                          </div>
+                          <div class="col-md-8 text-center">
+                              <h3>  <span>  تقرير مبيعات مندوبين </span> </h3>
+               </div>
+                          <div class="col-md-2 text-left">
+                              <div class="printbrand">
+                                  {{appSettings.ShopName}}
+                              </div>
+                      
+                          </div>
+                        </div>
+      
+                       
+                          <div class="spacetoprint"></div>
+                      
+
+
+
+                    
+                  </div>
+                  <div class="panel-body">
+                      <hr>
+
+                      <div class="row">
+                          <div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default"> اسم المندوب </label>
+                              &nbsp; <span>{{supplierName}}</span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default">  الفترة من </label>
+                              &nbsp; <span>{{DateFrom | date}}</span>
+                            </div>
+                          </div><div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default">  الفترة الى </label>
+                              &nbsp; <span>{{DateTo | date}}</span>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div style="overflow-x: auto;" class="text text-center">
+                        
+                          <table class="table text-center table-bordered  table-responsive">
+                              <thead>
+                                  <tr>
+                                      <th> رقم الفاتوره </th>
+                                      <th> العميل </th>
+              
+                                      <th> المخزن </th>
+                                      <th> تاريخ الفاتوره </th>
+                                      <th> المستخدم </th>
+                                      <th> حساب الفاتوره </th>
+                                      <th>   نوع الفاتورة </th>
+                                  </tr>
+                              </thead>
+              <!-- 
+                              |searchtproductbuymainfromtodate:DateFrom:DateTo
+                                  |searchproductbuymaininvoicessotorename:StoreName
+                                  |searchproductbuymaininvoicessuppliername:SupplierName
+                                  |searchproductbuymaininvoicesusername:UserName
+                                  |searchproductbuymaininvoicesinvoicenumber:InvoiceID -->
+                              <tbody>
+                                  <tr *ngFor="let item of AllProductSaleMainInvoices
+                                   let i = index;" [ngClass]="{'selectedrow':RowSelected(item)}">
+                                      <td>{{item.InvoiceID}}</td>
+                                      <td>{{item.CustomerName}}</td>
+                                      <td>{{item.StoreName}}</td>
+                                      <td>{{item.DateSubmit| date}}</td>
+                                      <td>{{item.UserName}}</td>
+                                      <td>{{item.Net| currency}}</td>
+                                      <td>{{item.InvTypeName}}</td>
+                                     
+                                  </tr>
+                                  <tr>
+                                    <td colspan="7" class="text text-center alert alert-danger" *ngIf="AllProductSaleMainInvoices.length === 0">
+                                        <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                    </td>
+                                </tr>
+                            
+                              </tbody>
+                          </table>
+                         
+
+
+                        
+                        </div> 
+                        <div class="row">
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  عدد فواتير المبيعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.SaleNumber}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  كمية المبيعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.SaleQuntity | number:'1.2-2'}}</span>
+                                  </div>
+                                </div><div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  إجمالى المبيعات </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.SalePrice| number:'1.2-2'}}</span>
+                                  </div>
+                                </div>
+                              
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  عدد فواتير المرتجعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardNumber}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">   كمية المرتجعات </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardQuantity| number:'1.2-2'}}</span>
+                                  </div>
+                                </div><div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  إجمالى المرتجعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardPrice| number:'1.2-2'}}</span>
+                                  </div>
+                                </div>
+                              
+                              </div>
+                    
+                    
+                  </div>
+                  <div class="panel-footer">
+                    <div class="btntricks">
+                        <button class="btn btn-style" (click)="PrintSupplierMoneyDetails()"><i class="fas fa-print"></i> طباعة</button>
+                    </div>
+                  </div>
+                  
+                  </div>
+        
+
+
+          
+
+
+  </div>
+</section>

@@ -1,0 +1,107 @@
+
+<section class="body-content login-page">
+    <audio id="my_audio" src="../../../assets/mrshoot.mp3" autoplay="autoplay"></audio>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                 <div class="row">
+                     <div class="col-md-12 text-center">
+                         <img [src]="appSettings.Logo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;" class="userlogo" alt="User Avatar">  
+                     </div>
+                    
+                   </div>
+                
+       
+              </div>
+              <div class="panel-body">
+
+                 <div class="col-md-12">
+
+
+                     <form #LoginForm ="ngForm" novalidate="novalidate">
+                         <div class="row">
+                             <div class="form-group col-md-12 text-right">
+                               <label for="LoginName"> اسم الدخول </label>
+                               <input name="LoginName" class="form-control" type="text" [(ngModel)]="oauth.LoginName" #LoginName="ngModel" required="required"
+                                 minlength="10" maxlength="50">
+
+                               <div *ngIf="LoginName.invalid && (LoginName.dirty || LoginName.touched)" class="alert alert-danger">
+
+                                 <p *ngIf="LoginName?.errors.required">
+                                   <i class="fa fa-bug"></i> الحقل مطلوب
+                                 </p>
+                                 <p *ngIf="LoginName?.errors.minlength">
+                                   <i class="fa fa-bug"></i> اسم الدخول بين 10-50 حرف
+                                 </p>
+                               </div>
+                                 </div>
+                             <div class="form-group col-md-12 text-right">
+                               <label for="Password"> كلمه المرور</label>
+                               <input name="Password" class="form-control" type="password" [(ngModel)]="oauth.Password" #Password="ngModel" required="required"
+                                 minlength="10" maxlength="50">
+                               <div *ngIf="Password.invalid && (Password.dirty || Password.touched)" class="alert alert-danger">
+
+                                 <p *ngIf="Password?.errors.required">
+                                   <i class="fa fa-bug"></i> الحقل مطلوب
+                                 </p>
+                                 <p *ngIf="Password?.errors.minlength">
+                                   <i class="fa fa-bug"></i> كلمة المرور بين 10-50 حرف
+                                 </p>
+                               </div>
+                             </div>
+                         </div>
+
+
+                     </form>
+
+                     <br>
+                     <br>
+                     <br>
+                      <br>
+                     <br>
+                     <br>
+        
+        
+        
+        
+                   </div>
+              </div>
+              <div class="panel-footer">
+                 <div class="row">
+                     <div class="col-md-8 text-right">
+                       
+                         <div class="clear text-right">
+                             <a href="#" class=" text-white"> هل نسيت كلمه السر ؟</a>
+                         </div>
+
+                     </div>
+                   
+                     <div class="col-md-4 text-left">
+                         
+                             <div class="form-group pull-left">
+                                 <button (click)="goIndex(oauth)" [disabled]="LoginForm.invalid"  class="btn btn-dark"> دخول </button>
+                             </div>
+                       
+                 
+                     </div>
+                   </div>
+                
+                
+              </div>
+
+            </div>
+
+          </div>
+
+             
+
+               <div class="col-md-3"></div>
+
+
+        </div>
+    </div>
+</section>

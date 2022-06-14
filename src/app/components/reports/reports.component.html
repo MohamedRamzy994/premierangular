@@ -1,0 +1,258 @@
+<section class="page-title">
+  <div class="container">
+    <ol class="breadcrumb">
+
+      <li>
+        <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+      </li>
+
+      <li class="active"> التقارير </li>
+    </ol>
+  </div>
+</section>
+<section class="body-content">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportProductMove==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+              <a [routerLink]="[ '/kindreportmove']" routerLinkActive="active"> تقرير حركات الصنف </a>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportStoreStock==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/inventorykindsreports']" routerLinkActive="active"> تقرير جرد مخازن الأصناف</a>
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportSupplierBuys==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/modernpurchasesreport']" routerLinkActive="active"> تقرير مشتريات موردين</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportCustomerSales==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/detailedcustomersalesreport']" routerLinkActive="active"> تقرير مبيعات عملاء </a>
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 hidden">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/salesreportcustomer']" routerLinkActive="active"> تقرير مبيعات عميل شركه</a>
+
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportSalesManSales==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+
+            <h4>
+
+                <a [routerLink]="[ '/salesreportdelegates']" routerLinkActive="active"> تقرير مبيعات مندوبين</a>
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 hidden">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/salesreportcompanydelegate']" routerLinkActive="active">تقرير مبيعات مندوب شركه</a>
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 ">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/salariesreport']" routerLinkActive="active"> تقرير المرتبات</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportAddCost==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/detailedreportaddbanks']" routerLinkActive="active"> تقرير المصروفات الإضافيه</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 ">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+
+                <a [routerLink]="[ '/detailedreportwithdrawdeposits']" routerLinkActive="active"> تقرير المسحوبات والإيداعات</a>
+
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 ">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/expensesreport']" routerLinkActive="active"> تقرير المصروفات</a>
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 hidden">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/visacache']" routerLinkActive="active"> تقرير المدفوعات بالفيزا</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 ">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/reportsaleskindssupplier']" routerLinkActive="active"> تقرير مبيعات اصناف مورد</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportProfitLose==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/profitlossreport']" routerLinkActive="active"> تقرير أرباح وخسائر</a>
+
+
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportTotalMoneyInfo==true">
+        <div class="item">
+          <div class="item-card">
+            <h1>
+              <i class="fas fa-2x fa-file-alt"></i>
+            </h1>
+          </div>
+          <div class="item-footer">
+            <h4>
+                <a [routerLink]="[ '/financialreport']" routerLinkActive="active"> تقرير ماليه شامل</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

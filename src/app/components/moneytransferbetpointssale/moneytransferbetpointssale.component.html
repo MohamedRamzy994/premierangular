@@ -1,0 +1,211 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active"> المصروفات </a>
+
+
+            </li>
+            <li class="active">  تحويل اموال</li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+<div class="container">
+
+
+        <div class="panel panel-default">
+                <div class="panel-heading text text-right">
+                        <div class="row">
+                                <div class="col-md-4">
+                                        <h4>
+
+                                                تحويل اموال
+                                            </h4>
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-2 text-left">
+                                    <a>
+                            
+                                        <button (click)="Refresh()" class="btn btn-link">
+                                          <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                       <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                        </button>
+                                      </a>
+                                </div>
+                            </div>
+             
+                </div>
+                <div class="panel-body">
+
+                    
+   <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 ">
+
+                <form name="info-form" class="clearfix " #AddTransferMoneyEventForm="ngForm">
+                    <fieldset>
+                        <div class="row">
+
+
+                            <div class="form-group col-md-12 text-right">
+                                <label > نقطة البيع التى سيتم الخصم منها</label>
+                                <select class="form-control" style=" padding-top:0;" name="SalesPointIDFrom"
+                                            [(ngModel)]="_addAdditionalCostEventModel.SalesPointIDFrom" id="SalesPointIDFrom"
+                                            #SalesPointIDFrom="ngModel" required="required"  (change) = "getSalesPointFromBalance(_addAdditionalCostEventModel.SalesPointIDFrom)">
+
+                                            <option *ngFor="let item of listSalesPointsModel" [value]="item.SalesPointID">
+                                                {{item.SalesPoint}} </option>
+                                        </select>
+
+
+                                        <div *ngIf="SalesPointIDFrom.invalid && (SalesPointIDFrom.dirty || SalesPointIDFrom.touched)"
+                                            class="alert alert-danger">
+
+                                            <p *ngIf="SalesPointIDFrom?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+
+                                        </div>
+                                   
+                            </div>
+
+                          
+                            <div class="form-group col-md-12 text-right">
+                                <label for="form_financial_val">  رصيد نقطة البيع </label>
+                                <input class="form-control" type="number" disabled="disabled" [(ngModel)]="SalesPointFromBalance" name="SalesPointFromBalance">
+
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                    <fieldset>
+                            <div class="row">
+
+
+                                <div class="form-group col-md-12 text-right">
+                                    <label > نقطة البيع التى سيتم التحويل اليها</label>
+                                <select class="form-control" style=" padding-top:0;" name="SalesPointIDTo"
+                                    [(ngModel)]="_addAdditionalCostEventModel.SalesPointIDTo" id="SalesPointIDTo"
+                                    #SalesPointIDTo="ngModel" required="required" (change) = "getSalesPointToBalance(_addAdditionalCostEventModel.SalesPointIDTo)">
+
+                                    <option *ngFor="let item of listSalesPointsModel" [value]="item.SalesPointID">
+                                        {{item.SalesPoint}} </option>
+                                </select>
+
+
+                                <div *ngIf="SalesPointIDTo.invalid && (SalesPointIDTo.dirty || SalesPointIDTo.touched)"
+                                    class="alert alert-danger">
+
+                                    <p *ngIf="SalesPointIDTo?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+
+                                </div>
+                           
+
+                                </div>
+
+                                <div class="form-group col-md-12 text-right">
+                                    <label for="form_financial_val">  رصيد نقطة البيع </label>
+                                    <input class="form-control" type="number" disabled="disabled" [(ngModel)]="SalesPointToBalance" name="SalesPointToBalance">
+    
+                                </div>
+
+                            </div>
+
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group col-md-12 text-right">
+                                <label for="form_financial_val"> القيمه الماليه </label>
+                                <input id="MoneyValue" name="MoneyValue" class="form-control" type="number"
+                                    [(ngModel)]="_addAdditionalCostEventModel.MoneyValue" #MoneyValue="ngModel"
+                                    required="required" minlength="1">
+
+                                <div *ngIf="MoneyValue.invalid && (MoneyValue.dirty || MoneyValue.touched)"
+                                    class="alert alert-danger">
+
+                                    <p *ngIf="MoneyValue?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="MoneyValue?.errors.minlength">
+                                        <i class="fa fa-bug"></i> القيمة يجب ان تكون قيمة صحيحة
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-md-12 text-right">
+                                <label for="DateSubmit"> التاريخ </label>
+                                <input id="DateSubmit" name="DateSubmit" class="form-control" type="date" name="DateSubmit"
+                                    [(ngModel)]="_addAdditionalCostEventModel.DateSubmit" id="DateSubmit"
+                                    #DateSubmit="ngModel" required="required">
+                                <div *ngIf="DateSubmit.invalid && (DateSubmit.dirty || DateSubmit.touched)"
+                                    class="alert alert-danger">
+
+                                    <p *ngIf="DateSubmit?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                </form>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 ">
+
+
+            </div>
+    </div>
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="btntricks">
+                                <button class="btn  btn-style" [disabled]="AddTransferMoneyEventForm.invalid" 
+                                (click)="openModal(template)"
+                                > حفظ </button>
+
+
+                        </div>
+                        <ng-template #template>
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                    <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p> هل تريد حفظ هذا التحويل بالفعل ؟</p>
+                                </div>
+                                <div class="modal-footer ">
+                                    <button type="button" class="btn  pull-right"  (click)="AddTransferMoneyEvent(_addAdditionalCostEventModel,AddTransferMoneyEventForm)"> نعم</button>
+                          
+                                    <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                                </div>
+                            </div>
+                          
+                          
+                          
+                          
+                          </ng-template>
+
+
+                    </div>
+        </div>
+
+
+</div>
+</section>

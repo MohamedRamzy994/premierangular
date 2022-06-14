@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>مـاركـت شــــوت </title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+
+  <link rel="stylesheet" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/bootstrap-rtl.css">
+  <link rel="stylesheet" href="assets/css/frame.css">
+  <link rel="stylesheet" href="assets/css/animate.css">
+  <script src="assets/js/jquery.js"></script>
+  <script>
+
+    $('body').ready(function(){
+      var apiUrl="http://localhost:49895";
+      $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: apiUrl.concat('/api/SettingsApi/GetSelectedSettingsThemes'),
+      success: function(data) {
+         $("#selectedtheme").attr("href",data['SettingsThemesModel'][0]['ThemUrl']);
+      },
+      error:function (data) {
+        
+      
+        
+      }
+          });
+  
+     
+      });
+  </script>
+  <link rel="stylesheet" href="assets/css/stylegreen.css" id="selectedtheme" />   
+  <link rel="stylesheet" href="assets/css/mobile.css">
+  <link rel="stylesheet" href="assets/css/all.css">
+  <link rel="stylesheet" href="styles.css">
+
+
+  <link rel="icon" type="image/x-icon" href="bag.png">
+<link rel="stylesheet" href="styles.9c2a96f695b6d5832ce2.css"></head>
+
+<body>
+
+
+  <app-root>
+
+  </app-root>
+
+  <div class="loading-overlay">
+    <div class="loader">
+
+        <img src="/bag.png"  class="userlogo" alt="User Avatar">
+      </div>
+  </div>
+
+<script type="text/javascript" src="runtime.ec2944dd8b20ec099bf3.js"></script><script type="text/javascript" src="polyfills.1830021e03d1c0db3030.js"></script><script type="text/javascript" src="scripts.c847ee7f999b4b2fcb45.js"></script><script type="text/javascript" src="main.a002ccd8f3f6b759db78.js"></script></body>
+
+</html>

@@ -1,0 +1,225 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+            </li>
+
+            <li class="active"> تقرير مبيعات اصناف مورد </li>
+        </ol>
+    </div>
+</section>
+
+<section class="search-sec">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+                      <div class="col-md-4 text text-right">
+  
+                              <label> في الفتره من</label>
+                              <div class="input-group">
+                                <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFrom"
+                                  [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject" (ngModelChange)="GetDateFrom($event)" />
+                  
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                  </button>
+                                </span>
+                              </div>
+                  
+                            </div>
+                            <div class="col-md-4  text text-right">
+                  
+                              <label> إلي الفتره</label>
+                              <div class="input-group">
+                  
+                                <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateTo"
+                                  [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject" (ngModelChange)="GetDateTo($event)" />
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                  </button>
+                  
+                                </span>
+                  
+                              </div>
+                            </div>
+                            <div class="col-md-4  text text-right">
+                              <label> المورد </label>
+                              <select class="form-control" [(ngModel)]="supplierID" (change)= "ListProductInventoryReport(supplierID)">
+                                <option *ngFor="let item of resultSuppliers.SuppliersList" [value]="item.SupplierID">{{item.SupplierName}}   </option>
+                            </select>
+                            </div>      
+          </div>
+      </div>
+  </div>
+</section>
+
+
+<section class="body-content" id="body-content">
+  <div class="container">
+      <br>
+      
+     
+      
+              <div class="panel panel-default">
+    
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-md-2 text-right">
+                              <img [src]="appSettings.Logo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;" class="userlogo" alt="User Avatar">  
+                          </div>
+                          <div class="col-md-8 text-center">
+                              <h3>  <span> تقرير مبيعات اصناف مورد</span> </h3>
+                             
+                      
+                          </div>
+                          <div class="col-md-2 text-left">
+                              <div class="printbrand">
+                                  {{appSettings.ShopName}}
+                              </div>
+                      
+                          </div>
+                        </div>
+      
+                       
+                          <div class="spacetoprint"></div>
+                      
+
+
+
+                    
+                  </div>
+                  <div class="panel-body">
+                      <hr>
+
+                      <div class="row">
+                          <div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default"> اسم المورد </label>
+                              &nbsp; <span>{{supplierName}}</span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default">  الفترة من </label>
+                              &nbsp; <span>{{DateFrom | date}}</span>
+                            </div>
+                          </div><div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default">  الفترة الى </label>
+                              &nbsp; <span>{{DateTo | date}}</span>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div style="overflow-x: auto;" class="text text-center">
+                        
+                            <table class="table text-center table-bordered  table-responsive">
+                                <thead>
+                                    <tr>
+                                        <td>مسلسل</td>
+                                        <th>  كود الصنف </th>
+                                        <th> اسم الصنف</th>
+                                        
+                                        <th> الكمية </th>
+                                        <th> الوحدة  </th>
+                                        <th> رقم الفاتورة </th>
+                                        <th>   السعر</th>
+                                        <th>   المخزن</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of listProductMoveMentReportModel
+                                     let i = index;" [ngClass]="{'selectedrow':RowSelected(item)}">
+                
+                                     <td>{{i+1}}</td>
+                
+                                        <td>{{item.ProductID}}</td>
+                                        <td>{{item.ProductName}}</td>
+                                        <td>{{item.Num| number:'1.2-2'}}</td>
+                                        <td>{{item.UnitName}}</td>
+                                        <td>{{item.InvoiceID}}</td>
+                                        <td>{{item.Price| currency}}</td>
+                                        <td>{{item.Stock| number:'1.2-2'}}</td>
+                                      
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="text text-center alert alert-danger" *ngIf="(listProductMoveMentReportModel).length === 0">
+                                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                        </td>
+                                    </tr>
+                
+                                </tbody>
+                            </table>
+                        
+                        </div> 
+                        <div class="row">
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  عدد فواتير الشراء  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.BuyNumber}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  كمية المشتريات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.BuyQuntity | number:'1.2-2'}}</span>
+                                  </div>
+                                </div><div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  إجمالى المشتريات </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.BuyPrice| number:'1.2-2'}}</span>
+                                  </div>
+                                </div>
+                              
+                              </div>
+                              <br>
+                              <div class="row">
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  عدد فواتير المرتجعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardNumber}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">   كمية المرتجعات </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardQuantity| number:'1.2-2'}}</span>
+                                  </div>
+                                </div><div class="col-md-4 text text-right">
+                                  <div class="form-group ">
+                                    <label for="StoreName" class="label label-default">  إجمالى المرتجعات  </label>
+                                    &nbsp; <span>{{productBuySelectTotalCommunicationReportModel.DiscardPrice| number:'1.2-2'}}</span>
+                                  </div>
+                                </div>
+                              
+                              </div>
+                    
+                    
+                  </div>
+                  <div class="panel-footer">
+                    <div class="btntricks">
+                        <button class="btn btn-style" (click)="PrintSupplierMoneyDetails()"><i class="fas fa-print"></i> طباعة</button>
+                    </div>
+                  </div>
+                  
+                  </div>
+        
+
+
+          
+
+
+  </div>
+</section>

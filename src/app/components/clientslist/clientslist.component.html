@@ -1,0 +1,203 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+
+            </li>
+
+            <li>
+                <a [routerLink]="[ '/clients' ]" routerLinkActive="active">عملاء</a>
+
+            </li>
+
+            <li class="active"> قائمه العملاء </li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6">
+                <label for="client-name"> إسم العميل </label>
+                <div class="input-group">
+                    <input type="text" #customername="ngModel" class="form-control" name="CustomerName"
+                   [(ngModel)]="CustomerName" placeholder="بحث" aria-describedby="basic-addon1">
+                    <span class="input-group-addon" id="basic-addon1">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <div class="form-group text-right">
+                    <label for="form_clint_kind"> نوع العميل </label>
+                    <br style="margin-top:10px;">
+                    <div class="radio disp-inl-bl " style="margin-right:25px;">
+                        <label for="form_radio1">
+                            <input id="form_radio1" name="CustomerType" type="radio" [value]="0" [(ngModel)]="CustomerType"> جمله </label>
+                    </div>
+
+                    <div class="radio disp-inl-bl" style="margin-right:25px;">
+                        <label for="form_radio2">
+                            <input id="form_radio2" name="CustomerType" type="radio" [value]="1" [(ngModel)]="CustomerType" > قطاعي </label>
+                    </div>
+                    <div class="radio disp-inl-bl" style="margin-right:25px;">
+                        <label for="form_radio3">
+                            <input id="form_radio3" name="CustomerType" type="radio" [value]="2" [(ngModel)]="CustomerType" > الكل </label>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+
+
+            <div class="panel panel-default">
+                    <div class="panel-heading">
+                            <div class="row">
+                                    <div class="col-md-4">
+                                            <h4 class="text-right"> قائمة العمــلاء </h4>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-2 text-left">
+                                        <a>
+                                
+                                            <button (click)="Refresh()" class="btn btn-link">
+                                              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                           <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                            </button>
+                                          </a>
+                                    </div>
+                                </div>
+                       
+        
+                    </div>
+                    <div class="panel-body">
+
+        <br>
+        <div style="overflow-x: auto;">
+            <table class="table text-center table-bordered  table-responsive ">
+                <thead>
+                    <tr>
+
+                        <th style="width:10%;"> كود</th>
+                        <th> إسم العميل</th>
+                        <th style="width:15%;">  نوع العميل</th>
+                        <th style="width:15%;"> الرصيد الحالي </th>
+                        <th style="width:5%;"> إختر</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of customerList|searchclientsname:CustomerName|
+                    searchclientstype: CustomerType|
+                         paginate: { itemsPerPage: 10, currentPage: p } ;
+                          let i=index;"
+                        [ngClass]="{'selectedrow':RowSelected(item)}">
+                        <td>{{item.CustomerID}}</td>
+                        <td> {{item.CustomerName}} </td>
+                        <td> {{item.Category}} </td>
+                        <td class="text text-colored"> {{item.Balance|currency}}</td>
+                        <td>
+
+                            <div class="checkbox " style="margin-right:25px;">
+                                <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                    <a class="label label-primary" (click)="SelectRow(item)">
+                                        <i class="fa fa-check"></i> تحـديـد
+
+                                    </a>
+                                </ng-container>
+                                <ng-template #RemoveSelect>
+                                    <a class="label label-primary" (click)="RemoveSelection(item)">
+                                        <i class="fa fa-remove"></i> الـــغـــاء
+
+                                    </a>
+                                </ng-template>
+
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5" class="text text-center alert alert-danger" *ngIf="customerList.length === 0 || (customerList|searchclientsname:CustomerName).length===0">
+                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="5" class="text text-center">
+                            <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false"
+                                responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                        </td>
+                    </tr>
+                   
+
+                </tbody>
+            </table>
+        </div>
+        <br>
+</div>
+
+<div class="panel-footer">
+
+        <div class="btntricks">
+                <button type="button" class="btn btn-style" (click)="goToEdit(selectedCustomer)"  >
+                    <i class="fa fa-folder-open"></i> فتح الملف</button>
+
+                
+
+                    <button type="button" class="btn btn-style" #ButtonAdd [disabled]="authenticatedUser.CustomerAdd==false">
+                            <a [routerLink]="[ '/addclient' ]" routerLinkActive="active">
+                        <i class="fa fa-plus"></i> إضافه
+                </a>
+                    
+                    </button>
+
+
+                <button type="button" class="btn btn-style" (click)="openModal(template)" [disabled]="authenticatedUser.CustomerDelete==false">
+                    <i class="fa fa-times"></i> حذف</button>
+
+            </div>
+
+</div>
+</div>
+
+
+        <ng-template #template>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                    <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                </div>
+                <div class="modal-body">
+                    <p> هل تريد حذف هذا العميل بالفعل ؟</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn  pull-right" (click)="DeleteCustomer(selectedCustomer)">
+                        نعم</button>
+
+                    <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                </div>
+            </div>
+
+
+
+
+        </ng-template>
+    </div>
+</section>

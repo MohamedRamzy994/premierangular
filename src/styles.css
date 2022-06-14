@@ -1,0 +1,213 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import url('./assets/css/bootstrap.css');
+@import url('./assets/css/bootstrap-rtl.css');
+@import url('./assets/css/frame.css');
+@import url('./assets/css/animate.css');
+@import url('./assets/css/styleblue.css'); */
+/* @import url('./assets/css/mobile.css'); */
+@import url('../node_modules/angular-notifier/styles/core.css');
+@import url('../node_modules/angular-notifier/styles/themes/theme-material.css');
+@import url('../node_modules/angular-notifier/styles/themes/theme-material.css');
+@import url('../node_modules/angular-notifier/styles/types/type-error.css');
+@import url('../node_modules/angular-notifier/styles/types/type-success.css');
+/* @import url('./assets/css/all.css'); */
+
+.userlogo{
+  height: 60px;
+  width: 60px;
+  padding: 8px;
+   background-color:#fff;
+    border:1px solid #000; 
+    border-radius: 20%;
+}
+
+/* tbody tr:hover {
+    background-color: #444444;
+    color: #fff;
+} */
+.usersmalllogo{
+  height: 30px;
+  width: 30px;
+}
+
+
+
+
+.breadcrumb > li + li:before {
+  padding: 0 5px;
+  color: #000;
+  content: "/\00a0";
+}
+
+.labelcontainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.labelcontainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  /* left: 0; */
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 100%
+}
+
+/* On mouse-over, add a grey background color */
+.labelcontainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.labelcontainer input:checked ~ .checkmark {
+  background-color: #000;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.labelcontainer input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.labelcontainer .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.btncustom{
+
+    display: inline-block;
+    padding: 0 6px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+
+}
+.form-control {
+	display: block;
+  width: 100%;
+  height: 40px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.clickable{
+
+    pointer-events: none;
+
+
+}
+.disclick{
+
+  pointer-events: none;
+  background-color: #ccc !important;
+  color:#000 !important;
+
+
+}
+
+.printbrand {
+  padding: 18px 10px; 
+  background-color:#fff; 
+  color: #000;
+  border:1px solid #000;
+  text-align: center;
+  border-radius: 5px;
+
+}
+.barecodestretch{
+  align-content: stretch;
+}
+.label-primary{
+  background-color: #f1f4f1;
+  color: #000;
+}
+a.label:hover, a.label:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover, a:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.btntricks{
+text-align: center;
+width: 100%;
+
+}
+
+.btnshowtricks .btn{
+  width: 15%;
+  background-color: #fff;
+  color: #000;
+  /* border: 1px solid #000; */
+
+}
+.btn-color:hover{
+  background-color: #0590FF;
+  color:#fff ;
+}
+.form-control[disabled], fieldset[disabled] .form-control {
+  cursor: not-allowed;
+  font-size: larger;
+  font-weight: bold;
+  background-color: #f1f4f1;
+}
+#AccessSalesPoint li:hover{
+  cursor:pointer;
+  padding: 5px;
+}

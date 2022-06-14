@@ -1,0 +1,209 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/reports' ]" routerLinkActive="active">التقارير</a>
+
+
+            </li>
+
+            <li class="active"> تقرير حركات صنف </li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+                <div class="col-md-3 text text-right">
+    
+                        <label> في الفتره من</label>
+                        <div class="input-group">
+                          <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstFrom"
+                            [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromObject" (ngModelChange)="GetDateFrom($event)" />
+            
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                          </span>
+                        </div>
+            
+                      </div>
+                      <div class="col-md-3  text text-right">
+            
+                        <label> إلي الفتره</label>
+                        <div class="input-group">
+            
+                          <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstTo"
+                            [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToObject" (ngModelChange)="GetDateTo($event)" />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                              <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+            
+                          </span>
+            
+                        </div>
+                      </div>
+                      <div class="col-md-3  text text-right">
+                            <label> المجموعه </label>
+                            <select class="form-control" (change)="getAllProducts(groupID)" [(ngModel)]="groupID">
+                                <option *ngFor="let item of resultlist.GroupsList" [value]="item.CatID">{{item.CatName}}   </option>
+                            </select>
+
+                      </div>
+                      <div class="col-md-3  text text-right">
+                            <label> الصنف </label>
+                            <select class="form-control" [(ngModel)]="productID" (change)="ListProductMovementReport(productID)">
+                                <option *ngFor="let item of result.ProductsList" [value]="item.ProductID">{{item.ProductName}}  </option>
+                            </select>
+                      </div>
+                </div>
+    </div>
+</div>
+</section>
+
+<section class="body-content" id="body-content">
+  <div class="container">
+      <br>
+      
+     
+      
+              <div class="panel panel-default">
+    
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-md-2 text-right">
+                              <img  [src]="appSettings.Logo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;" class="userlogo" alt="User Avatar">  
+                          </div>
+                          <div class="col-md-8 text-center">
+                              <h3>  <span> تقرير حركات الصنـف </span> </h3>
+                             
+                      
+                          </div>
+                          <div class="col-md-2 text-left">
+                              <div class="printbrand">
+
+                                <span>
+                                 {{appSettings.ShopName}}
+                                </span>
+
+                              </div>
+                      
+                          </div>
+                        </div>
+      
+                       
+                          <div class="spacetoprint"></div>
+                      
+
+
+
+                    
+                  </div>
+                  <div class="panel-body">
+                      <hr>
+
+                      <div class="row">
+                          <div class="col-md-4 text text-right">
+                            <div class="form-group ">
+                              <label for="StoreName" class="label label-default"> اسم الصنـف </label>
+                              &nbsp; <span>{{productName}}</span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 text text-right">
+                    
+                            <div class="form-group ">
+                              <label for="StoreTo" class="label label-default"> الفترة من</label>
+                              &nbsp; <span [textContent]="DateFrom|date"></span>
+                    
+                            </div>
+                          </div>
+                          <div class="col-md-4 text text-center">
+                            <div class="form-group">
+                              <label for="DateSubmit" class="label label-default"> الى الفترة </label>
+                    
+                              &nbsp; <span [textContent]="DateTo|date"></span>
+                    
+                    
+                            </div>
+                    
+                          </div>
+                        </div>
+                        <div style="overflow-x: auto;" class="text text-center">
+                           
+                            <table class="table text-center table-bordered  table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>  رقم الفاتورة </th>
+                                        <th> العميل/المورد  </th>
+                                        <th> الكمية  </th>
+                                        <th> الوحدة   </th>
+                                        <th> السعر  </th>
+                                        <th>  نوع الحركة </th>
+                                        <th> تاريخ الفاتوره </th>
+                                        
+
+                                        
+                      
+                                       
+                                    </tr>
+                                </thead>
+                       
+                               <tbody>
+                                    <tr *ngFor="let item of listProductMoveMentReportModel 
+                                    |searchtproductmovementreportfromtodate:DateFrom:DateTo             
+                                     let i = index;" [ngClass]="{'selectedrow':RowSelected(item)}">
+                      
+                                        <td>{{item.InvoiceID}}</td>
+                                        <td>{{item.Actor}}</td>
+                                        <td>{{item.Num| number:'1.2-2'}}</td>
+                                        <td>{{item.Unit}}</td>
+                                        <td>{{item.Price|currency}}</td>
+                                        <td>{{item.ActionType}}</td>
+                                        <td>{{item.DateSubmit| date}}</td>
+                                        
+
+                      
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8" class="text text-center alert alert-danger" *ngIf="(listProductMoveMentReportModel).length === 0">
+                                            <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td colspan="7" class="text text-center">
+                                            <pagination-controls (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false" responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                            </pagination-controls>
+                                        </td>
+                                    </tr> -->
+                                </tbody>
+                            </table>
+                        </div> 
+                    
+                    
+                  </div>
+                  <div class="panel-footer">
+                    <div class="btntricks">
+                        <button class="btn btn-style" (click)="PrintSupplierMoneyDetails()"><i class="fas fa-print"></i> طباعة</button>
+                    </div>
+                  </div>
+                  
+                  </div>
+        
+
+
+          
+
+
+  </div>
+</section>

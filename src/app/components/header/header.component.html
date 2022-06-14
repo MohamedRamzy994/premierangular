@@ -1,0 +1,101 @@
+<header>
+  <div class="container-fluid">
+    <div class="top-menu">
+
+      <div class="feature col-xs-12 col-sm-6">
+        <div class="profile">
+          <a>
+            <!-- <img src="/pos.png" class="usersmalllogo img-rounded" alt="POS image"> -->
+            
+           <i class="fas  fa-2x fa-desktop">&nbsp;</i>
+            <b>  {{currentsalespoint.SalesPoint}}</b>
+          </a>
+
+          <a>
+            <!-- <img src="/user.jpg" class="usersmalllogo img-rounded" alt="User Avatar"> -->
+           <i class="fas  fa-2x fa-user-tie">&nbsp;</i>            
+            
+            <b [textContent]="user.UserName"></b>
+          </a>
+          <a>
+
+            <button (click)="ToggelFullScreen($event)" class="btn btn-link">
+              <!-- <img src="/screenfull.png" alt="fullscreen"  class="usersmalllogo img-rounded"> -->
+              <i class="fas fa-2x fa-expand ">&nbsp;</i>            
+            </button>
+          </a>
+         
+          <a>
+
+            <button (click)="logOut()" class="btn btn-link">
+              <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+           <i class="fas fa-2x fa-sign-out-alt">&nbsp;</i>            
+            </button>
+          </a>
+       
+         
+
+
+        </div>
+        <!-- <ul>
+          <li>
+
+            <a [routerLink]="[ '/salesbill' ]" routerLinkActive="active">
+
+              &nbsp;<i class="fas fa-file-invoice"></i>&nbsp;<i class="icon-title">فاتورة بيع</i>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/purchasebill' ]" routerLinkActive="active">
+              &nbsp;<i class="fas fa-file-invoice"></i>&nbsp;<i class="icon-title">فاتورة شراء </i>
+            </a>
+          </li>
+          <li>
+
+            <a [routerLink]="[ '/salesbill' ]" routerLinkActive="active">
+
+              &nbsp;<i class="fas fa-file-invoice"></i>&nbsp;<i class="icon-title">مرتجع بيع</i>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/purchasebill' ]" routerLinkActive="active">
+              &nbsp;<i class="fas fa-file-invoice"></i>&nbsp;<i class="icon-title">مرتجع شراء </i>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/sales' ]" routerLinkActive="active">
+              &nbsp;<i class="fas fa-cart-arrow-down"></i>&nbsp;<i class="icon-title">مبيعات</i>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/purchases' ]" routerLinkActive="active">
+              &nbsp;<i class="fas fa-cart-plus"></i>&nbsp;<i class="icon-title">مشتريات</i>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="[ '/kinds' ]" routerLinkActive="active">
+              &nbsp;<i class="fas fa-bars"></i>&nbsp;<i class="icon-title">الأصناف</i>
+            </a>
+          </li>
+        </ul> -->
+
+      </div>
+      <div class="logo col-xs-12 col-sm-6 text-left">
+        <h1>
+
+          <a [routerLink]="[ '/root' ]" routerLinkActive="active">
+            <span style="font-size: 24px;"> {{appSettings.ShopName}} </span>
+        
+            <!-- <i class="fas fa-briefcase fa-line"></i> -->
+            
+            <img [src]="appSettings.Logo" class="userlogo" alt="User Avatar">
+          </a>
+
+      
+
+        </h1>
+      </div>
+    </div>
+
+  </div>
+</header>

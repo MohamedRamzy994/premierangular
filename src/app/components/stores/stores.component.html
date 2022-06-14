@@ -1,0 +1,128 @@
+
+        <section class="page-title">
+          <div class="container">
+              <ol class="breadcrumb">
+
+                  <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+                  </li>
+                  <li class="active">  مخازن </li>
+              </ol>
+          </div>
+      </section>
+      <section class="body-content">
+          <div class="container">
+              <div class="row">
+
+
+                  <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.StoreAdd==true||authenticatedUser.StoreDelete==true||authenticatedUser.StoreEdit==true||
+                  authenticatedUser.StoreTransferBalance==true">
+                          <div class="item">
+                              <div class="item-card">
+                                  <h1><i class="fa fa-2x fa-home"></i></h1>
+                              </div>
+                              <div class="item-footer">
+                                  <h4>
+                                      <a [routerLink]="[ '/storeskinds' ]" routerLinkActive="active">مخازن الاصناف</a>
+
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+
+
+                  <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ProductAdd==true||authenticatedUser.ProductEdit==true||authenticatedUser.ProductDelete==true">
+                          <div class="item">
+                              <div class="item-card">
+                                      <h1><i class="fa fa-2x fa-sitemap"></i></h1>
+                              </div>
+                              <div class="item-footer">
+                                  <h4>
+                                      <a [routerLink]="[ '/kindgroup' ]" routerLinkActive="active">مجموعات الاصناف</a>
+
+
+
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ProductAdd==true||authenticatedUser.ProductEdit==true||authenticatedUser.ProductDelete==true">
+                          <div class="item">
+                              <div class="item-card">
+                                  <h1><i class="fa fa-2x fa-bars"></i></h1>
+                              </div>
+                              <div class="item-footer">
+
+                                  <h4>
+
+                                      <a [routerLink]="[ '/kinds' ]" routerLinkActive="active">الاصناف</a>
+
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+
+
+                  <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ProductOpen==true||authenticatedUser.ProductOpenCancel==true">
+                          <div class="item">
+                              <div class="item-card">
+                                      <h1><i class="fa fa-2x fa-plus-square"></i></h1>
+                              </div>
+                              <div class="item-footer">
+                                  <h4>
+                                      <a [routerLink]="[ '/openbalance' ]" routerLinkActive="active">ارصده افتتاحيه</a>
+
+                                   </h4>
+                              </div>
+                          </div>
+                      </div>
+
+                  <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ProductResetStock==true">
+                          <div class="item">
+                              <div class="item-card">
+                                      <h1><i class="fa fa-2x fa-trash"></i></h1>
+                              </div>
+                              <div class="item-footer">
+
+                                  <h4>
+                                      <a [routerLink]="[ '/kindquantity' ]" routerLinkActive="active">تسويه كميات الاصناف</a>
+
+                                   </h4>
+                              </div>
+                          </div>
+                      </div>
+
+                  <div class="col-xs-6 col-sm-4 col-md-3 ">
+                          <div class="item">
+                              <div class="item-card">
+                                      <h1><i class="fa fa-2x fa-print"></i></h1>
+                              </div>
+                              <div class="item-footer">
+                                <h4>
+                                  <a [routerLink]="[ '/kindsbarcodegenerator' ]" routerLinkActive="active" >طباعة باركود للاصناف</a>
+
+                               </h4>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-xs-6 col-sm-4 col-md-3 ">
+                        <div class="item">
+                            <div class="item-card">
+                                    <h1><i class="fas fa-2x fa-list-ul"></i></h1>
+                            </div>
+                            <div class="item-footer">
+                              <h4>
+                                <a [routerLink]="[ '/listkindquantityreasons' ]" routerLinkActive="active" >  أسباب التسوية</a>
+
+                             </h4>
+                            </div>
+                        </div>
+                    </div>
+
+
+              </div>
+          </div>
+      </section>

@@ -1,0 +1,101 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+          </li>
+
+          <li class="active"> سجل نقاط البيع </li>
+      </ol>
+  </div>
+</section>
+<section class="body-content">
+<div class="container">
+        <br>
+        
+        <div class="panel panel-default">
+                <div class="panel-heading text text-right">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>
+                                قائمة سجل  نقاط البيع
+                    </h4>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2 text-left">
+                            <a>
+                    
+                                <button (click)="Refresh()" class="btn btn-link">
+                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                </button>
+                              </a>
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="panel-body">
+                
+            <div style="overflow-x: auto;">
+                <table class="table text-right table-bordered  table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">كود</th>
+                        <th> نقطة البيع  </th>
+                        <th style="width:10%;"> إختر</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let item of notificationsList| paginate: { itemsPerPage: 100, currentPage: p } ; let i=index"
+                    [ngClass]="[RowSelected(item) ? 'selectedrow': '', (item.Read ==1) ? 'selectedrow': '']">
+                        <td>{{item.ID}}</td>
+                        <td>{{item.ShowFormat}}</td>
+                         <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                
+                                    <a class="label label-primary" style="margin-left:2px; " (click)="UpdateNotificationRecord(item.ID,false)">
+                                        <i class="fa fa-check"></i>
+        
+                                    </a>
+                                    
+                                    <a class="label label-primary" (click)="UpdateNotificationRecord(item.ID,true)" style="margin-right:2px; ">
+                                        <i class="fa fa-remove"></i>
+        
+                                    </a>
+                              
+        
+                            </div>
+        
+                        </td>
+        
+                    </tr>
+                    <tr><td colspan="3" class="text text-center alert alert-danger"  *ngIf="(notificationsList).length === 0" ><h4>نأسف لم يتم العثور على اى نتائج</h4></td></tr>
+        
+        
+                    <tr>
+                      <td colspan="3" class="text text-center">
+                        <pagination-controls (pageChange)="p = $event" maxSize="100" directionLinks="true" autoHide="false"
+                          responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                          screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                      </td>
+                    </tr>
+        
+                </tbody>
+              </table>
+            </div>
+            <br>
+            </div>
+            <div class="panel-footer">
+              
+              <br>
+              <br>
+
+                
+        </div>
+            </div>
+</div>
+</section>

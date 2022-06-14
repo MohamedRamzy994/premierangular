@@ -1,0 +1,110 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+            </li>
+
+            <li class="active"> الأدوات </li>
+        </ol>
+    </div>
+</section>
+    <section class="body-content">
+        <div class="container">
+            <div class="row">
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 ">
+                            <div class="item">
+                                <div class="item-card">
+                                        <h1><i class="fas fa-2x fa-calculator"></i></h1>
+                                </div>
+                                <div class="item-footer">
+                                    <h4><a style="cursor: pointer;" (click)="openCalculatorModal(templatecalculator)">الحاسبه</a></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AddBranch==true||authenticatedUser.EditBranch==true||authenticatedUser.DeleteBranch==true">
+                            <div class="item">
+                              <div class="item-card">
+                                <h1>
+                                  <i class="fas fa-home"></i>
+                                </h1>
+                              </div>
+                              <div class="item-footer">
+                                <h4>
+                                    <a [routerLink]="[ '/branches' ]" routerLinkActive="active">الفروع</a>
+                  
+                  
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AddSalesPoint==true||authenticatedUser.EditSalesPoint==true||authenticatedUser.DeleteSalesPoint==true">
+                            <div class="item">
+                              <div class="item-card">
+                                <h1>
+                                  <i class="fas fa-2x fa-desktop"></i>
+                                </h1>
+                              </div>
+                              <div class="item-footer">
+                                <h4>
+                                    <a [routerLink]="[ '/listsalespoints' ]" routerLinkActive="active">نقاط البيع</a>
+                  
+                  
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+
+                    <!-- <div class="col-xs-6 col-sm-4 col-md-3 hidden ">
+                            <div class="item">
+                                <div class="item-card">
+                                        <h1><i class="fa fa-2x fa-cogs"></i></h1>
+                                </div>
+                                <div class="item-footer">
+                                    <h4><a>اختصارات البرنامج</a></h4>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 ">
+                            <div class="item">
+                                <div class="item-card">
+                                        <h1><i class="fas fa-2x fa-gears"></i></h1>
+                                </div>
+                                <div class="item-footer">
+                                    <h4>
+                                     <a [routerLink]="[ '/changesetting' ]" routerLinkActive="active">تغيير اعدادات النظام</a>
+
+
+
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            
+      <ng-template #templatecalculator>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                <h4 class="modal-title">
+                  <img src="/bag.png" class="userlogo" />
+                </h4>
+              </div>
+              <div class="modal-body">
+                <ngx-calculator> </ngx-calculator>
+              </div>
+  
+            </div>
+  
+  
+  
+  
+          </ng-template>
+        </div>
+    </section>

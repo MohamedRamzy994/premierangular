@@ -1,0 +1,145 @@
+
+<section class="page-title">
+    <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+          </li>
+
+          <li>
+            المصروفات 
+
+
+          </li>
+
+      </ol>
+    </div>
+  </section>
+
+
+<section class="body-content">
+  <div class="container">
+      <div class="row">
+
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.AdditionalCost==true">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-money-check-alt"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+                          <a [routerLink]="[ '/addexpenses' ]" routerLinkActive="active">تسجيل المصروفات  </a>
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesPointDepositWithdrow==true">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-money-bill-wave"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+
+                          <a [routerLink]="[ '/pulldepositdrawerstorage' ]" routerLinkActive="active">سحب وايداع  </a>
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesPointTransferMoney==true">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-sync"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+
+                          <a [routerLink]="[ '/moneytransferbetpointssale' ]" routerLinkActive="active">تحويل اموال </a>
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.ReportTotalMoneyInfo==true">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-chart-pie"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+
+                          <a [routerLink]="[ '/drawerstoragereports' ]" routerLinkActive="active">تقرير  المالية </a>
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.SalesPointDepositWithdrow==true">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-list-ul"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+
+                          <a [routerLink]="[ '/reasonwithdrawdeposit' ]" routerLinkActive="active">اسباب السحب والايداع  </a>
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 ">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-building"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+                          <a [routerLink]="[ '/banks' ]" routerLinkActive="active">البنوك </a>
+
+
+                      </h4>
+                  </div>
+
+              </div>
+          </div>
+          <div class="col-xs-6 col-sm-4 col-md-3 ">
+              <div class="item">
+                  <div class="item-card">
+                      <h1>
+                          <i class="fas fa-2x fa-money-check"></i>
+                      </h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+
+                          <a [routerLink]="[ '/checks' ]" routerLinkActive="active"> الشيكات</a>
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

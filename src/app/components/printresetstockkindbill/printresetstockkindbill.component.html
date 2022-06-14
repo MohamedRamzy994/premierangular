@@ -1,0 +1,197 @@
+    <section class="page-title">
+      <div class="container">
+          <ol class="breadcrumb">
+
+
+            <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+            <li>
+                <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+            </li>
+          <li>
+              <a [routerLink]="[ '/kindquantity' ]" routerLinkActive="active">تسويه كميات الأصناف</a>
+
+          </li>
+          <li>
+            <a [routerLink]="[ '/kindquantitybills' ]" routerLinkActive="active"> فواتير تسويه كميات الأصناف</a>
+
+        </li>
+        <li class="active"> 'طباعة فاتورة تسوية كميات </li>
+          </ol>
+      </div>
+  </section>
+
+<section class="body-content" id="body-content">
+
+  
+    <div class="container">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-md-2 text text-center">
+                    <img [src]="appSettings.Logo" class="userlogo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;">
+                     
+                    </div>
+              
+            
+                  <div class="col-md-8">
+                    <h3 class="text text-center">
+                      فاتورة  تسوية كميات
+                    </h3>
+                  </div>
+                  <div class="col-md-2 text text-right">
+            
+                      <div class="printbrand">
+                        {{appSettings.ShopName}}
+              
+                      </div>
+              
+              
+                    </div>
+                 
+                </div>
+    
+    
+          </div>
+    
+          <div class="panel-body">
+          <div class="spacetoprint"></div>
+          
+    
+    
+              <hr>
+          
+             <br>
+              <div class="row">
+                  <div class="col-md-4 text text-right">
+            
+                    <div class="form-group ">
+                      <label for="StoreName" class="label label-default"> رقم الفاتورة </label>
+                      &nbsp; <span>{{SelectedInvoice.InvoiceID}}</span>
+                    </div>
+            
+                  </div>
+                  <div class="col-md-4 text text-right">
+            
+                    <div class="form-group ">
+                      <label for="StoreName" class="label label-default"> المخزن </label>
+                      &nbsp; <span>{{SelectedInvoice.StoreName}}</span>
+                    </div>
+                  </div>
+          
+                  <div class="col-md-4 text text-right">
+                    <div class="form-group">
+                      <label for="DateSubmit" class="label label-default"> التاريخ </label>
+            
+                      &nbsp; <span [textContent]="SelectedInvoice.DateSubmit|date"></span>
+            
+            
+                    </div>
+            
+                  </div>
+                  
+                </div>
+                <br>
+                <br>
+    
+               
+                      <div class="row fixheight">
+                          <div class="col-md-12">
+                          <table class="table text-center table-bordered table-responsive ">
+                            <thead>
+                              <tr>
+                                <th> التسلسل</th>
+                                <th style="width:50%"> إسم الصنف </th>
+                                <th> الكمية</th>
+                                <th> الوحده </th>
+                    
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let item of SelectedInvoiceItems; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td style="width:50%"> {{item.ProductName}} </td>
+                                <td>{{item.Num|number:'1.2-2'}}</td>
+                                <td>{{item.UnitName}}</td>
+                    
+                              </tr>
+                    
+                    
+                    
+                            </tbody>
+                          </table>
+                    
+                    
+                    
+                        </div>
+                        <br>
+                 
+                     </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-5 text text-right">
+                    <div class="form-group ">
+                      <label for="StoreName" class="label label-default"> اسم المندوب  </label>
+            
+                    </div>
+            
+            
+                  </div>
+                  <div class="col-md-5 text text-right">
+            
+                    <div class="form-group ">
+                      <label for="StoreTo" class="label label-default">  توقيع المندوب </label>
+            
+            
+            
+                    </div>
+                  </div>
+            
+                </div>
+                <br>
+                <div class="spacetoprint"></div>
+    
+                
+            
+                <div class="row">
+                  <div class="col-md-5 text text-right">
+                    <div class="form-group ">
+                      <label for="StoreName" class="label label-default"> امين المخزن</label>
+            
+                    </div>
+            
+            
+                  </div>
+                  <div class="col-md-5 text text-right">
+            
+                    <div class="form-group ">
+                      <label for="StoreTo" class="label label-default">  توقيع امين المخزن </label>
+            
+            
+            
+                    </div>
+                  </div>
+            
+                </div>
+    
+          </div>
+          <div class="panel-footer">
+    
+             <div class="btntricks">
+               
+                <button type="button" class="btn  btn-style" (click)="PrintReportInvoice()">
+            
+                    <i class="fa fa-print"></i> طباعه </button>
+             </div>
+    
+          </div>
+    
+        </div>
+        
+     
+    
+      </div>
+</section>

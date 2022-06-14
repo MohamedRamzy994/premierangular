@@ -1,0 +1,274 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+          </li>
+
+          <li class="active">نقاط البيع</li>
+      </ol>
+  </div>
+</section>
+<section class="body-content">
+<div class="container">
+        <br>
+        
+        <div class="panel panel-default">
+                <div class="panel-heading text text-right">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>
+                                قائمة نقاط البيع
+                    </h4>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2 text-left">
+                            <a>
+                    
+                                <button (click)="Refresh()" class="btn btn-link">
+                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                </button>
+                              </a>
+                        </div>
+                    </div>
+                
+                </div>
+                <div class="panel-body">
+                
+            <div style="overflow-x: auto;">
+                <table class="table text-right table-bordered  table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">كود</th>
+                        <th> نقطة البيع </th>
+                        <th>   الرصيد </th>
+                        <th>   عنوان نقطة البيع </th>
+                        <th>   عنوان نقطة البيع </th>
+
+                        <th style="width:5%;"> إختر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of branchesList| paginate: { itemsPerPage: 10, currentPage: p } ; let i=index"
+                    [ngClass]="{'selectedrow':RowSelected(item)}">
+                        <td>{{item.SalesPointID}}</td>
+                        <td>{{item.SalesPoint}} </td>
+                        <td>{{item.Balance}}</td>
+                        <td>{{item.SalesPointMACEthernet}}</td>
+                        <td>{{item.SalesPointMACWireless}}</td>
+
+                        <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                    <a class="label label-primary" (click)="SelectRow(item)">
+                                        <i class="fa fa-check"></i> تحـديـد
+        
+                                    </a>
+                                </ng-container>
+                                <ng-template #RemoveSelect>
+                                    <a class="label label-primary" (click)="RemoveSelection(item)">
+                                        <i class="fa fa-remove"></i> الـــغـــاء
+        
+                                    </a>
+                                </ng-template>
+        
+                            </div>
+        
+                        </td>
+        
+                    </tr>
+                   
+                    <tr>
+                      <td colspan="6" class="text text-center alert alert-danger" *ngIf="(branchesList).length === 0">
+                          <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                      </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            </div>
+            <div class="panel-footer">
+                <div class="btntricks">
+                        <button type="button" class="btn  btn-style" (click)='openEditModal(EditTemplate)'>
+                                <i class="fa fa-edit"></i> تعديل</button>
+                    
+                        <button type="button" class="btn btn-style" (click)='openAddModal(template)' #ButtonAdd>
+                                <i class="fa fa-plus"></i> إضافه</button>
+                    
+                          
+                                <ng-template #template>
+        
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                      <form #AddStoreForm ="ngForm">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                          <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                          <b> إضافه نقطة بيع جديدة</b>
+                                          <div class="form-group text-right">
+                                            <label for="Name">  نقطة البيع  </label>
+                                            <input id="Name" name="Name" class="form-control" type="text" [(ngModel)]="addBranchModel.SalesPoint"
+                                            #Name='ngModel' required="required" minlength="10" >
+                                          </div>
+                                          <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
+                                
+                                            <p *ngIf="Name?.errors.required">
+                                              <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                                            <p *ngIf="Name?.errors.minlength">
+                                              <i class="fa fa-bug"></i>   نقطة البيع يجب ان يكون بين 10-50 حرف
+                                            </p>
+                                          </div>
+                                          
+                                          <div class="form-group text-right">
+                                              <label for="SalesPointMACEthernet"> عنوان نقطة البيع - كابل   </label>
+                                              <input id="SalesPointMACEthernet" name="SalesPointMACEthernet" class="form-control" type="text" [(ngModel)]="addBranchModel.SalesPointMACEthernet"
+                                              #SalesPointMACEthernet='ngModel' required="required" minlength="10" >
+                                            </div>
+                                            <div *ngIf="SalesPointMACEthernet.invalid && (SalesPointMACEthernet.dirty || SalesPointMACEthernet.touched)" class="alert alert-danger">
+                                  
+                                              <p *ngIf="SalesPointMACEthernet?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                              </p>
+                                              <p *ngIf="SalesPointMACEthernet?.errors.minlength">
+                                                <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                                              </p>
+                                            </div>
+
+                                            <div class="form-group text-right">
+                                                <label for="SalesPointMACWireless"> عنوان نقطة البيع- واى فاى  </label>
+                                                <input id="SalesPointMACWireless" name="SalesPointMACWireless" class="form-control" type="text" [(ngModel)]="addBranchModel.SalesPointMACWireless"
+                                                #SalesPointMACWireless='ngModel' required="required" minlength="10" >
+                                              </div>
+                                              <div *ngIf="SalesPointMACWireless.invalid && (SalesPointMACWireless.dirty || SalesPointMACWireless.touched)" class="alert alert-danger">
+                                    
+                                                <p *ngIf="SalesPointMACWireless?.errors.required">
+                                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                                </p>
+                                                <p *ngIf="SalesPointMACWireless?.errors.minlength">
+                                                  <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                                                </p>
+                                              </div>
+
+                                        </div>
+                                        <div class="modal-footer ">
+                                
+                                          <button type="button" class="btn  pull-left" [disabled]="AddStoreForm.invalid" (click)="AddSalesPoint(addBranchModel,AddStoreForm)">حفظ</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                
+                                  </ng-template>
+                                  
+        
+                        <button type="button" class="btn btn-style" (click)="openModal(templatedelete)">
+                            <i class="fa fa-times"></i> حذف</button>
+                            <ng-template #templatedelete>
+        
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حذف نقطة االبيع  بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" (click)="DeletSalesPoint(selectedReason.SalesPointID)" >
+                                            نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                            </ng-template>
+        
+                         <ng-template #EditTemplate>
+        
+              
+                <div class="modal-content">
+                  <form #EditStoreForm ="ngForm">
+                    <div class="modal-header">
+                      <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                      <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                    </div>
+                    <div class="modal-body text-center">
+                      <b> تعديل نقطة بيع </b>
+                      <div class="form-group text-right">
+                        <label for="Name">  نقطة البيع  </label>
+                        <input id="Name" name="Name" class="form-control" type="text" [(ngModel)]="selectedReason.SalesPoint"
+                        #Name='ngModel' required="required" minlength="10" >
+                      </div>
+                      <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
+            
+                        <p *ngIf="Name?.errors.required">
+                          <i class="fa fa-bug"></i> الحقل مطلوب
+                        </p>
+                        <p *ngIf="Name?.errors.minlength">
+                          <i class="fa fa-bug"></i>   نقطة البيع يجب ان يكون بين 10-50 حرف
+                        </p>
+                      </div>
+                      
+                      <div class="form-group text-right">
+                          <label for="SalesPointMACEthernet"> عنوان نقطة البيع - كابل   </label>
+                          <input id="SalesPointMACEthernet" name="SalesPointMACEthernet" class="form-control" type="text" [(ngModel)]="selectedReason.SalesPointMACEthernet"
+                          #SalesPointMACEthernet='ngModel' required="required" minlength="10" >
+                        </div>
+                        <div *ngIf="SalesPointMACEthernet.invalid && (SalesPointMACEthernet.dirty || SalesPointMACEthernet.touched)" class="alert alert-danger">
+              
+                          <p *ngIf="SalesPointMACEthernet?.errors.required">
+                            <i class="fa fa-bug"></i> الحقل مطلوب
+                          </p>
+                          <p *ngIf="SalesPointMACEthernet?.errors.minlength">
+                            <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                          </p>
+                        </div>
+
+                        <div class="form-group text-right">
+                            <label for="SalesPointMACWireless"> عنوان نقطة البيع- واى فاى  </label>
+                            <input id="SalesPointMACWireless" name="SalesPointMACWireless" class="form-control" type="text" [(ngModel)]="selectedReason.SalesPointMACWireless"
+                            #SalesPointMACWireless='ngModel' required="required" minlength="10" >
+                          </div>
+                          <div *ngIf="SalesPointMACWireless.invalid && (SalesPointMACWireless.dirty || SalesPointMACWireless.touched)" class="alert alert-danger">
+                
+                            <p *ngIf="SalesPointMACWireless?.errors.required">
+                              <i class="fa fa-bug"></i> الحقل مطلوب
+                            </p>
+                            <p *ngIf="SalesPointMACWireless?.errors.minlength">
+                              <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                            </p>
+                          </div>
+
+                   
+                    </div>
+                  
+
+
+                    <div class="modal-footer ">
+          
+                      <button type="button" class="btn  pull-left" [disabled]="EditStoreForm.invalid" 
+                      (click)="EditSalesPoint(selectedReason)" >حفظ</button>
+                    </div>
+                  </form>
+                </div>
+          
+              </ng-template>
+              
+                    
+        
+                    </div>
+                
+        </div>
+            </div>
+</div>
+</section>

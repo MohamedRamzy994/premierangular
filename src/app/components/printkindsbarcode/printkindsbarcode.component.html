@@ -1,0 +1,94 @@
+<section class="page-title">
+  <div class="container">
+    <ol class="breadcrumb">
+
+      <li>
+        <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+      </li>
+      <li>
+        <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+      </li>
+
+      <li>
+        <a [routerLink]="[ '/kindsbarcodegenerator' ]" routerLinkActive="active">طباعة باركود للاصناف</a>
+
+      </li>
+      <li class="active">
+        عرض الطباعة
+      </li>
+    </ol>
+  </div>
+</section>
+
+
+<section class="body-content">
+  <div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <div class="row">
+              <div class="col-md-4">
+                  <h4 class="text-right">
+                      طباعة باركود
+                    </h4>
+              </div>
+              <div class="col-md-6"></div>
+              <div class="col-md-2 text-left">
+                  <a>
+          
+                      <button (click)="Refresh()" class="btn btn-link">
+                        <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                     <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                      </button>
+                    </a>
+              </div>
+          </div>
+     
+      </div>
+      <div class="panel-body">
+          <div class="row" id="barcodes">
+<!-- <div class="seprate"></div> -->
+
+              <div class="col-md-3 text-center"
+               style="border: #000000 solid 1px;"
+                *ngFor="let item of productbarcodes">
+        
+                <div class="brheader">
+        
+                  {{item.AppName}}
+                </div>
+                <ngx-barcode class="barecodestretch" [bc-value]="item.ProductID" [bc-display-value]="options.displayValue"
+                  [bc-element-type]="'svg'" [bc-format]="options.format" [bc-width]="options.width" [bc-height]="options.height"></ngx-barcode>
+        
+                <div class="brfooter">
+                  {{item.ProductName}}
+                </div>
+              </div>
+        
+            </div>
+        
+
+      </div>
+      <div class="panel-footer">
+
+       
+              <div class="btntricks">
+                <button type="button" class="btn  btn-style" (click)="PrintBarCodeLabels()">
+                  طباعة </button>
+        
+              </div>
+        
+          
+      </div>
+
+    </div>
+
+    
+  
+
+   
+
+  </div>
+</section>

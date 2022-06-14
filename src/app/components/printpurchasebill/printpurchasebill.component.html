@@ -1,0 +1,269 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+          </li>
+
+          <li>
+              <a [routerLink]="[ '/purchases' ]" routerLinkActive="active">مشتريات</a>
+
+          </li>
+
+          <li>
+              <a [routerLink]="[ '/oldpurchasebill' ]" routerLinkActive="active">فواتير الشراء السابقه </a>
+
+          </li>
+          <li class="active"> طباعة فاتورة شراء سابقة  </li>
+      </ol>
+  </div>
+</section>
+
+
+<section class="body-content" id="body-content">
+
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-2 text text-center">
+              <img [src]="appSettings.Logo" class="userlogo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;">
+             
+            </div>
+             
+        
+              <div class="col-md-8">
+                <h3 class="text text-center">
+                  فاتورة شراء سابقة
+                </h3>
+              </div>
+              <div class="col-md-2 text text-right">
+        
+                <div class="printbrand">
+                  {{appSettings.ShopName}}
+        
+                </div>
+          
+          
+                </div>
+             
+            </div>
+          <div class="spacetoprint"></div>
+
+      </div>
+      <div class="panel-body">
+          <div class="spacetoprint"></div>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-4 text text-right">
+              <div class="form-group ">
+                <label for="StoreName" class="label label-default">  رقم الفاتورة </label>
+                &nbsp; <span>{{productBuyMainInvoices.InvoiceID}}</span>
+              </div>
+      
+      
+            </div>
+            <div class="col-md-4 text text-right">
+      
+              <div class="form-group ">
+                <label for="StoreTo" class="label label-default">  المورد</label>
+                &nbsp; <span [textContent]="productBuyMainInvoices.SupplierName"></span>
+      
+      
+      
+              </div>
+            </div>
+            <div class="col-md-4 text text-center">
+              <div class="form-group">
+                <label for="DateSubmit" class="label label-default"> التاريخ </label>
+      
+                &nbsp; <span [textContent]="productBuyMainInvoices.DateSubmit|date"></span>
+      
+      
+              </div>
+      
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4 text text-right">
+              <div class="form-group ">
+                <label for="StoreName" class="label label-default">  حساب الفاتورة </label>
+                &nbsp; <span>{{productBuyMainInvoices.Total}}</span>
+              </div>
+      
+      
+            </div>
+            <div class="col-md-4 text text-right">
+      
+              <div class="form-group ">
+                <label for="StoreTo" class="label label-default">  المخزن</label>
+                &nbsp; <span [textContent]="productBuyMainInvoices.StoreName"></span>
+      
+      
+      
+              </div>
+            </div>
+            <div class="col-md-4 text text-center">
+              <div class="form-group">
+                <label for="DateSubmit" class="label label-default"> نقطة البيع </label>
+      
+                &nbsp; <span [textContent]="productBuyMainInvoices.UserName"></span>
+      
+      
+              </div>
+      
+            </div>
+          </div>
+          <br>
+          <div class="row fixheight">
+            <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h5 class="text-colored text-right">الأصناف في الفاتورة</h5>
+                </div>
+                <div class="panel-body">
+                        <div style="overflow-x: auto;">
+                                <table class="table text-right table-bordered  table-responsive table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%;">كود الصنف</th>
+                                            <th> إسم الصنف </th>
+                                            <th style="width:10%;"> كميه الشراء </th>
+                                            <th style="width:10%;"> كميه المرتجع </th>
+                                            <th style="width:10%;"> صافي الكميه </th>
+                                            <th style="width:10%;"> الوحده </th>
+                                            <th style="width:10%;"> السعر </th>
+                                            <th style="width:10%;"> الإجمالي </th>
+                                            <th style="width:10%;"> رصيد المخزن </th>
+                    
+                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of productBuyMainInvoicesItems">
+                                            <td>{{item.ProductID}}</td>
+                                            <td> {{item.ProductName}}</td>
+                                            <td>{{item.Num| number:'1.2-2'}}</td>
+                                            <td>{{item.DiscardNum|number:'1.2-2'}}</td>
+                                            <td>{{(item.Num - item.DiscardNum)|number:'1.2-2'}}</td>
+                                            <td>{{item.UnitName}}</td>
+                                            <td>{{item.Price|currency}}</td>
+                                            <td>{{(item.Num * item.Price)|currency}}</td>
+                                            <td>{{item.Stock|number:'1.2-2'}}</td>
+                    
+                                        </tr>
+                    
+                                        <tr>
+                                            <td colspan="9" class="text text-center alert alert-danger" *ngIf="(productBuyMainInvoicesItems).length === 0">
+                                                <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                            </td>
+                                        </tr>
+                                   
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                </div>
+                <div class="panel-footer">
+    
+                    
+                        <br>
+                        <br>
+                </div>
+    
+            </div>
+         
+    
+           
+            
+            </div>
+             
+     
+        
+        
+            </div>
+
+            <hr>
+            <div class="row fixheight">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                              <h5 class="text-colored text-right">المرتجعات علي الفاتورة</h5>
+                      </div>
+                      <div class="panel-body">
+                              <div style="overflow-x: auto;">
+                                      <table class="table text-right table-bordered  table-responsive table-striped">
+                                          <thead>
+                                              <tr>
+                                                  <th style="width:10%;">كود الصنف</th>
+                                                  <th tyle="width:30%;"> إسم الصنف </th>
+                                                  <th style="width:20%;"> كميه المرتجع </th>
+                                                  <th style="width:20%;"> الوحده </th>
+                                                  <th style="width:10%;"> السعر </th>
+                                                  <th style="width:10%;"> الإجمالي </th>
+                                                  
+                              
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let item of productBuyDiscardMainInvoicesItems">
+                                                  <td>{{item.ProductID}}</td>
+                                                  <td>{{item.ProductName}}</td>
+                                                  <td>{{item.Num| number:'1.2-2'}}</td>
+                                                  <td>{{item.UnitName}}</td>
+                                                  <td>{{item.Price| currency}}</td>
+                                                  <td>{{(item.Price * item.Num)| currency}}</td>
+                                                
+                                              </tr>
+                              
+                                              <tr>
+                                                  <td colspan="6" class="text text-center alert alert-danger" *ngIf="(productBuyDiscardMainInvoicesItems).length === 0">
+                                                      <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                                  </td>
+                                              </tr>
+                                            
+                              
+                              
+                              
+                              
+                              
+                                          </tbody>
+                                      </table>
+                                  </div>
+                      </div>
+                      <div class="panel-footer">
+          
+                          <br>
+                          <br>
+                      </div>
+          
+                  </div>
+              
+              </div>
+                </div>
+           
+          
+             
+
+      </div>
+      <div class="panel-footer">
+           <div class="btntricks">
+
+              <button type="button" class="btn  btn-style" (click)="PrintReportInvoice()">
+        
+                  <i class="fa fa-print"></i> طباعه </button>
+           </div>
+        
+      </div>
+
+    </div>
+
+
+  
+
+  </div>
+</section>

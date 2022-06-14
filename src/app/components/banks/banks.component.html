@@ -1,0 +1,223 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active">  المصروفات</a>
+
+
+            </li>
+            <li class="active">البنوك</li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-4">
+                <label for="bank-name"> إسم البنك</label>
+            <div class="input-group">
+                   
+                <input type="text" class="form-control" name="bank-name" placeholder="بحث" aria-describedby="basic-addon1">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<section class="body-content">
+<div class="container">
+        <br>
+        
+        <div class="panel panel-default">
+                <div class="panel-heading text text-right">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4>
+                                قائمة البنوك
+                    </h4>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2 text-left">
+                            <a>
+                    
+                                <button (click)="Refresh()" class="btn btn-link">
+                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                </button>
+                              </a>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="panel-body">
+                
+            <div style="overflow-x: auto;">
+                <table class="table text-right table-bordered  table-responsive">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">التسلسل</th>
+                        <th> إسم البنك </th>
+                        <th style="width:5%;"> إختر</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of banksList| paginate: { itemsPerPage: 10, currentPage: p } ; let i=index"
+                    [ngClass]="{'selectedrow':RowSelected(item)}">
+                        <td>{{i+1}}</td>
+                        <td>{{item.BankName}} </td>
+                        <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                    <a class="label label-primary" (click)="SelectRow(item)">
+                                        <i class="fa fa-check"></i> تحـديـد
+        
+                                    </a>
+                                </ng-container>
+                                <ng-template #RemoveSelect>
+                                    <a class="label label-primary" (click)="RemoveSelection(item)">
+                                        <i class="fa fa-remove"></i> الـــغـــاء
+        
+                                    </a>
+                                </ng-template>
+        
+                            </div>
+        
+                        </td>
+        
+                    </tr>
+                  
+               <tr><td colspan="4" class="text text-center alert alert-danger"  *ngIf="banksList.length == 0" ><h4>نأسف لم يتم العثور على اى نتائج</h4></td></tr>
+                   
+        
+        
+                </tbody>
+              </table>
+            </div>
+            <br>
+            </div>
+            <div class="panel-footer">
+                <div class="btntricks">
+                        <button type="button" class="btn  btn-style" (click)='openEditModal(EditTemplate)'>
+                                <i class="fa fa-edit"></i> تعديل</button>
+                    
+                        <button type="button" class="btn btn-style" (click)='openAddModal(template)' #ButtonAdd>
+                                <i class="fa fa-plus"></i> إضافه</button>
+                    
+                          
+                                <ng-template #template>
+        
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                      <form #AddStoreForm ="ngForm">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                          <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                          <b> إضافه بنك جديد</b>
+                                          <div class="form-group text-right">
+                                            <label for="Reason"> اسم البنك  </label>
+                                            <input id="Reason" name="Reason" class="form-control" type="text" [(ngModel)]="reason"
+                                            #Reason='ngModel' required="required" minlength="10" >
+                                          </div>
+                                          <div *ngIf="Reason.invalid && (Reason.dirty || Reason.touched)" class="alert alert-danger">
+                                
+                                            <p *ngIf="Reason?.errors.required">
+                                              <i class="fa fa-bug"></i> الحقل مطلوب
+                                            </p>
+                                            <p *ngIf="Reason?.errors.minlength">
+                                              <i class="fa fa-bug"></i>  اسم البنك يجب ان يكون بين 10-50 حرف
+                                            </p>
+                                          </div>
+                                        </div>
+                                        <div class="modal-footer ">
+                                
+                                          <button type="button" class="btn  pull-left" [disabled]="AddStoreForm.invalid" (click)="AddBank(reason,AddStoreForm)">حفظ</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                
+                                  </ng-template>
+                                  
+        
+                        <button type="button" class="btn btn-style" (click)="openModal(templatedelete)">
+                            <i class="fa fa-times"></i> حذف</button>
+                    
+                            <ng-template #templatedelete>
+        
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p> هل تريد حذف هذا البنك بالفعل ؟</p>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <button type="button" class="btn  pull-right" (click)="DeleteBank(selectedReason.BankID)" >
+                                            نعم</button>
+                    
+                                        <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                                    </div>
+                                </div>
+                    
+                    
+                    
+                    
+                            </ng-template>
+        
+                         <ng-template #EditTemplate>
+        
+              
+                <div class="modal-content">
+                  <form #EditStoreForm ="ngForm">
+                    <div class="modal-header">
+                      <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                      <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                    </div>
+                    <div class="modal-body text-center">
+                      <b> تعديل  اسم البنك  </b>
+                      <div class="form-group text-right">
+                        <label for="editReason"> اسم البنك  </label>
+                        <input id="editReason" name="editReason" class="form-control" type="text" [(ngModel)]="selectedReason.BankName"
+                        #editReason='ngModel' required="required" >
+                      </div>
+                      <div *ngIf="editReason.invalid && (editReason.dirty || editReason.touched)" class="alert alert-danger">
+        
+                        <p *ngIf="editReason?.errors.required">
+                          <i class="fa fa-bug"></i> الحقل مطلوب
+                        </p>
+                       
+                      </div>
+          
+                    </div>
+                    <div class="modal-footer ">
+          
+                      <button type="button" class="btn  pull-left" [disabled]="EditStoreForm.invalid" 
+                      (click)="EditBank(selectedReason)" >حفظ</button>
+                    </div>
+                  </form>
+                </div>
+          
+              </ng-template>
+              
+                    
+        
+                    </div>
+                
+        </div>
+            </div>
+</div>
+</section>

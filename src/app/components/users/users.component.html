@@ -1,0 +1,56 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+            <li class="active"> المستخدم </li>
+        </ol>
+    </div>
+  </section>
+  <section class="body-content">
+
+
+      <div class="container">
+          <div class="row">
+
+
+              <div class="col-xs-6 col-sm-4 col-md-3 ">
+                  <div class="item">
+                      <div class="item-card">
+                          <h1>
+                              <i class="fa fa-2x fa-users"></i>
+                          </h1>
+                      </div>
+                      <div class="item-footer">
+                          <h4>
+                            <a [routerLink]="[ '/userslist' ]" routerLinkActive="active">قائمه المستخدمين</a>
+
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xs-6 col-sm-4 col-md-3 ">
+                  <div class="item">
+                      <div class="item-card">
+                          <h1>
+                            <i class="fas fa-user-cog"></i>       
+                                                   </h1>
+                      </div>
+                      <div class="item-footer">
+                          <h4>
+                            <a [routerLink]="[ '/personalaccount' ]" routerLinkActive="active">حسابي الخاص</a>
+                          </h4>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+  </section>
+
+

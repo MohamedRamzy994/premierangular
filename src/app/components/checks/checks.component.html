@@ -1,0 +1,267 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li>
+
+                <a [routerLink]="[ '/drawerstorage' ]" routerLinkActive="active">  المصروفات</a>
+
+
+            </li>
+            <li class="active"> الشيكات</li>
+        </ol>
+    </div>
+</section>
+<section class="search-sec">
+<div class="container">
+    <div class="row">
+            <div class="col-md-4">
+                    <div class="form-group">
+                                    <label> نوع الشيك </label>
+                                    <select class="form-control" >
+                                        <option> شيك مدفوع من عميل </option>
+                                        <option> شيك مدفوع إلي مورد  </option>
+                                    </select>
+    
+                    <label> حالة الشيك </label>
+                    <select class="form-control" >
+                        <option>  تم الإلغاء </option>
+                        <option>  تم التظهير  </option>
+                        <option>  تحت الإستحقاق </option>
+                    </select>
+                    
+                    
+                    <label> البنك </label>
+                    <select class="form-control">
+                        <option> البنك الأهلي المصري </option>
+                        <option> بنك مصر  </option>
+                    </select>
+
+                    </div>
+
+                        </div>
+            
+            <div class="col-md-4">
+                    <div class="form-group ">
+            <label>تاريخ الإنشاء من</label>
+            <input name="range_from" class="form-control " type="date">
+            <label>  إلي </label>
+            <input name="range_to" class="form-control " type="date">
+
+         
+                    </div>
+                    <div class="form-group">
+
+                        <label> رقم الشيك</label>
+                        <input type="number" class="form-control">
+                    </div>
+            </div>
+            <div class="col-md-4">
+                    <div class="form-group ">
+           
+            <label>تاريخ الإستحقاق من</label>
+            <input name="range_from" class="form-control " type="date">
+            <label>  إلي </label>
+            <input name="range_to" class="form-control " type="date">
+          
+            
+
+</div>
+<div class="form-group">
+
+        <label> نتيجة البحث </label>
+        <input type="number" class="form-control">
+    </div>
+
+            </div>
+          
+            </div>
+        </div>
+</section>
+<section class="body-content">
+<div class="container">
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading text text-right">
+                    <div class="row">
+                            <div class="col-md-4">
+                                    <h4>
+                                            قائمة الشيكات
+                                        </h4>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-2 text-left">
+                                <a>
+                        
+                                    <button (click)="Refresh()" class="btn btn-link">
+                                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                    </button>
+                                  </a>
+                            </div>
+                        </div>
+               
+
+            </div>
+            <div class="panel-body">
+
+                    <div style="overflow-x: auto;">
+                            <table class="table text-right table-bordered  table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="width:15%;"> البنك </th>
+                                    <th>رقم الشيك</th>
+                                    <th>نوع الشيك</th>
+                                    <th> العميل / المورد</th>
+                                    <th>قيمه الشيك</th>
+                                    <th> تاريخ الإنشاء </th>
+                                    <th> تاريخ الإستحقاق </th>
+                                    <th>حالة الشيك</th>
+                                    <th style="width:5%;"> إختر</th>
+            
+                                </tr>
+                            </thead>
+                            <tbody>
+            
+                                    <tr>
+                                        <td>البنك الأهلي</td>
+                                        <td> 3838383838 </td>
+                                        <td> شيك مدفوع من عميل </td>
+                                        <td> نور صلاح </td>
+                                        <td> 10.000.000 </td>
+                                        <td> 20/6/2017 </td>
+                                        <td> 25/6/2017 </td>
+                                        <td> تم الإلغاء </td>
+                                        <td>
+                                                <div class="checkbox " style="margin-right:25px;">
+                                                        <label for="form_checkbox">
+                                                            <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                                    </div>
+                                        </td>
+            
+                                    </tr>
+                                    
+                                    <tr>
+                                            <td>البنك الأهلي</td>
+                                            <td> 3838383838 </td>
+                                            <td> شيك مدفوع من عميل </td>
+                                            <td> نور صلاح </td>
+                                            <td> 10.000.000 </td>
+                                            <td> 20/6/2017 </td>
+                                            <td> 25/6/2017 </td>
+                                            <td> تم الإلغاء </td>
+                                            <td>
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                            <label for="form_checkbox">
+                                                                <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                                        </div>
+                                            </td>
+                
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td>البنك الأهلي</td>
+                                            <td> 3838383838 </td>
+                                            <td> شيك مدفوع من عميل </td>
+                                            <td> نور صلاح </td>
+                                            <td> 10.000.000 </td>
+                                            <td> 20/6/2017 </td>
+                                            <td> 25/6/2017 </td>
+                                            <td> تم الإلغاء </td>
+                                            <td>
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                            <label for="form_checkbox">
+                                                                <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                                        </div>
+                                            </td>
+                
+                                        </tr>
+                                        
+                                    <tr>
+                                            <td>البنك الأهلي</td>
+                                            <td> 3838383838 </td>
+                                            <td> شيك مدفوع من عميل </td>
+                                            <td> نور صلاح </td>
+                                            <td> 10.000.000 </td>
+                                            <td> 20/6/2017 </td>
+                                            <td> 25/6/2017 </td>
+                                            <td> تم الإلغاء </td>
+                                            <td>
+                                                    <div class="checkbox " style="margin-right:25px;">
+                                                            <label for="form_checkbox">
+                                                                <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                                        </div>
+                                            </td>
+                
+                                        </tr>
+                            </tbody>
+                          </table>
+                        </div>
+           
+                        
+
+
+
+            </div>
+            <div class="panel-footer">
+
+                <div class="btntricks">
+
+                        <button type="button" class="btn  btn-style">
+                                إستحقاق</button>
+
+                                <button type="button" class="btn  btn-style" data-toggle="modal" data-target="#myModal">
+                                        <i class="fa fa-times"></i> إلغاء</button>
+
+                                        <button type="button" class="btn btn-info btn-style">
+                                                تظهير</button>
+                                                <select style="width: 270px; height: 38px; padding: 5px; border-radius: 5px;">
+                                                    <option>نور صلاح </option>
+                                                    <option> السيد عبد الحي  </option>
+                                                </select>
+
+
+                </div>
+                
+           
+            </div>
+        </div>
+           
+
+
+
+          
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Business Accounting</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p> هل تريد إلغاء هذا الشيك بالفعل ؟</p>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="button" class="btn  pull-right"> نعم</button>
+
+                            <button type="button" class="btn  pull-left">لا</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+           
+
+
+</div>
+</section>

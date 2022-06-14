@@ -1,0 +1,215 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+                <li>
+
+                <a [routerLink]="[ '/sales' ]" routerLinkActive="active">مبيعات</a>
+
+
+                </li>
+
+                <li>
+                <a [routerLink]="[ '/salesbillsprofit' ]" routerLinkActive="active">ربحية فواتير البيع </a>
+
+
+                </li>
+                <li class="active"> عرض فاتوره بيع  </li>
+            </ol>
+        </div>
+</section>
+<section class="search-sec">
+    <div class="container">
+
+
+                    <label for="search-bills"> بحث فواتير </label>
+                    <div class="form-group disp-inl-bl" >
+                       <input type="text" class="form-control" name="search-bills" placeholder="بحث">
+
+                    </div>
+                    <button class="btn  btn-style"> <i class="fa fa-search"></i> بحث </button>
+                    <h4>تفاصيل الفاتورة</h4>
+                    <div class="radio disp-inl-bl " style="margin-right:25px;">
+                            <label for="form_radio2">
+                                <input id="form_radio2" name="form_radio" type="radio" checked> آجل </label>
+                    </div>
+                    <div class="form-group disp-inl-bl">
+                        <label for="bill-num"> رقم الفاتوره </label>
+                        <input name="bill-num" class="form-control" type="text">
+
+                    </div>
+                    <div class="form-group disp-inl-bl">
+                            <label for="bill-account"> حساب الفاتوره </label>
+                            <input name="bill-account" class="form-control" type="text">
+
+                    </div>
+                    <div class="form-group disp-inl-bl">
+                            <label for="bill-total"> صافي الفاتوره </label>
+                            <input name="bill-total" class="form-control" type="text">
+
+                    </div>
+                    <div class="form-group disp-inl-bl ">
+                        <label> المخزن </label>
+                        <select class="form-control p-0">
+                            <option> المخزن الرئيسي </option>
+                            <option> المخزن الفرعي </option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="form-group disp-inl-bl ">
+                            <label> العميل  </label>
+                           <input name="client" class="form-control" type="text">
+                    </div>
+
+                    <div class="form-group disp-inl-bl ">
+                            <label> خصم %  </label>
+                           <input name="discount" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl ">
+                            <label> خصم بالقيمه  </label>
+                           <input name="discount-value" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl ">
+                            <label> مدفوع  </label>
+                           <input name="paid" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl ">
+                            <label> متبقي  </label>
+                           <input name="remain" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl">
+
+                        <label for="date"> التاريخ </label>
+                        <input name="date" class="form-control" type="date">
+
+                    </div>
+                    <br>
+                    <div class="form-group disp-inl-bl">
+
+                            <label for="delegate"> المندوب </label>
+                            <input name="delegate" class="form-control" type="text">
+
+                    </div>
+
+                    <div class="form-group disp-inl-bl ">
+                            <label> إجمالي الخصم  </label>
+                           <input name="total-discount" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl ">
+                            <label> إضافات  </label>
+                           <input name="additions" class="form-control" type="text" style="width: 120px;">
+                    </div>
+                    <div class="form-group disp-inl-bl">
+                        <label for="notes"> ملاحظات </label>
+                        <input name="notes" class="form-control" type="text">
+
+                    </div>
+
+                    <div class="form-group disp-inl-bl">
+                            <label for="user"> المستخدم </label>
+                            <input name="user" class="form-control" type="text">
+
+                        </div>
+                    <br>
+
+                    <button type="button" class="btn  btn-style pull-right">
+                        <i class="fa fa-print"></i> نسخ الفاتورة </button>
+                    <button type="button" class="btn  btn-style">
+                        <i class="fa fa-times"></i> إلغاء الفاتورة </button>
+
+
+
+
+
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+        <h5 class="text-colored text-right">الأصناف في الفاتورة</h5>
+
+        <div style="overflow-x: auto;">                     <table class="table text-right table-bordered  table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th style="width:10%;">كود الصنف</th>
+                    <th style="width:30%;"> إسم الصنف </th>
+                    <th > كميه البيع </th>
+                    <th > كميه المرتجع </th>
+                    <th >  صافي الكميه </th>
+                    <th > الوحده </th>
+                    <th >  السعر </th>
+                    <th > نسبه الخصم </th>
+                    <th > السعر النهائي </th>
+                    <th >  الإجمالي </th>
+                    <th > رصيد المخزن </th>
+                    <th style="width:5%;">إختر</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>25.00</td>
+                    <td>0.00</td>
+                    <td>25.00</td>
+                    <td>قطعه</td>
+                    <td>15.50</td>
+                    <td>0.00%</td>
+                    <td>15.50</td>
+                    <td>15.50</td>
+                    <td>1.00</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+            </tbody>
+          </table>                     </div>
+         <br>
+        <h5 class="text-colored text-right">المرتجعات علي الفاتورة</h5>
+
+        <div style="overflow-x: auto;">                     <table class="table text-right table-bordered  table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th style="width:10%;">كود الصنف</th>
+                    <th> إسم الصنف </th>
+                    <th style="width:10%;"> كميه المرتجع </th>
+                    <th style="width:10%;"> الوحده </th>
+                    <th style="width:10%;">  السعر </th>
+                    <th style="width:10%;">  الإجمالي </th>
+                    <th style="width:5%;">إختر</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td> Mintor Lap </td>
+                    <td>25.00</td>
+                    <td>قطعه</td>
+                    <td>12.20</td>
+                    <td>213.20</td>
+                    <td>
+                            <div class="checkbox " style="margin-right:25px;">
+                                    <label for="form_checkbox">
+                                        <input id="form_checkbox" name="form_checkbox" type="checkbox"></label>
+                                </div>
+                    </td>
+                </tr>
+
+            </tbody>
+          </table>                     </div>
+
+
+    </div>
+</section>

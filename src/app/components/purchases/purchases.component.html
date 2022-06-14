@@ -1,0 +1,85 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+          </li>
+
+
+          <li class="active"> مشتريات  </li>
+      </ol>
+  </div>
+</section>
+
+<section class="body-content">
+  <div class="container">
+      <div class="row">
+
+
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.BuyInvoice==true">
+                  <div class="item">
+                      <div class="item-card">
+                           <h1><i class="fas fa-2x fa-plus-square"></i></h1>
+                      </div>
+                      <div class="item-footer">
+                          <h4>
+                              <a [routerLink]="[ '/purchasebill' ]" routerLinkActive="active">فاتوره شراء </a>
+
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.BuyInvoice==true">
+                  <div class="item">
+                      <div class="item-card">
+                              <h1><i class="fas fa-2x fa-file-invoice"></i></h1>
+                      </div>
+                      <div class="item-footer">
+                          <h4>
+                              <a [routerLink]="[ '/oldpurchasebill' ]" routerLinkActive="active">فواتير الشراء السابقه </a>
+
+
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.BuyDiscard==true">
+                  <div class="item">
+                      <div class="item-card">
+                           <h1><i class="fas fa-2x fa-plus-square"></i></h1>
+                      </div>
+                      <div class="item-footer">
+                          <h4>
+                              <a [routerLink]="[ '/buyback' ]" routerLinkActive="active">مرتجع شراء </a>
+
+
+
+                          </h4>
+                      </div>
+                  </div>
+              </div>
+
+
+          <div class="col-xs-6 col-sm-4 col-md-3 " *ngIf="authenticatedUser.BuyDiscard==true">
+              <div class="item">
+                  <div class="item-card">
+                       <h1><i class="fas fa-2x fa-file-invoice"></i></h1>
+                  </div>
+                  <div class="item-footer">
+                      <h4>
+                          <a [routerLink]="[ '/oldbuyback' ]" routerLinkActive="active">مرتجعات شراء سابقه </a>
+
+
+
+                      </h4>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>

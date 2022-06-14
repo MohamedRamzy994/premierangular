@@ -1,0 +1,270 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+            </li>
+
+            <li class="active">الفروع</li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+  <div class="container">
+          <br>
+          
+          <div class="panel panel-default">
+                  <div class="panel-heading text text-right">
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h4>
+                                  قائمة الفروع
+                      </h4>
+                          </div>
+                          <div class="col-md-6"></div>
+                          <div class="col-md-2 text-left">
+                              <a>
+                      
+                                  <button (click)="Refresh()" class="btn btn-link">
+                                    <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                 <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                  </button>
+                                </a>
+                          </div>
+                      </div>
+                     
+                  </div>
+                  <div class="panel-body">
+                  
+              <div style="overflow-x: auto;">
+                  <table class="table text-right table-bordered  table-responsive">
+                  <thead>
+                      <tr>
+                          <th style="width:10%;">كود</th>
+                          <th> إسم الفرع </th>
+                          <th>  رقم الجهاز </th>
+                          <th>   عنوان الفرع </th>
+                          <th style="width:5%;"> إختر</th>
+  
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of branchesList| paginate: { itemsPerPage: 10, currentPage: p } ; let i=index"
+                      [ngClass]="{'selectedrow':RowSelected(item)}">
+                          <td>{{item.BranchID}}</td>
+                          <td>{{item.Name}} </td>
+                          <td>{{item.DeviceIP}}</td>
+                          <td>{{item.Address}}</td>
+
+
+                          <td>
+                              <div class="checkbox " style="margin-right:25px;">
+                                  <ng-container *ngIf="!RowSelected(item); else RemoveSelect">
+                                      <a class="label label-primary" (click)="SelectRow(item)">
+                                          <i class="fa fa-check"></i> تحـديـد
+          
+                                      </a>
+                                  </ng-container>
+                                  <ng-template #RemoveSelect>
+                                      <a class="label label-primary" (click)="RemoveSelection(item)">
+                                          <i class="fa fa-remove"></i> الـــغـــاء
+          
+                                      </a>
+                                  </ng-template>
+          
+                              </div>
+          
+                          </td>
+          
+                      </tr>
+          
+                     
+                        <tr>
+                          <td colspan="5" class="text text-center alert alert-danger" *ngIf="(branchesList).length === 0">
+                              <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                          </td>
+                      </tr>
+                     
+                  </tbody>
+                </table>
+              </div>
+              <br>
+              </div>
+              <div class="panel-footer">
+                  <div class="btntricks">
+                          <button type="button" class="btn  btn-style" (click)='openEditModal(EditTemplate)'>
+                                  <i class="fa fa-edit"></i> تعديل</button>
+                      
+                          <button type="button" class="btn btn-style" (click)='openAddModal(template)' #ButtonAdd>
+                                  <i class="fa fa-plus"></i> إضافه</button>
+                      
+                            
+                                  <ng-template #template>
+          
+                                      <!-- Modal content-->
+                                      <div class="modal-content">
+                                        <form #AddStoreForm ="ngForm">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                            <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                          </div>
+                                          <div class="modal-body text-center">
+                                            <b> إضافه فرع جديد</b>
+                                            <div class="form-group text-right">
+                                              <label for="Name"> اسم الفرع  </label>
+                                              <input id="Name" name="Name" class="form-control" type="text" [(ngModel)]="addBranchModel.Name"
+                                              #Name='ngModel' required="required" minlength="10" >
+                                            </div>
+                                            <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
+                                  
+                                              <p *ngIf="Name?.errors.required">
+                                                <i class="fa fa-bug"></i> الحقل مطلوب
+                                              </p>
+                                              <p *ngIf="Name?.errors.minlength">
+                                                <i class="fa fa-bug"></i>  اسم الفرع يجب ان يكون بين 10-50 حرف
+                                              </p>
+                                            </div>
+                                            
+                                            <div class="form-group text-right">
+                                                <label for="DeviceIP"> عنوان الجهاز   </label>
+                                                <input id="DeviceIP" name="DeviceIP" class="form-control" type="text" [(ngModel)]="addBranchModel.DeviceIP"
+                                                #DeviceIP='ngModel' required="required" minlength="10" >
+                                              </div>
+                                              <div *ngIf="DeviceIP.invalid && (DeviceIP.dirty || DeviceIP.touched)" class="alert alert-danger">
+                                    
+                                                <p *ngIf="DeviceIP?.errors.required">
+                                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                                </p>
+                                                <p *ngIf="DeviceIP?.errors.minlength">
+                                                  <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                                                </p>
+                                              </div>
+                                              <div class="form-group text-right">
+                                                <label for="Address"> عنوان الفرع  </label>
+                                                <input id="Address" name="Address" class="form-control" type="text" [(ngModel)]="addBranchModel.Address"
+                                                #Address='ngModel' required="required" minlength="10" >
+                                              </div>
+                                              <div *ngIf="Address.invalid && (Address.dirty || Address.touched)" class="alert alert-danger">
+                                    
+                                                <p *ngIf="Address?.errors.required">
+                                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                                </p>
+                                                <p *ngIf="Address?.errors.minlength">
+                                                  <i class="fa fa-bug"></i>  عنوان الفرع يجب ان يكون بين 10-50 حرف
+                                                </p>
+                                              </div>
+                                          </div>
+                                          <div class="modal-footer ">
+                                  
+                                            <button type="button" class="btn  pull-left" [disabled]="AddStoreForm.invalid" (click)="AddBranch(addBranchModel,AddStoreForm)">حفظ</button>
+                                          </div>
+                                        </form>
+                                      </div>
+                                  
+                                    </ng-template>
+                                    
+          
+                          <button type="button" class="btn btn-style" (click)="openModal(templatedelete)">
+                              <i class="fa fa-times"></i> حذف</button>
+                              <ng-template #templatedelete>
+          
+                                  <!-- Modal content-->
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                                          <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p> هل تريد حذف هذا الفرع بالفعل ؟</p>
+                                      </div>
+                                      <div class="modal-footer ">
+                                          <button type="button" class="btn  pull-right" (click)="DeleteBranch(selectedReason.BranchID)" >
+                                              نعم</button>
+                      
+                                          <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                                      </div>
+                                  </div>
+                      
+                      
+                      
+                      
+                              </ng-template>
+          
+                           <ng-template #EditTemplate>
+          
+                
+                  <div class="modal-content">
+                    <form #EditStoreForm ="ngForm">
+                      <div class="modal-header">
+                        <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                        <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                      </div>
+                   
+                      <div class="modal-body text-center">
+                          <b> تعديل بيانات الفرع </b>
+                          <div class="form-group text-right">
+                            <label for="Name"> اسم الفرع  </label>
+                            <input id="Name" name="Name" class="form-control" type="text" [(ngModel)]="selectedReason.Name"
+                            #Name='ngModel' required="required" minlength="10" >
+                          </div>
+                          <div *ngIf="Name.invalid && (Name.dirty || Name.touched)" class="alert alert-danger">
+                
+                            <p *ngIf="Name?.errors.required">
+                              <i class="fa fa-bug"></i> الحقل مطلوب
+                            </p>
+                            <p *ngIf="Name?.errors.minlength">
+                              <i class="fa fa-bug"></i>  اسم الفرع يجب ان يكون بين 10-50 حرف
+                            </p>
+                          </div>
+                          
+                          <div class="form-group text-right">
+                              <label for="DeviceIP"> عنوان الجهاز   </label>
+                              <input id="DeviceIP" name="DeviceIP" class="form-control" type="text" [(ngModel)]="selectedReason.DeviceIP"
+                              #DeviceIP='ngModel' required="required" minlength="10" >
+                            </div>
+                            <div *ngIf="DeviceIP.invalid && (DeviceIP.dirty || DeviceIP.touched)" class="alert alert-danger">
+                  
+                              <p *ngIf="DeviceIP?.errors.required">
+                                <i class="fa fa-bug"></i> الحقل مطلوب
+                              </p>
+                              <p *ngIf="DeviceIP?.errors.minlength">
+                                <i class="fa fa-bug"></i>   عنوان الجهاز يجب ان يكون بين 10-50 حرف
+                              </p>
+                            </div>
+                            <div class="form-group text-right">
+                              <label for="Address"> عنوان الفرع  </label>
+                              <input id="Address" name="Address" class="form-control" type="text" [(ngModel)]="selectedReason.Address"
+                              #Address='ngModel' required="required" minlength="10" >
+                            </div>
+                            <div *ngIf="Address.invalid && (Address.dirty || Address.touched)" class="alert alert-danger">
+                  
+                              <p *ngIf="Address?.errors.required">
+                                <i class="fa fa-bug"></i> الحقل مطلوب
+                              </p>
+                              <p *ngIf="Address?.errors.minlength">
+                                <i class="fa fa-bug"></i>  عنوان الفرع يجب ان يكون بين 10-50 حرف
+                              </p>
+                            </div>
+                        </div>
+
+
+                      <div class="modal-footer ">
+            
+                        <button type="button" class="btn  pull-left" [disabled]="EditStoreForm.invalid" 
+                        (click)="EditBranch(selectedReason)" >حفظ</button>
+                      </div>
+                    </form>
+                  </div>
+            
+                </ng-template>
+                
+                      
+          
+                      </div>
+                  
+          </div>
+              </div>
+  </div>
+  </section>

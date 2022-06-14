@@ -1,0 +1,157 @@
+<section class="page-title">
+    <div class="container">
+        <ol class="breadcrumb">
+
+            <li>
+                <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+              </li>
+              <li>
+                <a [routerLink]="[ '/users' ]" routerLinkActive="active">المستخدم</a>
+
+
+              </li>
+            <li class="active"> حسابك الخاص </li>
+        </ol>
+    </div>
+</section>
+<section class="body-content">
+    <div class="container">
+
+      <div class="panel panel-default">
+        <div class="panel-heading text-right">
+          <div class="row">
+            <div class="col-md-4">
+                <h4> حسابى الشخصى</h4>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-2 text-left">
+                <a>
+        
+                    <button (click)="Refresh()" class="btn btn-link">
+                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                    </button>
+                  </a>
+            </div>
+
+          </div>
+          </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 ">
+                    <br>
+                    <form class="clearfix" #UserForm="ngForm" novalidate="novalidate" >
+    
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-6 text-right">
+                                  <label for="UserName"> اسم المستخدم </label>
+                                  <input type="text" name="UserName" class="form-control" [(ngModel)]="user.UserName" #UserName="ngModel" required="required"
+                                    maxlength="50" minlength="10" />
+                                  <div *ngIf="UserName.invalid && (UserName.dirty || UserName.touched)" class="alert alert-danger">
+    
+                                    <p *ngIf="UserName?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="UserName?.errors.minlength">
+                                      <i class="fa fa-bug"></i> اسم المستخدم بين 10-50 حرف
+                                    </p>
+    
+    
+                                  </div>
+                                </div>
+                                <div class="form-group col-md-6 text-right">
+                                  <label for="LoginName"> اسم الدخول </label>
+                                  <input name="LoginName" class="form-control" type="text" [(ngModel)]="user.LoginName" #LoginName="ngModel" required="required"
+                                    minlength="10" maxlength="50">
+    
+                                  <div *ngIf="LoginName.invalid && (LoginName.dirty || LoginName.touched)" class="alert alert-danger">
+    
+                                    <p *ngIf="LoginName?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="LoginName?.errors.minlength">
+                                      <i class="fa fa-bug"></i> اسم الدخول بين 10-50 حرف
+                                    </p>
+                                  </div>
+                              </div>
+                                <div class="form-group col-md-6 text-right">
+                                  <label for="Password"> كلمه المرور</label>
+                                  <input name="Password" class="form-control" type="password" [(ngModel)]="user.Password" #Password="ngModel" required="required"
+                                    minlength="10" maxlength="50">
+                                  <div *ngIf="Password.invalid && (Password.dirty || Password.touched)" class="alert alert-danger">
+    
+                                    <p *ngIf="Password?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="Password?.errors.minlength">
+                                      <i class="fa fa-bug"></i> كلمة المرور بين 10-50 حرف
+                                    </p>
+                                  </div>
+                                 </div>
+                                <div class="form-group col-md-6 text-right">
+                                  <label for="ConfirmPassword">  تأكيد كلمه المرور </label>
+                                  <input name="ConfirmPassword" class="form-control" type="text" [(ngModel)]="user.Password" #ConfirmPassword="ngModel" required="required"
+                                    minlength="10" maxlength="50">
+                                  <div *ngIf="ConfirmPassword.invalid && (ConfirmPassword.dirty || ConfirmPassword.touched) &&  (Password.value!== ConfirmPassword.value)" class="alert alert-danger">
+    
+                                    <p *ngIf="ConfirmPassword?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="ConfirmPassword?.errors.minlength">
+                                      <i class="fa fa-bug"></i> كلمة المرور بين 10-50 حرف
+                                    </p>
+                                    <p *ngIf="Password.value!== ConfirmPassword.value">
+                                        <i class="fa fa-bug"></i>  كلمة المرور غير متطابقة حاول مرة اخرى
+                                      </p>
+                                  </div>
+                                 </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+    
+            </div>
+          
+        </div>
+        <div class="panel-footer">
+            <div class="form-group">
+                <button class="btn  btn-style" [disabled]="UserForm.invalid" (click)="openModal(template)">
+                  <i class="fa fa-save"></i> حفظ</button>
+              </div>
+
+                   
+          <ng-template #template>
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                    <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                </div>
+                <div class="modal-body">
+                    <p> هل تريد حفظ هذا المستخدم بالفعل ؟</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn  pull-right"  (click)="onSubmit(user)"> نعم</button>
+
+                    <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                </div>
+            </div>
+
+
+
+
+  </ng-template>
+        </div>
+      </div>
+
+
+       
+    </div>
+</section>
+

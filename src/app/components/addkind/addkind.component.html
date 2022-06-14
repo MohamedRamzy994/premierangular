@@ -1,0 +1,589 @@
+<section class="page-title">
+  <div class="container">
+    <ol class="breadcrumb">
+
+      <li>
+        <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+      </li>
+      <li>
+        <a [routerLink]="[ '/stores' ]" routerLinkActive="active">مخازن</a>
+
+
+      </li>
+      <li>
+        <a [routerLink]="[ '/kinds' ]" routerLinkActive="active">قائمه الأصناف</a>
+
+
+
+      </li>
+      <li class="active"> إضافه صنف</li>
+    </ol>
+  </div>
+</section>
+
+
+
+<section class="body-content">
+  <div class="container">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#main-info" aria-controls="main-info" role="tab" data-toggle="tab">البيانات الأساسيه</a>
+      </li>
+      <li role="presentation">
+        <a href="#units-suport" aria-controls="units-suport" role="tab" data-toggle="tab">الوحدات والموزعين</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="main-info">
+          <form class="add-kind" #ProductBasicForm="ngForm">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h4 class="text-right"> البيانات الاساسية</h4>
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-2 text-left">
+                            <a>
+                    
+                                <button (click)="Refresh()" class="btn btn-link">
+                                  <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                               <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                </button>
+                              </a>
+                        </div>
+                    </div>
+                 
+      
+                </div>
+                <div class="panel-body">
+
+               
+                  <div class="col-md-6">
+               
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="text text-right">البيانات الاساسية</h4>
+      
+                          </div>
+                          <div class="panel-body">
+                              <div class="form-group text-right">
+                                  <label for="ProductCode"> كود الصنف </label>
+  
+                                    <input type="text" id="ProductCode" name="ProductCode" class="form-control" [(ngModel)]="productbasic.ProductCode"
+                                      #ProductCode="ngModel" required="required" maxlength="25" minlength="10" autofocus autocomplete="off" />
+                    
+                                    <div *ngIf="ProductCode.invalid && (ProductCode.dirty || ProductCode.touched)" class="alert alert-danger">
+                    
+                                      <p *ngIf="ProductCode?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                      </p>
+                                      <p *ngIf="ProductCode?.errors.maxlength">
+                                        <i class="fa fa-bug"> القيمة المدخلة لاتقل عن 10 ارقام</i>
+                                      </p>
+                                      <p *ngIf="ProductCode?.errors.minlength">
+                                        <i class="fa fa-bug"> القيمة المدخلة لاتقل عن 10 ارقام</i>
+                                      </p>
+                    
+                                    </div>
+                                  </div>
+                                  <br>
+                              <div class="form-group text-right">
+                                  <label for="ProductName"> اسم الصنف </label>
+                                  <input id="ProductName" name="ProductName" class="form-control" type="text" [(ngModel)]="productbasic.ProductName"
+                                    #ProductName="ngModel" required="required" maxlength="50" minlength="5">
+                  
+                                  <div *ngIf="ProductName.invalid && (ProductName.dirty || ProductName.touched)" class="alert alert-danger">
+                  
+                                    <p *ngIf="ProductName?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                                    <p *ngIf="ProductName?.errors.minlength">
+                                      <i class="fa fa-bug"></i> اسم الصنف بين 5-50 حرف
+                                    </p>
+                                  </div>
+                  
+                                </div>
+                                <br>
+
+                                <div class="form-group text-right">
+                                  <label for="CatID"> المجموعه </label>
+                                  <select id="CatID" class="form-control" name="CatID" [(ngModel)]="productbasic.CatID" #ProductCatID="ngModel"
+                                    required="required">
+                  
+                                    <option *ngFor="let item of productgroups" [value]="item.CatID">{{item.CatName}}</option>
+                  
+                                  </select>
+                  
+                                  <div *ngIf="ProductCatID.invalid && (ProductCatID.dirty || ProductCatID.touched)" class="alert alert-danger">
+                  
+                                    <p *ngIf="ProductCatID?.errors.required">
+                                      <i class="fa fa-bug"></i> الحقل مطلوب
+                                    </p>
+                  
+                                  </div>
+                  
+                                </div>
+            
+                                <br>
+                               
+                                <br>
+
+                                <div class="checkbox disp-inl-bl ">
+                                    <label for="PrintBarcode">
+                                      <input id="PrintBarcode" name="PrintBarcode" type="checkbox" [(ngModel)]="productbasic.PrintBarcode"
+                                        #ProductPrintBarcode="ngModel"> طباعه باكورد </label>
+                                  </div>
+                
+                                  <div class="checkbox disp-inl-bl">
+                                    <label for="StopSale">
+                                      <input id="StopSale" name="StopSale" type="checkbox" [(ngModel)]="productbasic.StopSale"
+                                        #ProductStopSale="ngModel"> موقوف البيع </label>
+                                  </div>
+                
+                                  <div class="checkbox disp-inl-bl">
+                                    <label for="StopBuy">
+                                      <input id="StopBuy" name="StopBuy" type="checkbox" [(ngModel)]="productbasic.StopBuy"
+                                        #ProductStopBuy="ngModel"> موقوف الشراء </label>
+                                  </div>
+                                  <br>
+                                  <br>
+                                  <br>
+
+
+      
+                          </div>
+                          <div class="panel-footer">
+                            <br>
+      
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+
+                        <h4 class="text text-right">
+                            الأسعار
+                        </h4>
+                      </div>
+                      <div class="panel-body">
+                          <div class="form-group text-right">
+                              <label for="P_Price"> سعر الشراء </label>
+                              <input id="P_Price" name="P_Price" class="form-control" type="text" [(ngModel)]="productbasic.P_Price"
+                                #ProductPPrice="ngModel" required="required" [pattern]="'^([0-9])+$'" maxlength="6" minlength="1">
+                              <div *ngIf="ProductPPrice.invalid && (ProductPPrice.dirty || ProductPPrice.touched)" class="alert alert-danger">
+            
+                                <p *ngIf="ProductPPrice?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.pattern">
+                                  <i class="fa fa-bug"></i> ادخال ارقام فقط الحروف غير مسموح بها
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.maxlength">
+                                  <i class="fa fa-bug"></i> سعر الشراء بين 1-1000000
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.minlength">
+                                  <i class="fa fa-bug"></i> سعر الشراء بين 1-1000000
+                                </p>
+            
+                              </div>
+            
+                            </div>
+            
+                            <div class="form-group text-right">
+                              <label for="Price"> سعر البيع </label>
+                              <input id="Price" name="Price" class="form-control" type="text" [(ngModel)]="productbasic.Price"
+                                #ProductPrice="ngModel" required="required" [pattern]="'^([0-9])+$'" maxlength="6" minlength="1">
+                              <div *ngIf="ProductPrice.invalid && (ProductPrice.dirty || ProductPrice.touched)" class="alert alert-danger">
+            
+                                <p *ngIf="ProductPrice?.errors.required">
+                                  <i class="fa fa-bug"></i> الحقل مطلوب
+                                </p>
+                                <p *ngIf="ProductPrice?.errors.pattern">
+                                  <i class="fa fa-bug"></i> ادخال ارقام فقط الحروف غير مسموح بها
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.maxlength">
+                                  <i class="fa fa-bug"></i> سعر البيع بين 1-1000000
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.minlength">
+                                  <i class="fa fa-bug"></i> سعر البيع بين 1-1000000
+                                </p>
+            
+                              </div>
+            
+                            </div>
+                            <div class="form-group text-right">
+                              <label for="Discount"> % الخصم </label>
+                              <input id="Discount" name="Discount" class="form-control" type="text" [(ngModel)]="productbasic.Discount"
+                                #ProductDiscount="ngModel" [pattern]="'^([0-9])+$'" maxlength="2" minlength="1">
+            
+                              <div *ngIf="ProductDiscount.invalid && (ProductDiscount.dirty || ProductDiscount.touched)" class="alert alert-danger">
+            
+                                <p *ngIf="ProductDiscount?.errors.pattern">
+                                  <i class="fa fa-bug"></i> ادخال ارقام فقط الحروف غير مسموح بها
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.maxlength">
+                                  <i class="fa fa-bug"></i> نسبة الخصم  بين 1-100
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.minlength">
+                                  <i class="fa fa-bug"></i> نسبة الخصم  بين 1-100
+                                </p>
+            
+                              </div>
+                            </div>
+                            <div class="form-group text-right">
+                              <label for="form_price"> السعر بعد الخصم </label>
+                              <input id="form_price" name="form_price" class="form-control" disabled="disabled" type="text" [value]="productbasic.Price-(productbasic.Price*(productbasic.Discount/100))">
+                            </div>
+                            <div class="form-group text-right">
+                              <label for="MinSalePrice"> سعر البيع الأدني </label>
+                              <input id="MinSalePrice" name="MinSalePrice" class="form-control" type="text" [(ngModel)]="productbasic.MinSalePrice"
+                                #ProductMinSalePrice="ngModel" [pattern]="'^$?\-?([1-9]{1}[0-9]{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\-?$?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))$|^\($?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d{0,}(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2}))\)$'" maxlength="9" minlength="1">
+                              <div *ngIf="ProductMinSalePrice.invalid && (ProductMinSalePrice.dirty || ProductMinSalePrice.touched)"
+                                class="alert alert-danger">
+            
+                                <p *ngIf="ProductMinSalePrice?.errors.pattern">
+                                  <i class="fa fa-bug"></i> ادخال ارقام فقط الحروف غير مسموح بها
+                                </p>
+            
+                                <p *ngIf="ProductPPrice?.errors.maxlength">
+                                  <i class="fa fa-bug"></i> سعر البيع بين 1-1000000
+                                </p>
+                                <p *ngIf="ProductPPrice?.errors.minlength">
+                                  <i class="fa fa-bug"></i> سعر البيع بين 1-1000000
+                                </p>
+            
+                              </div>
+            
+                            </div>
+
+                      </div>
+                      <div class="panel-footer">
+
+                        <br>
+                      </div>
+
+                    </div>
+                  </div>
+               
+               
+                  
+                     
+                     
+                   
+            
+            
+</div>      
+<div class="panel-footer">
+  <div class="btntricks">
+      <button class="btn  btn-style" [disabled]="ProductBasicForm.invalid" (click)="openModal(template)">
+       <i class="fa fa-save"></i>   حفظ </button>
+  </div>
+  
+</div>
+
+<ng-template #template>
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+            <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+        </div>
+        <div class="modal-body">
+            <p> هل تريد حفظ هذا الصنف بالفعل ؟</p>
+        </div>
+        <div class="modal-footer ">
+            <button type="button" class="btn  pull-right"  (click)="addProductBasic(productbasic,ProductBasicForm)"> نعم</button>
+
+            <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+        </div>
+    </div>
+
+
+
+
+</ng-template>
+
+
+        </div>
+
+      </form>
+      </div>
+      <div role="tabpanel" class="tab-pane fade" id="units-suport">
+          <form #AddProductUnitsForm="ngForm" class="add-kind">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-md-4">
+                      <h4 class="text text-right"> الوحدات والموزعين</h4>
+                    </div>
+                  <div class="col-md-6"></div>
+                  <div class="col-md-2 text-left">
+                      <a>
+              
+                          <button (click)="Refresh()" class="btn btn-link">
+                            <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                         <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                          </button>
+                        </a>
+                  </div>
+              </div>
+          </div>
+          <div class="panel-body">
+
+
+              <div class="col-md-4 text-right ">
+
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h4 class="text-right"> وحـدات الأصناف</h4>
+            
+                      </div>
+                      <div class="panel-body">
+                        
+                    <fieldset>
+      
+                        <legend> الوحدات </legend>
+                        <div class="form-group">
+                          <input type="checkbox" id="UnitCat11" name="UnitCat11" #UnitCat11 checked="true" disabled="disabled" />&nbsp;
+                          <label for="UnitCat11"> الوحده الكبري </label>
+                          <select class="form-control"   [(ngModel)]="ProductsUnitsSupplierModel.Unit11"
+                            name="Unit11" required="required" #Unit11="ngModel">
+                            <option *ngFor="let item of productunits" [value]="item.UnitID">{{item.UnitName}}</option>
+                          </select>
+                          <div *ngIf="Unit11.invalid && (Unit11.dirty || Unit11.touched)" class="alert alert-danger">
+        
+                              <p *ngIf="Unit11?.errors.required">
+                                <i class="fa fa-bug"></i> الحقل مطلوب
+                              </p>
+        
+                            </div>
+                        </div>
+        
+                        <fieldset>
+                          <legend> بيانات الوحده المتوسطه </legend>
+                          <input type="checkbox" id="UnitCat12" name="UnitCat" [checked]="unitcatcheckbox12" #UnitCat12 (click)="changeUnitCat12()" />&nbsp;
+                          <label for="UnitCat12"> الوحده المتوسطه </label>
+                          <select class="form-control" [disabled]="!unitcatcheckbox12" [(ngModel)]="ProductsUnitsSupplierModel.Unit12"
+                            name="Unit12" (change)="changeUnitCat12buyorsale()">
+                            <option *ngFor="let item of productunits" [value]="item.UnitID">{{item.UnitName}}</option>
+        
+                          </select>
+        
+        
+                          <div class="form-group text-right">
+                            <label for="ChangeNum12"> عدد الوحدات </label>
+                            <input id="ChangeNum12" name="ChangeNum12" class="form-control" type="text" [(ngModel)]="ProductsUnitsSupplierModel.ChangeNum12" [disabled]="!unitcatcheckbox12">
+                          </div>
+        
+                        </fieldset>
+                        <fieldset>
+                          <legend> بيانات الوحده الصغري </legend>
+                          <input type="checkbox" id="UnitCat13" [checked]="unitcatcheckbox13" name="UnitCat" #UnitCat13 (click)="changeUnitCat13()" />&nbsp;
+        
+                          <label for="UnitCat13"> الوحده الصغري </label>
+                          <select class="form-control" [disabled]="!unitcatcheckbox13" [(ngModel)]="ProductsUnitsSupplierModel.Unit13"
+                            name="Unit13" (change)="changeUnitCat13buyorsale()">
+                            <option *ngFor="let item of productunits" [value]="item.UnitID">{{item.UnitName}}</option>
+        
+                          </select>
+        
+        
+                          <div class="form-group text-right">
+                            <label for="ChangeNum13"> عدد الوحدات </label>
+                            <input id="ChangeNum13" name="ChangeNum13" class="form-control" type="text" [(ngModel)]="ProductsUnitsSupplierModel.ChangeNum13"  [disabled]="!unitcatcheckbox13">
+                          </div>
+        
+                        </fieldset>
+        
+                      </fieldset>
+        
+        
+                      </div>
+                      <div class="panel-footer">
+                          <br>
+                          <br>
+      
+                        </div>
+      
+                  </div>
+                 
+      
+                  </div>
+      
+                  <div class="col-md-4 text-right ">
+      
+      
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="text-right"> وحـدات البيع والشراء</h4>
+                
+                          </div>
+                          <div class="panel-body">
+                              <fieldset>
+                                  <legend> بيانات البيع و الشراء </legend>
+                                  <div class="form-group">
+                                    <label for="UnitBuy"> وحده الشراء الافتراضيه </label>
+                                    <select class="form-control" [(ngModel)]="ProductsUnitsSupplierModel.UnitBuy" #UnitBuy="ngModel"  name="UnitBuy" required="required" >
+                                      <option *ngFor="let item of ProductUnitsDefault" [value]="item.UnitCatID" >{{item.UnitCat}} </option>
+                                    </select>
+                                    <div *ngIf="UnitBuy.invalid && (UnitBuy.dirty || UnitBuy.touched)" class="alert alert-danger">
+                  
+                                      <p *ngIf="UnitBuy?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                      </p>
+                  
+                                    </div>
+                  
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="UnitSale"> وحده البيع الافتراضيه </label>
+                                    <select class="form-control"  [(ngModel)]="ProductsUnitsSupplierModel.UnitSale" #UnitSale="ngModel"  name="UnitSale" required="required">
+                                        <option *ngFor="let item of ProductUnitsDefault" [value]="item.UnitCatID" >{{item.UnitCat}} </option>
+                                    </select>
+                  
+                                    <div *ngIf="UnitSale.invalid && (UnitSale.dirty || UnitSale.touched)" class="alert alert-danger">
+                  
+                                      <p *ngIf="UnitSale?.errors.required">
+                                        <i class="fa fa-bug"></i> الحقل مطلوب
+                                      </p>
+                  
+                                    </div>
+                                  </div>
+                  
+                  
+                  
+                                </fieldset>
+                  
+                                <fieldset>
+                                  <legend> الرصيد الافتتاحي </legend>
+                  
+                                  <div class="form-group">
+                                    <label for="StoreId"><input type="checkbox" id="EnableBalance" [checked]="enableopeningbalance" name="EnableBalance" #EnableBalance (click)="openbalance()" />&nbsp;  المخزن </label>
+                                    <select class="form-control" [(ngModel)]="ProductsUnitsSupplierModel.StoreId" [disabled]="!enableopeningbalance" name="StoreId">
+                                      <option *ngFor="let item of ProductStores" [value]="item.StoreID" >{{item.StoreName}} </option>
+                  
+                  
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="form_balance"> وحده الرصيد الإفتتاحي </label>
+                                    <select class="form-control" [(ngModel)]="ProductsUnitsSupplierModel.UnitCatId" [disabled]="!enableopeningbalance" name="UnitCatId">
+                                      <option *ngFor="let item of ProductUnitsDefault" [value]="item.UnitCatID" > {{item.UnitCat}} </option>
+                  
+                                    </select>
+                                  </div>
+                  
+                  
+                                  <div class="form-group text-right">
+                                    <label for="form_balance"> كميه الرصيد الافتتاحي </label>
+                                    <input id="form_balance" class="form-control" type="text"  [(ngModel)]="ProductsUnitsSupplierModel.OpeningNum" [disabled]="!enableopeningbalance" name="OpeningNum">
+                                  </div>
+                  
+                  
+                                </fieldset>
+                  
+                  
+                                <br>
+                                <br>
+                          
+                          
+                          </div>
+                          <div class="panel-footer">
+                           
+                              <br>
+                              <br>
+      
+                             
+                            </div>
+                            </div>
+              
+                  </div>
+                  <div class="col-md-4 text-right">
+                      <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <h4 class="text-right"> بيانات الموردين </h4>
+                
+                          </div>
+                          <div class="panel-body">
+                              <fieldset>
+                                  <legend> ربط الصنف بالمورد </legend>
+                                </fieldset>
+                                <div class="form-group">
+                                  <label for="support"> <input type="checkbox" id="EnableBalance" name="EnableBalance" #EnableBalance (click)="opensupplier()" />&nbsp; الموردين</label>
+                                  <select class="form-control" name="support" multiple="multiple" size="10" [disabled]="!opensupplierenabled"
+                                   [(ngModel)]="ProductsUnitsSupplierModel.SelectedProductSuppliers" >
+                                    <option *ngFor="let item of Suppliers" [value]="item.SupplierID" >{{item.SupplierName}}</option>
+                  
+                                  </select>
+                                </div>
+                                <br>
+                                    <br>
+                                    <br>
+      
+                          </div>
+                          <div class="panel-footer" style="padding-bottom: 20px;">
+                              <br>
+                              <br>
+                              
+                            </div>
+                            </div>
+                          
+      
+                
+      
+      
+      
+                  </div>
+                 
+          </div>
+          <div class="panel-footer">
+              <div class="btntricks">
+                  <button class="btn  btn-style" [disabled]="AddProductUnitsForm.invalid" (click)="openModal(templateunits)">
+                    <i class="fa fa-save"></i>  حفظ </button>
+              </div>
+          </div>
+          <ng-template #templateunits>
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" (click)="modalRef.hide()">&times;</button>
+                      <h4 class="modal-title"><img src="/bag.png" class="userlogo" /></h4>
+                  </div>
+                  <div class="modal-body">
+                      <p> هل تريد حفظ بيانات الوحدات لهذا الصنف  بالفعل ؟</p>
+                  </div>
+                  <div class="modal-footer ">
+                      <button type="button" class="btn  pull-right"  (click)="addProductUnits(ProductsUnitsSupplierModel, AddProductUnitsForm)"> نعم</button>
+          
+                      <button type="button" class="btn  pull-left" (click)="modalRef.hide()">لا</button>
+                  </div>
+              </div>
+          
+          
+          
+          
+          </ng-template>
+        </div> 
+       
+
+       
+          </form>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</section>

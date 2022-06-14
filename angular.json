@@ -1,0 +1,158 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "PREMIER": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/PREMIER",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/web.config"
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
+              "node_modules/font-awesome/css/font-awesome.css"
+                        ],
+            "scripts": [
+
+              "node_modules/screenfull/dist/screenfull.js",
+              "src/assets/js/jquery.js",
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/head.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/fontawesome-all.js",
+              "src/assets/js/fontawesome.js",
+              "src/assets/js/animat.js",
+              "src/assets/js/scrollspy.js",
+              "src/assets/js/code.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "PREMIER:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "PREMIER:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "PREMIER:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "src/styles.css",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"
+            ],
+            "scripts": [
+
+              "node_modules/screenfull/dist/screenfull.js",
+              "src/assets/js/jquery.js",
+              "src/assets/js/bootstrap.js",
+              "src/assets/js/head.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/fontawesome-all.js",
+              "src/assets/js/animat.js",
+              "src/assets/js/scrollspy.js",
+              "src/assets/js/code.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "PREMIER-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "PREMIER:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "PREMIER:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "PREMIER"
+}

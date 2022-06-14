@@ -1,0 +1,258 @@
+
+    <section class="page-title">
+        <div class="container">
+            <ol class="breadcrumb">
+
+                <li>
+                    <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+                </li>
+
+                <li>
+
+                    <a [routerLink]="[ '/sales' ]" routerLinkActive="active">مبيعات</a>
+
+
+                </li>
+
+                <li>
+
+                    <a [routerLink]="[ '/oldsalesbills' ]" routerLinkActive="active"> فواتير بيع سابقه </a>
+
+                </li>
+                <li class="active"> عرض فاتوره بيع  </li>
+            </ol>
+        </div>
+</section>
+<section class="search-sec">
+    <div class="container">
+
+        <h4>تفاصيل الفاتورة</h4>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label for="bill-num"> رقم الفاتوره </label>
+                <input name="bill-num" class="form-control" type="text" disabled="disabled" [value]="InvoiceID">
+            </div>
+            <div class="form-group  ">
+                <label> المخزن </label>
+                <input name="bill-num" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.StoreName">
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> صافى الفاتوره </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.Net">
+
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> المتبقى   </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.Net-productSaleMainInvoiceDetails.TotalPayed">
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group  ">
+                <label> العميل </label>
+                <input name="supplier" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.CustomerName">
+            </div>
+            <div class="form-group ">
+                <label for="date"> التاريخ </label>
+                <input name="bill-num" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.DateSubmit">
+
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> الخصـم  </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.DiscLE">
+
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> الاضافات   </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.Additions">
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label for="bill-account"> حساب الفاتوره </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.Total">
+
+            </div>
+
+            <div class="form-group ">
+                <label for="user"> المستخدم </label>
+                <input name="user" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.UserName">
+
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> المدفوع  </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.TotalPayed">
+
+            </div>
+            <div class="form-group ">
+                <label for="bill-account"> الملاحظات   </label>
+                <input name="bill-account" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.Notes">
+
+            </div>
+        </div>
+        <div class="col-md-3">
+<div class="form-group  ">
+    <label> المندوب </label>
+    <input name="supplier" class="form-control" type="text" disabled="disabled" [value]="productSaleMainInvoiceDetails.EmpName">
+</div>
+<br>
+
+            <div class="form-group">
+                <button type="button" class="btn  btn-style form-control" (click)="goToPrintOldSalesBill()">
+                    <i class="fa fa-print"></i> طباعة </button>
+                    <br>
+                <button type="button" class="btn  btn-style form-control">
+                    <i class="fa fa-times"></i> إلغاء </button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
+<section class="body-content">
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    <div class="row">
+                            <div class="col-md-4">
+                                    <h5 class="text-colored text-right">الأصناف في الفاتورة</h5>
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-2 text-left">
+                                <a>
+                        
+                                    <button (click)="Refresh()" class="btn btn-link">
+                                      <!-- <img src="/poweroff1.png" alt="signout" class="usersmalllogo"> -->
+                                   <i class="fas fa-2x fa-refresh">&nbsp;</i>            
+                                    </button>
+                                  </a>
+                            </div>
+                        </div>
+          
+
+            </div>
+            <div class="panel-body">
+
+                    <div style="overflow-x: auto;">                     <table class="table text-right table-bordered  table-responsive table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">كود الصنف</th>
+                                    <th style="width:15%;"> إسم الصنف </th>
+                                    <th > كميه البيع </th>
+                                    <th > كميه المرتجع </th>
+                                    <th >  صافي الكميه </th>
+                                    <th > الوحده </th>
+                                    <th >  السعر </th>
+                                    <th > نسبه الخصم </th>
+                                    <th > السعر النهائي </th>
+                                    <th >  الإجمالي </th>
+                                    <th > رصيد المخزن </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of productSaleMainInvoiceItems|
+                                 paginate: {id:'first', itemsPerPage: 10, currentPage: p } ; let i=index">
+                                    <td>{{item.ProductID}}</td>
+                                    <td>{{item.ProductName}} </td>
+                                    <td>{{item.Num| number:'1.2-2'}}</td>
+                                    <td>{{item.DiscardNum| number:'1.2-2'}}</td>
+                                    <td>{{item.Num-item.DiscardNum| number:'1.2-2'}}</td>
+                                    <td>{{item.UnitName}}</td>
+                                    <td>{{item.Price| currency}}</td>
+                                    <td>{{item.TotalDisc| currency}}</td>
+                                    <td>{{item.NetPrice| currency}}</td>
+                                    <td>{{item.NetPrice*item.Num | currency}}</td>
+                                    <td>{{item.Stock| number:'1.2-2'}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" class="text text-center alert alert-danger" *ngIf="(productSaleMainInvoiceItems).length === 0">
+                                        <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="11" class="text text-center">
+                                        <pagination-controls id="first" (pageChange)="p = $event" maxSize="10" directionLinks="true" autoHide="false"
+                                            responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                                            screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                        </pagination-controls>
+                                    </td>
+                                </tr>
+                
+                            </tbody>
+                          </table>                     </div>
+            </div>
+            <div class="panel-footer">
+                <br>
+                <br>
+            </div>
+        </div>
+
+      
+         <br>
+
+         <div class="panel panel-default">
+            <div class="panel-heading">
+        <h5 class="text-colored text-right">المرتجعات علي الفاتورة</h5>
+
+            </div>
+            <div class="panel-body">
+
+                <div style="overflow-x: auto;">                     <table class="table text-right table-bordered  table-responsive table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">كود الصنف</th>
+                            <th> إسم الصنف </th>
+                            <th style="width:10%;"> كميه المرتجع </th>
+                            <th style="width:10%;"> الوحده </th>
+                            <th style="width:10%;">  السعر </th>
+                            <th style="width:10%;">  الإجمالي </th>
+                            <th style="width:5%;">إختر</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of productSaleDiscardSelectMainInvoicesItems
+                        | paginate: {id:'second', itemsPerPage: 10, currentPage: s } ; let i=index">
+                        
+                            <td>{{item.ProductID}}</td>
+                            <td>{{item.ProductName}} </td>
+                            <td>{{item.Num| number:'1.2-2'}}</td>
+                            <td>{{item.DiscardNum| number:'1.2-2'}}</td>
+                            <td>{{item.UnitName}}</td>
+                            <td>{{item.Price| currency}}</td>
+                            <td>{{item.TotalDisc| currency}}</td>
+                            <td>{{item.Price*item.Num | currency}}</td>
+                            <td>{{item.Stock| number:'1.2-2'}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" class="text text-center alert alert-danger" *ngIf="(productSaleDiscardSelectMainInvoicesItems).length === 0">
+                                <h4>نأسف لم يتم العثور على اى نتائج</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="11" class="text text-center">
+                                <pagination-controls id="second" (pageChange)="s = $event" maxSize="10" directionLinks="true" autoHide="false"
+                                    responsive="true" previousLabel="السابق" nextLabel="التالى" screenReaderPaginationLabel="Pagination"
+                                    screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                </pagination-controls>
+                            </td>
+                        </tr>
+        
+        
+                    </tbody>
+                  </table>                     </div>
+            </div>
+            <div class="panel-footer">
+                    <br>
+                    <br>
+                </div>
+         </div>
+
+     
+
+
+    </div>
+</section>

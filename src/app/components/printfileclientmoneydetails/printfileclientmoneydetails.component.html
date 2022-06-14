@@ -1,0 +1,201 @@
+<section class="page-title">
+  <div class="container">
+      <ol class="breadcrumb">
+
+          <li>
+              <a [routerLink]="[ '/root' ]" routerLinkActive="active">الرئيسيه</a>
+
+
+          </li>
+
+          <li>
+              <a [routerLink]="[ '/clients' ]" routerLinkActive="active">عملاء</a>
+
+          </li>
+
+          <li>
+              <a [routerLink]="[ '/clientslist' ]" routerLinkActive="active">قائمه العملاء</a>
+
+
+          </li>
+          <li>
+            <a [routerLink]="[ '/fileclient',addcustomerRebateActionModel.CustomerID ]" routerLinkActive="active"> ملف العميل </a>
+    
+          </li>
+          <li class="active">  طباعة ملف العميل  </li>
+      </ol>
+  </div>
+</section>
+<section class="body-content file-supplier" id="body-content">
+  <div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-2 text text-center">
+                    <img [src]="appSettings.Logo" class="userlogo" style="padding: 8px; background-color:#fff; border:1px solid #000; border-radius: 20%;">
+                  </div>
+               
+          
+                <div class="col-md-8">
+                  <h3 class="text text-center">
+
+                      {{addCustomer.Name}} -  تقرير كشف حساب عميل
+                  </h3>
+                </div>
+                <div class="col-md-2 text text-right">
+          
+                    <div class="printbrand">
+                        {{appSettings.ShopName}}            
+                    </div>
+            
+            
+                  </div>
+               
+              </div>
+            <div class="spacetoprint"></div>
+  
+        </div>
+      <div class="panel-body">
+         
+          <hr>
+          <div class="row" id="datefromto">
+
+              <div class="col-md-6">
+        
+                <label> في الفتره من</label>
+                <div class="input-group">
+                  <input class="form-control"  style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstFrom"
+                    [options]="myOptions" #dp="ngx-mydatepicker" [(ngModel)]="DateFromFirstObject" (ngModelChange)="GetDateFirstFrom($event)" />
+        
+                  <span class="input-group-btn">
+                    <button type="button" class="btn" (click)="dp.toggleCalendar()" style="height: 40px;">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+        
+              </div>
+              <div class="col-md-6">
+        
+                <label> إلي الفتره</label>
+                <div class="input-group">
+        
+                  <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="DateFirstTo"
+                    [options]="myOptions" #dpo="ngx-mydatepicker" [(ngModel)]="DateToFirstObject" (ngModelChange)="GetDateFirstTo($event)" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn" (click)="dpo.toggleCalendar()" style="height: 40px;">
+                      <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+        
+                  </span>
+        
+                </div>
+              </div>
+        
+            </div>
+           <br>
+            <div class="row">
+                <div class="col-md-4 text text-right">
+                  <div class="form-group ">
+                    <label for="StoreName" class="label label-default"> اسم العميل </label>
+                    &nbsp; <span> {{addCustomer.Name}} </span>
+                  </div>
+                </div>
+                <div class="col-md-4 text text-right">
+          
+                  <div class="form-group ">
+                    <label for="StoreTo" class="label label-default"> الفترة من</label>
+                    &nbsp; <span [textContent]="DateFirstFrom|date"></span>
+          
+                  </div>
+                </div>
+                <div class="col-md-4 text text-center">
+                  <div class="form-group">
+                    <label for="DateSubmit" class="label label-default"> الى الفترة </label>
+          
+                    &nbsp; <span [textContent]="DateFirstTo|date"></span>
+          
+          
+                  </div>
+          
+                </div>
+              </div>
+              <div class="spacetoprint"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <br>
+          <div style="overflow-x: auto;">
+            <table class="table text-center table-bordered  table-responsive">
+              <thead>
+                <tr>
+                    <th> الكود</th>
+                  <th> المستخدم</th>
+                  <th style="width:15%">التاريخ </th>
+                  <th> العمليه </th>
+                  <th> نقطه البيع </th>
+                  <th> المبلغ </th>
+                  <th> اجمالي الحساب </th>
+  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of allSupplierMoneyDetails
+                |searchsuppliermoneydetailsfromtodate:DateFirstFrom:DateFirstTo
+                 let i=index;" >
+                    <td> {{item.PayID}}</td>
+  
+                  <td> {{item.UserName}} </td>
+                  <td> {{item.DateSubmit|date}}</td>
+                  <td>{{item.Reason}}</td>
+                  <td> {{item.SalesPoint}}</td>
+                  <td class="text "> {{item.MoneyValue| currency}} </td>
+                  <td class="text "> {{item.BalanceAfter| currency}}</td>
+  
+                </tr>
+                <tr><td colspan="7" class="text text-center alert alert-danger"  *ngIf="(allSupplierMoneyDetails).length === 0" ><h4>نأسف لم يتم العثور على اى نتائج</h4></td></tr>
+  
+              </tbody>
+            </table>
+          </div>
+          <br>
+          <div style="overflow-x: auto;">
+            <table class="table text-center table-bordered  table-responsive">
+              <thead>
+                <tr>
+                  <th> إجمالي التعامل</th>
+                  <th> إجمالي المسدد </th>
+                  <th> باقي الحساب </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text text-primary"><label class="label label-info"> {{customerTotalCommunicationSummaryModel.TotalCommunication| currency }}</label></td>
+                  <td class="text text-success"><label class="label label-success">{{customerTotalCommunicationSummaryModel.CompletedCommunication| currency }}</label></td>
+                  <td class="text text-danger"><label class="label label-danger"> {{customerTotalCommunicationSummaryModel.RestCommunication| currency}}</label></td>
+  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+        </div>
+        
+      </div>
+      </div>
+      <div class="panel-footer">
+          <div class="btntricks">
+  
+              <button type="button" class="btn btn-style" (click)="PrintSupplierMoneyDetails()" >
+                <i class="fa fa-print"></i> طباعه الحساب </button>
+            </div>
+      </div>
+
+    </div>
+  
+    
+
+
+
+  </div>
+
+</section>
